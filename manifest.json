@@ -1,0 +1,28 @@
+{
+  "description": "Wiktionary in the context menu",
+  "manifest_version": 2,
+  "name": "Right Click Wiktionary",
+  "version": "1.0",
+  "homepage_url": "https://github.com/losnappas/Context-menu-dictionary",
+
+  "browser_action": {
+    "default_title": "Wiktionary it",
+    "default_popup": "popup/popup.html",
+    "browser_style": true
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "permissions": [
+    "contextMenus",
+    "https://en.wiktionary.org/api/rest_v1/page/definition/*"
+  ],
+
+  "applications": {
+    "gecko":{
+      "strict_min_version": "57.0"
+    }
+  }
+}
