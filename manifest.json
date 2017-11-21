@@ -2,7 +2,7 @@
   "description": "Wiktionary in the context menu",
   "manifest_version": 2,
   "name": "Right Click Wiktionary",
-  "version": "1.0",
+  "version": "1.1",
   "homepage_url": "https://github.com/losnappas/Context-menu-dictionary",
 
   "browser_action": {

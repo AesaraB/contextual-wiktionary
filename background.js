@@ -16,15 +16,23 @@ browser.contextMenus.create({
   contexts: ["selection"]
 })
 
-
+/*
+	Fetches Wiki dictionary (Wiktionary) meaning for selected word.
+	Wiktionary gives <b> and <i> etc tags too.
+*/
 function translate ( onClickData, tab ) {
 	
 	let selectionText = onClickData.selectionText
+	/*
+		If Wiktionary had 0 ping this addon could glitch out by trying to append the translation before
+		the popup is open.
+	*/
 	// let wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-	let translation
+	let translations
 
 	//Start by opening popup to make sure it is open when it is needed.
+	//This is FF57+.
 	browser.browserAction.openPopup()
 
 
@@ -49,14 +57,15 @@ function translate ( onClickData, tab ) {
 	.then( res => {
 		//store result in upper scope
 		if (res.en) {
-			translation = res.en[0]
+			translations = res.en
 		} else {
 			throw new Error("No English translation found.")
 		}
 	})
 	.catch( e => {
 		console.error(e, e.name, e.message )
-		translation = {
+		translations = [
+		{
 			"partOfSpeech": e.name,
 			"definitions": [
 				{
@@ -70,13 +79,16 @@ function translate ( onClickData, tab ) {
 				}
 			]
 		}
+		]
 	})
 	// .then( () => wait(100) )
+	// Grab reference to the popup
 	.then( () => browser.extension.getViews({type: "popup"}) )
 	.then( popup => {
 
 		popup = popup[0].document
 
+		//Heading3: the selected word Capitalized Like This
 		let heading = popup.createElement("h3")
 
 		//https://stackoverflow.com/questions/2332811/capitalize-words-in-string
@@ -85,52 +97,56 @@ function translate ( onClickData, tab ) {
 		heading.appendChild( headingText )
 		popup.body.appendChild( heading )
 
-		// if (translation.definitions) {
-		let definitions = translation.definitions
-		// }
+		// translation is an array like [{partofspeect{},definitions:[definition:{},definition:{}]}] 
+		for (let translation of translations) {
 
-		let partOfSpeech = translation.partOfSpeech
+			let definitions = translation.definitions
 
-		// noun/verb/etc
-		if (partOfSpeech) {
-			let p = popup.createElement("p")
-			let t = popup.createTextNode( partOfSpeech )
-			p.appendChild( t )
-			popup.body.appendChild( p )
-		}
-
-		if (definitions) {
-			//definitions
-			let ol = popup.createElement("ol")
-			for ( let definition of definitions ) {
-
-				// last min change: p is misnamed-
-				let p = popup.createElement("li")
-
-				// let t = popup.createTextNode( definition.definition )
-				// p.appendChild(t)
-				p.innerHTML += strip_tags(definition.definition)
-
-				ol.appendChild(p)
-
-				if ( definition.examples ) {
-					let ul = popup.createElement("ul")
-					
-					//definition used in a sentence
-					for ( let example of definition.examples ) {
-						let li = popup.createElement("li")
-
-						li.innerHTML += strip_tags(example)
-						// let t = popup.createTextNode( example )
-						// li.appendChild( t )
-						ul.appendChild( li )
-					}
 				
-					ol.appendChild( ul )
-				}
-			}
-			popup.body.appendChild( ol )
 
+			let partOfSpeech = translation.partOfSpeech
+
+			// noun/verb/etc
+			if (partOfSpeech) {
+				let p = popup.createElement("p")
+				let t = popup.createTextNode( partOfSpeech )
+				p.appendChild( t )
+				popup.body.appendChild( p )
+			}
+
+			if (definitions) {
+				//definitions
+				let ol = popup.createElement("ol")
+				for ( let definition of definitions ) {
+
+					// last min change: p is misnamed-
+					let p = popup.createElement("li")
+
+					// let t = popup.createTextNode( definition.definition )
+					// p.appendChild(t)
+					p.innerHTML += strip_tags(definition.definition)
+
+					ol.appendChild(p)
+
+					if ( definition.examples ) {
+						let ul = popup.createElement("ul")
+						
+						//definition used in a sentence
+						for ( let example of definition.examples ) {
+							let li = popup.createElement("li")
+
+							li.innerHTML += strip_tags(example)
+							// let t = popup.createTextNode( example )
+							// li.appendChild( t )
+							ul.appendChild( li )
+						}
+					
+						ol.appendChild( ul )
+					}
+				}
+				popup.body.appendChild( ol )
+
+			}
 		}
 
 	})
