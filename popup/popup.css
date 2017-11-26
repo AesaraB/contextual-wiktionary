@@ -1,7 +1,39 @@
 body {
+	/* a sort of dark-ish blue+green mix? */
 	background-color: #093145;
 	color: white;
-	margin: 2em;
+	margin: 2em 2em 4em;
 }
 
+footer {
+	font-style: italic;
+	font-size: 0.8em;
+}
 
+@media screen and (min-width: 350px) {
+	body {
+		margin-bottom: 2em;
+	}
+}
+
+@media screen and (max-width: 350px) {
+	body {
+		margin-left: 1em;
+	}
+	ul {
+		padding-inline-start: 11%;
+	}
+	ol {
+		padding-inline-start: 8%;
+	}
+	ol > li:not(:first-child) {
+		margin-top: 0.5em;
+	}
+}
+
+/* 621px is where */
+@media screen and (max-height: 621px) {
+	body {
+		margin-bottom: 2em;
+	}
+}
