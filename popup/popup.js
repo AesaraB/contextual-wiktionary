@@ -1,7 +1,10 @@
 "use strict"
-const normalize = word => word.trim().replace(/ /g, "_").toLowerCase()
+// Keep it in uppercase if all the letters are in uppercase. This helps in case of acronyms like CE.
+const normalize = word => word.trim().toUpperCase()===word.trim() ? word.trim() : word.trim().replace(/ /g, "_").toLowerCase()
 const WIKTIONARYURL = word => `https://en.wiktionary.org/api/rest_v1/page/definition/${normalize(word)}`
 
+// in ms. The timeout before scrolling lower again. 30 seems ok on my pc at least.
+const SCROLLDOWNWAIT = 10
 
 
 const HOMEPAGE = `https://github.com/losnappas/Context-menu-dictionary`
@@ -15,10 +18,11 @@ window.onload = () => {
 	browser.runtime.sendMessage({ok: true})
 }
 
+var translations
+
 // Background script responds with the selection text.
 browser.runtime.onMessage.addListener( selectionText => {
-
-	let translations
+	// let translations
 	/*
 		Fetches Wiki dictionary (Wiktionary) meaning for selected word.
 		Wiktionary gives <b> and <i> etc tags too.
@@ -43,15 +47,15 @@ browser.runtime.onMessage.addListener( selectionText => {
 	})
 	.then( res => {
 		//store result in upper scope
-		if (res.en) {
-			translations = res.en
-		} else {
-			throw new Error("No English translation found.")
+		translations = res
+		if (!res.en) {
+			throw new Error("No English meaning found. Try the + button below.")
 		}
 	})
 	.catch( e => {
 		// console.error(e, e.name, e.message )
-		translations = [
+		translations==null ? translations={} : translations
+		translations.en = [
 		{
 			"partOfSpeech": e.name,
 			"definitions": [
@@ -70,66 +74,52 @@ browser.runtime.onMessage.addListener( selectionText => {
 	})
 	.then( () => {
 
-		let popup = document
+		// let popup = document
 
 		//Heading3: the selected word Capitalized Like This
-		let heading = popup.createElement("h3")
+		let heading = document.createElement("h3")
 
 		//https://stackoverflow.com/questions/2332811/capitalize-words-in-string
-		let headingText = popup.createTextNode( selectionText.replace(/(^|\s)\S/g, l => l.toUpperCase()) )
+		let headingText = document.createTextNode( selectionText.replace(/(^|\s)\S/g, l => l.toUpperCase()) )
 
 		heading.appendChild( headingText )
-		popup.body.appendChild( heading )
+		document.body.appendChild( heading )
 
+		// English translations:
 		// translation is an array like [{partofspeect{},definitions:[definition:{},definition:{}]}] 
-		for (let translation of translations) {
+		for (let translation of translations.en) {
 
-			let definitions = translation.definitions
-
-			let partOfSpeech = translation.partOfSpeech
-
-			// noun/verb/etc
-			if (partOfSpeech) {
-				let p = popup.createElement("p")
-				let t = popup.createTextNode( partOfSpeech )
-				p.appendChild( t )
-				popup.body.appendChild( p )
-			}
-
-			if (definitions) {
-				//definitions
-				let ol = popup.createElement("ol")
-				for ( let definition of definitions ) {
-
-					// last min change: p is misnamed-
-					let p = popup.createElement("li")
-
-					// let t = popup.createTextNode( definition.definition )
-					// p.appendChild(t)
-					p.innerHTML += strip_tags(definition.definition)
-
-					ol.appendChild(p)
-
-					if ( definition.examples ) {
-						let ul = popup.createElement("ul")
-						
-						//definition used in a sentence
-						for ( let example of definition.examples ) {
-							let li = popup.createElement("li")
-
-							li.innerHTML += strip_tags(example)
-							// let t = popup.createTextNode( example )
-							// li.appendChild( t )
-							ul.appendChild( li )
-						}
-					
-						ol.appendChild( ul )
-					}
-				}
-				popup.body.appendChild( ol )
-
-			}
+			add( translation, document.body )
 		}
+
+
+		// Add a button that opens up the rest
+		let plusButton = document.createElement("button")
+		let wrapper = document.createElement("div")
+		let slider = document.createElement("div")
+		
+		slider.id = "slider"
+		slider.className = "slider"
+		slider.classList.toggle("closed")
+		wrapper.className = "slider-wrapper closed"
+		plusButton.className = "slider-button"
+		plusButton.id = "plus-button"
+
+		let plus = document.createTextNode('+')
+		plusButton.appendChild( plus )
+
+		plusButton.onclick = expand
+
+		wrapper.appendChild( plusButton )
+
+		wrapper.appendChild( slider )
+
+		// Check that there is something to put under the expander.
+		if ( Object.keys(translations).length <= 1 ){
+			plusButton.disabled = true
+		}
+		document.body.appendChild( wrapper )
+
 
 		// Add a footer so it's easier to distinguish document end.
 		let footer = document.createElement("footer")
@@ -137,12 +127,111 @@ browser.runtime.onMessage.addListener( selectionText => {
 		document.body.appendChild( footer )
 
 	})
-	.catch( e => console.error(`error in fetch chain wiktionary: ${e}`) )
+	.catch( e => console.error(`error in fetch chain wiktionary: ${e}, ${e.lineNumber}`) )
 
 })
 
+// Expander for the button
+function expand () {
+	// Check if content has already been added previously.
+	if ( !slider.firstChild ) {
+
+		// Loop through different languages.
+		// How is this actually so painful? Really.?
+		Object.keys( translations ).forEach( language => {
+
+			// English translation already exists.
+			if ( language !== 'en' ) {
+				for ( let translation of translations[language] ) {
+					add( translation, slider , true )
+				}
+			}
 
 
+		})//for
+	}//if
+
+	if ( !slider.classList.toggle("closed") ) {
+		// Scroll down with the expanding div
+		scrollDown( 0, 0 )
+	}
+}
+
+
+// Compare current height to next height. If they don't match, then re-scroll to bottom and go again. If they do, goto step 1 10 times to make this thing less glitchy.
+function scrollDown ( cur, tries ) {
+	// Scrolls down with the expanding div.
+	if ( cur != document.body.scrollHeight ) {
+		window.scrollTo( 0, document.body.scrollHeight )
+		// Now this is lexical
+		let x = document.body.scrollHeight
+		setTimeout( () => scrollDown( x, 0 ) , SCROLLDOWNWAIT )
+	} else if ( tries < 10 ) {
+		setTimeout( () => scrollDown( cur, tries + 1 ) , SCROLLDOWNWAIT )
+	}
+}
+
+// popup means context
+function add ( translation, popup, addingExtra ) {
+
+	
+	let definitions = translation.definitions
+
+	let partOfSpeech = translation.partOfSpeech
+
+	if ( addingExtra ) {
+		let language = translation.language
+		if ( language ) {
+			// Put a heading to indicate the language we're using now.
+			let h5 = document.createElement("h4")
+			let lang = document.createTextNode( language )
+			h5.appendChild( lang )
+			slider.appendChild( h5 )
+		}
+	}
+
+	// noun/verb/etc
+	if (partOfSpeech) {
+		let p = document.createElement("p")
+		let t = document.createTextNode( partOfSpeech )
+		p.appendChild( t )
+		popup.appendChild( p )
+	}
+
+	if (definitions) {
+		//definitions
+		let ol = document.createElement("ol")
+		for ( let definition of definitions ) {
+
+			// last min change: p is misnamed-
+			let p = document.createElement("li")
+
+			// let t = popup.createTextNode( definition.definition )
+			// p.appendChild(t)
+			p.innerHTML += strip_tags(definition.definition)
+
+			ol.appendChild(p)
+
+			if ( definition.examples ) {
+				let ul = document.createElement("ul")
+				
+				//definition used in a sentence
+				for ( let example of definition.examples ) {
+					let li = document.createElement("li")
+
+					li.innerHTML += strip_tags(example)
+					// let t = popup.createTextNode( example )
+					// li.appendChild( t )
+					ul.appendChild( li )
+				}
+			
+				ol.appendChild( ul )
+			}
+		}
+		popup.appendChild( ol )
+
+	}
+}
 
 //http://locutus.io/php/strings/strip_tags/
 function strip_tags (input) { // eslint-disable-line camelcase

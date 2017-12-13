@@ -3,11 +3,53 @@ body {
 	background-color: #093145;
 	color: white;
 	margin: 2em 2em 4em;
+	-moz-user-select: text;
+}
+
+#plus-button {
+	cursor: auto;
+	background-color: black;
+	border: 1px outset ThreeDLightShadow;
+	color: lightgray;
+}
+
+#plus-button:disabled {
+	border: 1px solid #999999;
+	background-color: #cccccc;
+	color: #666666;
+	cursor: not-allowed;
 }
 
 footer {
 	font-style: italic;
 	font-size: 0.8em;
+}
+
+.slider h4 {
+	margin-top: 0.5em;
+	margin-bottom: 0;
+	border-bottom: 1px dotted gray;
+    width: 95%;
+}
+
+
+.slider h4:first-child {
+	margin-top: 0.3em;
+}
+
+.slider {
+	padding-left: 0.5em;
+	overflow-y: auto;
+	max-height: 500px; /* approximate max height */
+	border: 1px solid black;
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slider.closed {
+	max-height: 0;
+	border: none;
 }
 
 @media screen and (min-width: 350px) {
@@ -31,7 +73,7 @@ footer {
 	}
 }
 
-/* 621px is where */
+/* 621px is where (edit:??) */
 @media screen and (max-height: 621px) {
 	body {
 		margin-bottom: 2em;
