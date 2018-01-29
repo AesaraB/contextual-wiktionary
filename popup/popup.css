@@ -6,6 +6,35 @@ body {
 	-moz-user-select: text;
 }
 
+/* wew. css priorities... :link didn't work on ff58, worked on ff60. :any-link works. */
+a.link-actual:any-link {
+	text-decoration: underline;
+	color: #DFA144; 
+}
+
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
+
+a:link {
+	/* brown infused with peach */
+	color: #DFA144;
+	text-decoration: none;
+}
+
+
+a:link:hover {
+	border-bottom: 1px solid;
+	/* less brown, more peach, more white */
+	background: #FFDAB9;
+	color: black;
+}
+
+a:link:active {
+	filter: invert(100%);
+}
+
 #plus-button {
 	cursor: auto;
 	background-color: black;
@@ -29,7 +58,7 @@ footer {
 	margin-top: 0.5em;
 	margin-bottom: 0;
 	border-bottom: 1px dotted gray;
-    width: 95%;
+	width: 95%;
 }
 
 
@@ -73,7 +102,7 @@ footer {
 	}
 }
 
-/* 621px is where (edit:??) */
+/* Not too sure about this rule. */
 @media screen and (max-height: 621px) {
 	body {
 		margin-bottom: 2em;

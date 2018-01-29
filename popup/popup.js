@@ -1,17 +1,22 @@
 "use strict"
+// https://github.com/losnappas/Context-menu-dictionary
 // Keep it in uppercase if all the letters are in uppercase. This helps in case of acronyms like CE.
 const normalize = word => word.trim().toUpperCase()===word.trim() ? word.trim() : word.trim().replace(/ /g, "_").toLowerCase()
-const WIKTIONARYURL = word => `https://en.wiktionary.org/api/rest_v1/page/definition/${normalize(word)}`
+// removed normalization here to make links work better.
+const WIKTIONARYURL = word => `https://en.wiktionary.org/api/rest_v1/page/definition/${word}`
+const EDITURL = word => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`
 
-// in ms. The timeout before scrolling lower again. 30 seems ok on my pc at least.
+// Opening the slider autoscrolls.
+// In ms: the timeout before scrolling lower again. 
 const SCROLLDOWNWAIT = 10
 
+const BUTTONTEXT = 'Show other languages'
 
 const HOMEPAGE = `https://github.com/losnappas/Context-menu-dictionary`
 const MYEMAIL = `hanu6@hotmail.com`
 // const HOMEPAGE = `testing`
 // const MYEMAIL = `testing`
-const ALLOWED_TAGS = "<b><i><u><strong>"
+const ALLOWED_TAGS = "<b><i><u><strong><a><span><div><small>"
 
 // Send message back indicating that the popup is now open & ready.
 window.onload = () => {
@@ -20,9 +25,10 @@ window.onload = () => {
 
 var translations
 
-// Background script responds with the selection text.
-browser.runtime.onMessage.addListener( selectionText => {
-	// let translations
+// Background script responds with the selection text. Normalize input here.
+browser.runtime.onMessage.addListener( selectionText => translate( normalize(selectionText) ) )
+
+function translate (selectionText) {
 	/*
 		Fetches Wiki dictionary (Wiktionary) meaning for selected word.
 		Wiktionary gives <b> and <i> etc tags too.
@@ -49,7 +55,8 @@ browser.runtime.onMessage.addListener( selectionText => {
 		//store result in upper scope
 		translations = res
 		if (!res.en) {
-			throw new Error("No English meaning found. Try the + button below.")
+			// "The word x was not found." kind of throws off.. oh well -- for now. TODO
+			throw new Error("No English meaning found. Try the <b><i>"+ BUTTONTEXT +"</i></b> button below.")
 		}
 	})
 	.catch( e => {
@@ -63,10 +70,11 @@ browser.runtime.onMessage.addListener( selectionText => {
 					"definition": e.message
 				},
 				{
-					"definition": "Word is probably not in the dictionary. If you know or find out what it means, then consider adding it."
-				},
-				{
-					"definition": "https://en.wiktionary.org/"
+					"definition": `The word <b>${normalize(selectionText)}</b> was not found.`,
+					"examples": [ 
+						"<i>Know what it means?</i>",
+						`<a title="${selectionText}" class="link-actual" id="addWord">Submit it to the Wiktionary.</a> <small>(Opens in a new tab.)</small>`
+					]
 				}
 			]
 		}
@@ -74,13 +82,12 @@ browser.runtime.onMessage.addListener( selectionText => {
 	})
 	.then( () => {
 
-		// let popup = document
-
 		//Heading3: the selected word Capitalized Like This
 		let heading = document.createElement("h3")
 
 		//https://stackoverflow.com/questions/2332811/capitalize-words-in-string
-		let headingText = document.createTextNode( selectionText.replace(/(^|\s)\S/g, l => l.toUpperCase()) )
+		// and underscores back to spaces
+		let headingText = document.createTextNode( selectionText.replace(/(^|\s)\S/g, l => l.toUpperCase()).replace('_', ' ') )
 
 		heading.appendChild( headingText )
 		document.body.appendChild( heading )
@@ -93,33 +100,11 @@ browser.runtime.onMessage.addListener( selectionText => {
 		}
 
 
-		// Add a button that opens up the rest
-		let plusButton = document.createElement("button")
-		let wrapper = document.createElement("div")
-		let slider = document.createElement("div")
-		
-		slider.id = "slider"
-		slider.className = "slider"
-		slider.classList.toggle("closed")
-		wrapper.className = "slider-wrapper closed"
-		plusButton.className = "slider-button"
-		plusButton.id = "plus-button"
-
-		let plus = document.createTextNode('+')
-		plusButton.appendChild( plus )
-
-		plusButton.onclick = expand
-
-		wrapper.appendChild( plusButton )
-
-		wrapper.appendChild( slider )
-
 		// Check that there is something to put under the expander.
-		if ( Object.keys(translations).length <= 1 ){
-			plusButton.disabled = true
+		// aka. Check that there are other translations.
+		if ( Object.keys(translations).length > 1 ) {
+			document.body.appendChild( createSlider() )
 		}
-		document.body.appendChild( wrapper )
-
 
 		// Add a footer so it's easier to distinguish document end.
 		let footer = document.createElement("footer")
@@ -129,7 +114,33 @@ browser.runtime.onMessage.addListener( selectionText => {
 	})
 	.catch( e => console.error(`error in fetch chain wiktionary: ${e}, ${e.lineNumber}`) )
 
-})
+}
+
+// Add a button that opens up the rest of the translations
+function createSlider () {
+	let plusButton = document.createElement("button")
+	let wrapper = document.createElement("div")
+	let slider = document.createElement("div")
+	
+	slider.id = "slider"
+	slider.className = "slider"
+	slider.classList.toggle("closed")
+	wrapper.className = "slider-wrapper closed"
+	plusButton.className = "slider-button"
+	plusButton.id = "plus-button"
+
+	let plus = document.createTextNode(BUTTONTEXT)
+	plusButton.appendChild( plus )
+
+	plusButton.onclick = expand
+
+	wrapper.appendChild( plusButton )
+
+	wrapper.appendChild( slider )
+
+	return wrapper
+}
+
 
 // Expander for the button
 function expand () {
@@ -147,7 +158,6 @@ function expand () {
 				}
 			}
 
-
 		})//for
 	}//if
 
@@ -158,6 +168,7 @@ function expand () {
 }
 
 
+// TODO: improve this.. looks terrible sometimes.... but ehh---
 // Compare current height to next height. If they don't match, then re-scroll to bottom and go again. If they do, goto step 1 10 times to make this thing less glitchy.
 function scrollDown ( cur, tries ) {
 	// Scrolls down with the expanding div.
@@ -174,7 +185,6 @@ function scrollDown ( cur, tries ) {
 // popup means context
 function add ( translation, popup, addingExtra ) {
 
-	
 	let definitions = translation.definitions
 
 	let partOfSpeech = translation.partOfSpeech
@@ -206,9 +216,8 @@ function add ( translation, popup, addingExtra ) {
 			// last min change: p is misnamed-
 			let p = document.createElement("li")
 
-			// let t = popup.createTextNode( definition.definition )
-			// p.appendChild(t)
-			p.innerHTML += strip_tags(definition.definition)
+			let frag = createFragment( definition.definition )
+			p.appendChild( frag.content )
 
 			ol.appendChild(p)
 
@@ -218,10 +227,9 @@ function add ( translation, popup, addingExtra ) {
 				//definition used in a sentence
 				for ( let example of definition.examples ) {
 					let li = document.createElement("li")
+					frag = createFragment( example )
 
-					li.innerHTML += strip_tags(example)
-					// let t = popup.createTextNode( example )
-					// li.appendChild( t )
+					li.appendChild( frag.content )
 					ul.appendChild( li )
 				}
 			
@@ -232,6 +240,63 @@ function add ( translation, popup, addingExtra ) {
 
 	}
 }
+
+// Create a chunk of useful html from string
+function createFragment (content) {
+	let frag = document.createElement('template')
+	frag.innerHTML = strip_tags(content)
+	transform_links(frag)
+	return frag
+}
+
+// transform <a> elements of given document fragment
+function transform_links (documentFragment) {
+	documentFragment.content.querySelectorAll('a').forEach(transform_link)
+}
+
+// Chose to edit the href to "javascript:;" because... I had a good plan once. It's like that. 
+function transform_link (link) {
+	// str = "/wiki/salutation heyo#English"  ---->  Array [ "/wiki/salutation heyo#", "salutation heyo" ]
+	// let word = link.href.match(/\/wiki\/([\w\s]+)#?/)[1]
+
+	// Using the title property instead.
+	let word = link.title
+	// Replace spaces with underscores here. For Wiktionary.
+	word = word.replace(/ /g, '_')
+	// bottom left indicator for link target.. better have "javascript:;" than "MOZ-EXTENSION1231431___...."
+	link.href = "javascript:;"
+
+	// Original was not found -> this is the "open edit page" link
+	if ( link.id === "addWord" ) {
+		link.href = EDITURL( word )
+		link.addEventListener('click', e => {
+			e.preventDefault()
+			browser.tabs.create( { 
+				url: EDITURL( word ) 
+			} )
+
+		})
+	} else
+	// Sometimes wiktionary gives "Appendix:Glossary" like links.
+	// Avoid it.
+	if ( word != null && !/:/g.test( word ) ) {
+		link.onclick = () => define( word )
+	} else {
+		// if the link is not going to work
+		link.removeAttribute('href')
+		link.removeAttribute('title')
+	}
+}
+
+
+// Search wiktionary and display result on popup. The same thing as using the context menu.
+// Except now we empty the popup first.
+function define (word) {
+	// TODO: instead of just clearing the thing, add a loading icon... mmmmmmaybe.
+	document.body.innerHTML = ''
+	translate( word )
+}
+
 
 //http://locutus.io/php/strings/strip_tags/
 function strip_tags (input) { // eslint-disable-line camelcase
