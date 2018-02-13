@@ -1,1 +1,4 @@
 web-ext-artifacts
+Session.vim
+*.swp
+*.swo

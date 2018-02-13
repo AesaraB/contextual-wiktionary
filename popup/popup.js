@@ -1,10 +1,16 @@
 "use strict"
 // https://github.com/losnappas/Context-menu-dictionary
 // Keep it in uppercase if all the letters are in uppercase. This helps in case of acronyms like CE.
+// Normalize means "turn into wiktionary api url" in this context. Not "normalize for humans".
 const normalize = word => word.trim().toUpperCase()===word.trim() ? word.trim() : word.trim().replace(/ /g, "_").toLowerCase()
+const humanize = word => word.trim().replace(/_/g, " ")
+//https://stackoverflow.com/questions/2332811/capitalize-words-in-string
+const TITLECASE = word => word.replace(/(^|\s)\S/g, l => l.toUpperCase()).replace(/_/g, ' ')
 // removed normalization here to make links work better.
 const WIKTIONARYURL = word => `https://en.wiktionary.org/api/rest_v1/page/definition/${word}`
 const EDITURL = word => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`
+// Link to the actual wiktionary page. For footer.
+const WORDURL = word => `https://en.wiktionary.org/wiki/${word}`
 
 // Opening the slider autoscrolls.
 // In ms: the timeout before scrolling lower again. 
@@ -26,6 +32,7 @@ window.onload = () => {
 var translations
 
 // Background script responds with the selection text. Normalize input here.
+// so first normalize here and then start "humanizing" later? great.
 browser.runtime.onMessage.addListener( selectionText => translate( normalize(selectionText) ) )
 
 function translate (selectionText) {
@@ -54,9 +61,14 @@ function translate (selectionText) {
 	.then( res => {
 		//store result in upper scope
 		translations = res
-		if (!res.en) {
-			// "The word x was not found." kind of throws off.. oh well -- for now. TODO
-			throw new Error("No English meaning found. Try the <b><i>"+ BUTTONTEXT +"</i></b> button below.")
+		if (!translations.en) {
+			// old way: // throw new Error("No English meaning found. Try the <b><i>"+ BUTTONTEXT +"</i></b> button below.")
+			// see: last .then of this chain.
+			translations.en = [
+			{
+				"partOfSpeech": "No English meaning found.",
+			}
+			]
 		}
 	})
 	.catch( e => {
@@ -70,10 +82,10 @@ function translate (selectionText) {
 					"definition": e.message
 				},
 				{
-					"definition": `The word <b>${normalize(selectionText)}</b> was not found.`,
+					"definition": `The word <b>${humanize(selectionText)}</b> was not found.`,
 					"examples": [ 
 						"<i>Know what it means?</i>",
-						`<a title="${selectionText}" class="link-actual" id="addWord">Submit it to the Wiktionary.</a> <small>(Opens in a new tab.)</small>`
+						`<a title="${humanize(selectionText)}" class="link-actual" target="_blank" id="addWord">Submit it to the Wiktionary.</a> <small>(Opens in a new tab.)</small>`
 					]
 				}
 			]
@@ -85,9 +97,9 @@ function translate (selectionText) {
 		//Heading3: the selected word Capitalized Like This
 		let heading = document.createElement("h3")
 
-		//https://stackoverflow.com/questions/2332811/capitalize-words-in-string
 		// and underscores back to spaces
-		let headingText = document.createTextNode( selectionText.replace(/(^|\s)\S/g, l => l.toUpperCase()).replace('_', ' ') )
+		// titlecase
+		let headingText = document.createTextNode( TITLECASE(selectionText) )
 
 		heading.appendChild( headingText )
 		document.body.appendChild( heading )
@@ -107,13 +119,34 @@ function translate (selectionText) {
 		}
 
 		// Add a footer so it's easier to distinguish document end.
+		// v3.5: links to the current word's page.
 		let footer = document.createElement("footer")
-		footer.innerHTML += "<br/>https://en.wiktionary.org/"
+		footer.innerHTML += `<br/>
+		<a class="link-actual" title="${humanize(selectionText)}" href="${WORDURL(selectionText)}">
+			'${TITLECASE(selectionText)}' on Wiktionary.org
+		</a>`
+		footer.addEventListener('click',e => open_page(e, selectionText))
 		document.body.appendChild( footer )
 
 	})
+	// Finally, open the "other languages" box if English had no definitions.
+	// This case only happens if English had no translations thus "translations.en" was touched on in the third ".then" clause.
+	.then(() => {
+		if ( translations.en[0].definitions == null ) {
+			expand()
+		}
+	})
 	.catch( e => console.error(`error in fetch chain wiktionary: ${e}, ${e.lineNumber}`) )
 
+}
+
+// just another function to make a link.. This time for the footer.
+// Could change the other (EDITURL) to use this function too.
+function open_page (e, word) {
+    	e.preventDefault()
+	browser.tabs.create( { 
+	      url: WORDURL( word ) 
+	} )
 }
 
 // Add a button that opens up the rest of the translations
@@ -148,7 +181,7 @@ function expand () {
 	if ( !slider.firstChild ) {
 
 		// Loop through different languages.
-		// How is this actually so painful? Really.?
+		// alternative was for..in, I guess? for..of even?
 		Object.keys( translations ).forEach( language => {
 
 			// English translation already exists.
@@ -278,11 +311,11 @@ function transform_link (link) {
 		})
 	} else
 	// Sometimes wiktionary gives "Appendix:Glossary" like links.
-	// Avoid it.
+	// if (it isn't like that.) {
 	if ( word != null && !/:/g.test( word ) ) {
 		link.onclick = () => define( word )
-	} else {
-		// if the link is not going to work
+	} else { // so it is like that
+		// the link is not going to work
 		link.removeAttribute('href')
 		link.removeAttribute('title')
 	}
