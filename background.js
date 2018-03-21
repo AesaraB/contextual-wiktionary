@@ -1,4 +1,3 @@
-
 var selectionText
 
 browser.contextMenus.create({
@@ -24,11 +23,11 @@ browser.contextMenus.onClicked.addListener(translate)
 
 /* popup is open, it sends a message */
 browser.runtime.onMessage.addListener( message => {
-
 	/* respond with the word to translate */
 	if (message.ok) {
 		browser.runtime.sendMessage(selectionText)
-	}else{
+	}else if(message.ok != null && message.ok === false) {
 		browser.runtime.sendMessage("A bug happened. Try again.")
 	}
 } )
+

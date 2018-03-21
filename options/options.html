@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Context Menu Wiktionary options</title>
+	<script src="webextensions-lib-configs/Configs.js"></script>
+	<script src="webextensions-lib-options/Options.js"></script>
+	<script src="/common.js"></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<script src="jscolor-2.0.4/jscolor.js"></script>
+	<h1>Popup Appearance</h1>
+	<fieldset>
+		<legend>Theme</legend>
+		<ul class="theme">
+			<li>
+				<label>
+					<input name="style" type="radio" value="default" checked>Default (indigo)
+				</label>
+			</li>
+			<li>
+				<label>
+					<input name="style" type="radio" value="plain">Plain
+				</label>
+			</li>
+			<li>
+				<label>
+					<input name="style" type="radio" value="dark">Dark
+				</label>
+			</li>
+			<li>
+				<label>
+					<input name="style" type="radio" value="custom">Use custom settings (style it yourself)
+				</label>
+			</li>
+		</ul>
+	</fieldset>
+
+	<fieldset>
+		<legend>Custom settings</legend>
+		<table>
+			<tbody>
+				<tr>
+					<td>Text</td>
+					<td><input class="jscolor" name="text" id="text" value=""></td>
+				</tr>
+				<tr>
+					<td>Background</td>
+					<td><input type="text" class="jscolor" id="background" value=""></td>
+				</tr>
+				<tr>
+					<td>Links</td>
+					<td><input id="link" class="jscolor" value=""></td>
+				</tr>
+			</tbody>
+		</table>
+	</fieldset>
+
+	<h2>Preview</h2>
+	<iframe src="/popup/preview.html" frameborder="1" scrolling="no"></iframe>
+	<script src="options.js"></script>
+</body>
+</html>
+

@@ -1,5 +1,6 @@
+// https://github.com/losnappas/Context-menu-Wiktionary
 "use strict"
-// https://github.com/losnappas/Context-menu-dictionary
+
 // Keep it in uppercase if all the letters are in uppercase. This helps in case of acronyms like CE.
 // Normalize means "turn into wiktionary api url" in this context. Not "normalize for humans".
 const normalize = word => word.trim().toUpperCase()===word.trim() ? word.trim() : word.trim().replace(/ /g, "_").toLowerCase()

@@ -6,5 +6,5 @@ A Firefox web extension. Requires FF57. [https://addons.mozilla.org/en-US/firefo
 
 To try it, clone or download the repository and head to about:debugging. Load the manifest.json as temporary addon.
 
-Unlicence -d. Icons are from Wiktionary/Wikipedia and licensed under ????
+Unlicence'd. Icons are from Wiktionary/Wikipedia and licensed under ????
 
