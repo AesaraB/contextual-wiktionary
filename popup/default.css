@@ -1,0 +1,39 @@
+body {
+	/* a sort of dark-ish blue+green mix? */
+	background-color: #093145;
+	color: white;
+}
+
+/* wew. css priorities... :link didn't work on ff58, worked on ff60. :any-link works. */
+a:any-link {
+	color: #DFA144; 
+}
+
+/*
+a {
+	/* brown infused with peach *//*
+	color: #DFA144;
+}
+*/
+
+a:link:hover {
+	/* less brown, more peach, more white */
+	background: #FFDAB9;
+	color: black;
+}
+/*
+a:link:active {
+	filter: invert(100%);
+}
+*/
+#plus-button {
+	background-color: black;
+	color: lightgray;
+}
+
+#plus-button:disabled {
+	border: 1px solid #999999;
+	background-color: #cccccc;
+	color: #666666;
+}
+

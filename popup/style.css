@@ -1,7 +1,4 @@
 body {
-	/* a sort of dark-ish blue+green mix? */
-	background-color: #093145;
-	color: white;
 	margin: 2em 2em 4em;
 	-moz-user-select: text;
 }
@@ -9,26 +6,19 @@ body {
 /* wew. css priorities... :link didn't work on ff58, worked on ff60. :any-link works. */
 a.link-actual:any-link {
 	text-decoration: underline;
-	color: #DFA144; 
 }
 
-a {
-	color: inherit;
-	text-decoration: inherit;
-}
-
-a:link {
-	/* brown infused with peach */
-	color: #DFA144;
+a:any-link {
 	text-decoration: none;
 }
 
-
+/*
+a {
+	text-decoration: none;
+}
+*/
 a:link:hover {
 	border-bottom: 1px solid;
-	/* less brown, more peach, more white */
-	background: #FFDAB9;
-	color: black;
 }
 
 a:link:active {
@@ -37,15 +27,12 @@ a:link:active {
 
 #plus-button {
 	cursor: auto;
-	background-color: black;
 	border: 1px outset ThreeDLightShadow;
-	color: lightgray;
 }
 
 #plus-button:disabled {
 	border: 1px solid #999999;
 	background-color: #cccccc;
-	color: #666666;
 	cursor: not-allowed;
 }
 
