@@ -12,6 +12,20 @@
 	<script src="jscolor-2.0.4/jscolor.js"></script>
 	<h1>Popup Appearance</h1>
 	<fieldset>
+		<legend>Global settings</legend>
+		<ul>
+		<li>
+			<label><input id="fsize" name="fsize" type="number" step="0.1">Font size</label>
+		</li>
+		<li>
+			<label><input id="spacing" name="spacing" type="number" step="0.1">List row spacing</label>
+		</li>
+		<li>
+			<label><input id="margin" name="margin" type="number" step="0.1">Extra spacing between numbered list items</label>
+		</li>
+		</ul>
+	</fieldset>
+	<fieldset>
 		<legend>Theme</legend>
 		<ul class="theme">
 			<li>
@@ -58,7 +72,7 @@
 	</fieldset>
 
 	<h2>Preview</h2>
-	<iframe src="/popup/preview.html" frameborder="1" scrolling="no"></iframe>
+	<div class="iframecontainer"><iframe src="/popup/preview.html" title="preview for popup"></iframe></div>
 	<script src="options.js"></script>
 </body>
 </html>

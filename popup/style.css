@@ -1,6 +1,7 @@
 body {
 	margin: 2em 2em 4em;
 	-moz-user-select: text;
+	cursor: auto;
 }
 
 /* wew. css priorities... :link didn't work on ff58, worked on ff60. :any-link works. */
@@ -67,6 +68,11 @@ footer {
 	max-height: 0;
 	border: none;
 }
+
+ol > li:first-child {
+	margin-top: 0;
+}
+
 
 @media screen and (min-width: 350px) {
 	body {
