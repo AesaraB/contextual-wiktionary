@@ -1,4 +1,19 @@
-configs.$loaded.then(({style, ...customs}) => {
+configs.$loaded.then(({style, fsize, spacing, margin, ...customs}) => {
+
+	let globalStyle = document.createElement('style')
+	globalStyle.innerHTML = `
+	body {
+		font-size: ${fsize}em;
+	}
+	li {
+		line-height: ${spacing};
+	}
+	ol > li {
+		margin-top: ${margin}em;
+	}
+	`
+	document.head.appendChild(globalStyle);
+
 	if (style !== "custom") {
 		let link = document.createElement('link')
 		link.rel = "stylesheet"
