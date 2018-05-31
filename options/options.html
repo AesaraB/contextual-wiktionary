@@ -10,7 +10,29 @@
 </head>
 <body>
 	<script src="jscolor-2.0.4/jscolor.js"></script>
-	<h1>Popup Appearance</h1>
+	<div>
+		<h1>Wiktionary language</h1>
+		<p>Blank means you are using the pre-set English Wiktionary. Only the pre-set has the customized display style.</p>
+		<input type="text" id="wiktionaryapi" placeholder="Specify url. e.g. en.wiktionary.org">
+		<p>Example values: 
+
+		<ul>
+			<li>zh.wiktionary.org</li>
+			<li>fr.wiktionary.org</li>
+			<li>pl.wiktionary.org</li>
+			<li>en.wiktionary.org
+				<ul>
+					<li>This will result in the results displaying differently than the pre-set.</li>
+				</ul>
+			</li>
+		</ul>
+		</p>
+
+		<p>Styling isn't applied if using non-default. Instead, it will open the full Wiktionary page in the popup. Saves automatically.</p>
+		<p>PS. blame Mozilla if the text goes offscreen or similar . . .</p>
+	</div>
+
+	<h1>Default Popup Appearance</h1>
 	<fieldset>
 		<legend>Global settings</legend>
 		<ul>
@@ -30,7 +52,7 @@
 		<ul class="theme">
 			<li>
 				<label>
-					<input name="style" type="radio" value="default" checked>Default (indigo)
+					<input name="style" type="radio" value="default" checked>Default (Indigo)
 				</label>
 			</li>
 			<li>

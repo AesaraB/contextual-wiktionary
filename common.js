@@ -5,6 +5,7 @@ var configs = new Configs({
 	margin: "1",
 	text: "FFFFFF",
 	background: "FFFFFF",
-	link: "FFFFFF"
+	link: "FFFFFF",
+	wiktionaryapi: ""
 })
 
