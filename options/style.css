@@ -24,3 +24,7 @@ div.iframecontainer {
 	height: 400px;
 }
 
+ul.radios {
+	list-style: none;
+}
+

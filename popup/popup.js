@@ -141,6 +141,7 @@ function translate (selectionText) {
 
 }
 
+
 // just another function to make a link.. This time for the footer.
 // Could change the other (EDITURL) to use this function too.
 function open_page (e, word) {
