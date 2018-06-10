@@ -1,4 +1,5 @@
 var selectionText
+var alternateapi
 var wiktionaryapi
 const normalize = word => word.trim().toUpperCase()===word.trim() ? word.trim() : word.trim().replace(/ /g, "_").toLowerCase()
 browser.contextMenus.create({
@@ -7,11 +8,24 @@ browser.contextMenus.create({
   contexts: ["selection"]
 })
 
-configs.$loaded.then(res => wiktionaryapi=res.wiktionaryapi)
+configs.$loaded.then(res => {
+	wiktionaryapi = res.wiktionaryapi
+	alternateapi = res.alternateapi
+})
 
 function translate ( onClickData, tab ) {
 	selectionText = onClickData.selectionText
-	let popup = wiktionaryapi !== "" ? `https://${wiktionaryapi}/wiki/${normalize(selectionText)}` : null
+	let popup
+	if (wiktionaryapi !== "") {
+		if (!alternateapi) {
+			popup = `https://${wiktionaryapi}/wiki/${normalize(selectionText)}`
+		} else {
+			popup = `https://${wiktionaryapi}/api/rest_v1/page/html/${normalize(selectionText)}`
+		}
+	} else {
+		popup = null
+	}
+
 	browser.browserAction.setPopup({
 		"popup": popup
 	})
@@ -26,8 +40,13 @@ browser.contextMenus.onClicked.addListener(translate)
 
 /* popup is open, it sends a message */
 browser.runtime.onMessage.addListener( message => {
-	if (message.type === "Configs:updated" && message.key==="wiktionaryapi") {
-		wiktionaryapi = message.value
+	if ( message.type === "Configs:updated" ) {
+		if ( message.key === "wiktionaryapi" ) {
+			wiktionaryapi = message.value
+		}
+		if ( message.key === "alternateapi" ) {
+			alternateapi = message.value
+		}
 	}
 	/* respond with the word to translate */
 	else if (message.ok) {

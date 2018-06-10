@@ -6,6 +6,7 @@ var configs = new Configs({
 	text: "FFFFFF",
 	background: "FFFFFF",
 	link: "FFFFFF",
-	wiktionaryapi: ""
+	wiktionaryapi: "",
+	alternateapi: true
 })
 
