@@ -1,0 +1,24 @@
+{
+  "name": "context-menu-dictionary",
+  "version": "1.0.0",
+  "description": "Wiktionary lives in the context menu.",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext=.js --report-unused-disable-directives",
+    "fix": "eslint . --ext=.js --report-unused-disable-directives --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/losnappas/Context-menu-Wiktionary.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/losnappas/Context-menu-Wiktionary/issues"
+  },
+  "homepage": "https://gitlab.com/losnappas/Context-menu-Wiktionary#readme",
+  "devDependencies": {
+    "eslint": "^5.5.0"
+  }
+}

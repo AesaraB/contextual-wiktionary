@@ -1,6 +1,6 @@
 configs.$loaded.then(({style, fsize, spacing, margin, ...customs}) => {
 
-	let globalStyle = document.createElement('style')
+	const globalStyle = document.createElement('style')
 	globalStyle.innerHTML = `
 	body {
 		font-size: ${fsize}em;
@@ -14,18 +14,21 @@ configs.$loaded.then(({style, fsize, spacing, margin, ...customs}) => {
 	`
 	document.head.appendChild(globalStyle);
 
-	if (style !== "custom") {
-		let link = document.createElement('link')
-		link.rel = "stylesheet"
-		link.type = "text/css"
-		link.href = style + ".css"
+	if (style !== 'custom') {
+		const link = document.createElement('link')
+		link.rel = 'stylesheet'
+		link.type = 'text/css'
+		link.href = style + '.css'
 		document.head.appendChild(link)
 	} else {
-		let styleEl = document.createElement('style')
+		const styleEl = document.createElement('style')
 		styleEl.innerHTML = `
 			body { 
 				color: #${customs.text};
 				background-color: #${customs.background};
+			}
+			body * {
+				background-color: #${customs.background} !important;
 			}
 			a:any-link {
 				color: #${customs.link};

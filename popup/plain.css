@@ -3,6 +3,9 @@ body {
 	color: black;
 }
 
+body * {
+	background-color: #FFFFFF !important;
+}
 /* wew. css priorities... :link didn't work on ff58, worked on ff60. :any-link works. */
 a:any-link {
 	color: #0a8dff; 
