@@ -27,9 +27,6 @@ configs.$loaded.then(({style, fsize, spacing, margin, ...customs}) => {
 				color: #${customs.text};
 				background-color: #${customs.background};
 			}
-			body * {
-				background-color: #${customs.background} !important;
-			}
 			a:any-link {
 				color: #${customs.link};
 			}
