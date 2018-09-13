@@ -25,6 +25,7 @@ a:link:active {
 
 #plus-button {
 	border: 1px solid black;
+	background-color: white !important;
 }
 
 #plus-button:disabled {

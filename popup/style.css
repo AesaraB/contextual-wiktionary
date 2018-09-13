@@ -4,6 +4,14 @@ body {
 	cursor: auto;
 }
 
+/* Some chinese definitions come with their own bg-color.
+ * It totally messes up the display.
+ * Remove it with this.
+ */
+body *:not(#plus-button):not(a) {
+	background-color: unset !important;
+}
+
 /* wew. css priorities... :link didn't work on ff58, worked on ff60. :any-link works. */
 a.link-actual:any-link {
 	text-decoration: underline;
@@ -13,11 +21,6 @@ a:any-link {
 	text-decoration: none;
 }
 
-/*
-a {
-	text-decoration: none;
-}
-*/
 a:link:hover {
 	border-bottom: 1px solid;
 }
@@ -101,3 +104,4 @@ ol > li:first-child {
 		margin-bottom: 2em;
 	}
 }
+

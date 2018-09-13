@@ -3,3 +3,6 @@ Session.vim
 *.swp
 *.swo
 content_scripts
+node_modules
+.idea
+

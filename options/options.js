@@ -1,9 +1,9 @@
 var options = new Options(configs)
 
-let customs = document.querySelectorAll(".jscolor")
+const customs = document.querySelectorAll('.jscolor')
 
-for (let el of customs) {
-	el.onchange = e => el.dispatchEvent(new InputEvent("input", {value: e.value}))
+for (const el of customs) {
+	el.onchange = e => el.dispatchEvent(new InputEvent('input', {value: e.value}))
 }
 
 /* // bugged mess. check back in ff61.
@@ -24,7 +24,7 @@ let requester = info => {
 allurls.addEventListener('click', requester)
 */
 
-let reloadIFrame = () => document.querySelector('iframe').contentWindow.location.reload()
+const reloadIFrame = () => document.querySelector('iframe').contentWindow.location.reload()
 
 configs.$addObserver(reloadIFrame)
 
