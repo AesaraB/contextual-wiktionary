@@ -5,9 +5,7 @@
 // Normalize means "turn into wiktionary api url" in this context. Not "normalize for humans".
 const normalize = word => word.trim().replace(/ /g, '_')
 const humanize = word => word.trim().replace(/_/g, ' ')
-//https://stackoverflow.com/questions/2332811/capitalize-words-in-string
-//const TITLECASE = word => word.replace(/(^|\s)\S/g, l => l.toUpperCase()).replace(/_/g, ' ')
-// removed normalization here to make links work better.
+
 const WIKTIONARYURL = word => `https://en.wiktionary.org/api/rest_v1/page/definition/${word}`
 const EDITURL = word => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`
 // Link to the actual wiktionary page. For footer.
@@ -19,10 +17,8 @@ const SCROLLDOWNWAIT = 10
 
 const BUTTONTEXT = 'Show other languages'
 
-const HOMEPAGE = `https://gitlab.com/losnappas/Context-menu-dictionary`
+const HOMEPAGE = `https://gitlab.com/losnappas/Context-menu-Wiktionary`
 const MYEMAIL = `hanu6@hotmail.com`
-// const HOMEPAGE = `testing`
-// const MYEMAIL = `testing`
 const ALLOWED_TAGS = '<b><i><u><strong><a><span><div><small>'
 
 // Send message back indicating that the popup is now open & ready.
@@ -79,8 +75,6 @@ function translate (selectionText) {
 			}
 		})
 		.catch( e => {
-		// console.error(e, e.name, e.message )
-		//translations==null ? translations={} : translations
 			if (translations == null) {
 				translations = {}
 			}
@@ -88,13 +82,34 @@ function translate (selectionText) {
 			// Different spellings.
 			let alternate404Spellings = {}
 			if (e.message.indexOf('404') !== -1) {
+    			const trimmedAndHumanized = humanize(selectionText.trim())
+				const uppercase = trimmedAndHumanized.toUpperCase()
+				const titlecase = trimmedAndHumanized.toLowerCase().toTitleCase()
+				const lowercase = trimmedAndHumanized.toLowerCase()
+
+				const disabler = { upper: '', lower: '', title: '' }
+				// One of these is a match. Gray it out so it appears disabled, because it is currently the active one.
+				// TODO okay, gray will not look great on all styles. Going to let it slide for now, as this is the only gray link out there.
+				switch ( trimmedAndHumanized ) {
+    				case uppercase:
+    					disabler.upper = 'color: gray;'
+    					break;
+
+    				case lowercase:
+    					disabler.lower = 'color: gray;'
+    					break;
+
+    				case titlecase:
+    					disabler.title = 'color: gray;'
+    					break;
+				}
+
 				alternate404Spellings = {
 					'definition': 'Perhaps one of these spellings.',
 					'examples': [
-						//Uppercase.
-						`<a href="javascript:;" title="${selectionText.trim().toUpperCase()}">${humanize(selectionText.trim()).toUpperCase()}</a>`,
-						//Titlecase.
-						`<a href="javascript:;" title="${(humanize(selectionText.trim()).toTitleCase())}">${humanize(selectionText.trim()).toTitleCase()}</a>`
+						`<a href="javascript:;" style="${disabler.upper}" title="${uppercase}">${uppercase}</a>`,
+						`<a href="javascript:;" style="${disabler.title}" title="${titlecase}">${titlecase}</a>`,
+						`<a href="javascript:;" style="${disabler.lower}" title="${lowercase}">${lowercase}</a>`,
 					]
 				}
 			}
@@ -204,6 +219,7 @@ function createSlider () {
 
 // Expander for the button
 function expand () {
+	const slider = document.getElementById('slider')
 	// Check if content has already been added previously.
 	if ( !slider.firstChild ) {
 
@@ -254,6 +270,7 @@ function add ( translation, popup, addingExtra ) {
 		if ( language ) {
 			// Put a heading to indicate the language we're using now.
 			const h5 = document.createElement('h4')
+			const slider = document.getElementById('slider')
 			const lang = document.createTextNode( language )
 			h5.appendChild( lang )
 			slider.appendChild( h5 )
@@ -337,7 +354,7 @@ function transform_link (link) {
 
 		})
 	} else
-	// Sometimes wiktionary gives "Appendix:Glossary" like links.
+	// Sometimes wiktionary gives "Appendix:Glossary" like links, so
 	// if (it isn't like that.) {
 	if ( word != null && !/:/g.test( word ) ) {
 		link.onclick = () => define( word )
@@ -352,7 +369,6 @@ function transform_link (link) {
 // Search wiktionary and display result on popup. The same thing as using the context menu.
 // Except now we empty the popup first.
 function define (word) {
-	// TODO: instead of just clearing the thing, add a loading icon... mmmmmmaybe.
 	document.body.innerHTML = ''
 	translate( word )
 }

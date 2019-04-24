@@ -13,7 +13,7 @@ configs.$loaded.then(res => { //eslint-disable-line
 	alternateapi = res.alternateapi
 })
 
-function translate ( onClickData, tab ) {
+function translate ( onClickData ) {
 	selectionText = onClickData.selectionText
 	let popup
 	if (wiktionaryapi !== '') {
@@ -23,6 +23,7 @@ function translate ( onClickData, tab ) {
 			popup = `https://${wiktionaryapi}/api/rest_v1/page/html/${normalize(selectionText)}`
 		}
 	} else {
+    	// Setting to null resets to manifest defined one.
 		popup = null
 	}
 

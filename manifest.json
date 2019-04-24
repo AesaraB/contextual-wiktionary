@@ -2,7 +2,7 @@
   "description": "Wiktionary in the context menu",
   "manifest_version": 2,
   "name": "Right Click Wiktionary",
-  "version": "8.0",
+  "version": "8.1",
   "homepage_url": "https://gitlab.com/losnappas/Context-menu-Wiktionary",
 
   "browser_action": {
