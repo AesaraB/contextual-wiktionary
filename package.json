@@ -12,13 +12,26 @@
     "type": "git",
     "url": "git+https://gitlab.com/losnappas/Context-menu-Wiktionary.git"
   },
-  "author": "",
+  "author": "losnappas",
   "license": "ISC",
   "bugs": {
     "url": "https://gitlab.com/losnappas/Context-menu-Wiktionary/issues"
   },
   "homepage": "https://gitlab.com/losnappas/Context-menu-Wiktionary#readme",
   "devDependencies": {
-    "eslint": "^5.5.0"
-  }
+    "eslint": "^6.0.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0"
+  },
+  "dependencies": {},
+  "keywords": [
+    "wiktionary",
+    "web",
+    "extension",
+    "firefox",
+    "dictionary"
+  ]
 }
