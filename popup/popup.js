@@ -86,8 +86,9 @@ function translate (selectionText) {
 				const uppercase = trimmedAndHumanized.toUpperCase()
 				const titlecase = trimmedAndHumanized.toLowerCase().toTitleCase()
 				const lowercase = trimmedAndHumanized.toLowerCase()
+				const sentencecase = trimmedAndHumanized.charAt(0).toUpperCase() + trimmedAndHumanized.toLowerCase().substring(1)
 
-				const disabler = { upper: '', lower: '', title: '' }
+				const disabler = { upper: '', lower: '', title: '', sentence: '' }
 				// One of these is a match. Gray it out so it appears disabled, because it is currently the active one.
 				// TODO okay, gray will not look great on all styles. Going to let it slide for now, as this is the only gray link out there.
 				switch ( trimmedAndHumanized ) {
@@ -102,6 +103,10 @@ function translate (selectionText) {
     				case titlecase:
     					disabler.title = 'color: gray;'
     					break;
+
+    				case sentencecase:
+    					disabler.sentence = 'color: gray;'
+    					break;
 				}
 
 				alternate404Spellings = {
@@ -110,6 +115,7 @@ function translate (selectionText) {
 						`<a href="javascript:;" style="${disabler.upper}" title="${uppercase}">${uppercase}</a>`,
 						`<a href="javascript:;" style="${disabler.title}" title="${titlecase}">${titlecase}</a>`,
 						`<a href="javascript:;" style="${disabler.lower}" title="${lowercase}">${lowercase}</a>`,
+						`<a href="javascript:;" style="${disabler.sentence}" title="${sentencecase}">${sentencecase}</a>`,
 					]
 				}
 			}
@@ -162,13 +168,21 @@ function translate (selectionText) {
 			// Add a footer so it's easier to distinguish document end.
 			// v3.5: links to the current word's page.
 			const footer = document.createElement('footer')
-			footer.innerHTML += `<br/>
-		<a class="link-actual" title="${humanize(selectionText)}" href="${WORDURL(selectionText)}">
-			'${humanize(selectionText)}' on Wiktionary.org
-		</a>`
-			footer.addEventListener('click',e => open_page(e, selectionText))
+			footer.innerHTML += `
+				<a id="wiktilink" class="link-actual" title="${humanize(selectionText)}" href="${WORDURL(selectionText)}">
+					'${humanize(selectionText)}' on Wiktionary.org
+				</a>
+				<form id="search">
+					<input type="search" name="search" placeholder="Search">
+				</form>`
+			const link = footer.querySelector('#wiktilink')
+			const search = footer.querySelector('#search')
+			link.addEventListener('click',e => open_page(e, selectionText))
+			search.addEventListener('submit', e => {
+				e.preventDefault()
+				define( e.explicitOriginalTarget.value )
+			})
 			document.body.appendChild( footer )
-
 		})
 	// Finally, open the "other languages" box if English had no definitions.
 	// This case only happens if English had no translations thus "translations.en" was touched on in the third ".then" clause.

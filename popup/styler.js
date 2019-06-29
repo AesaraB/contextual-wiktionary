@@ -1,9 +1,12 @@
-configs.$loaded.then(({style, fsize, spacing, margin, ...customs}) => {
+/* global configs */
+configs.$loaded.then(({style, fsize, spacing, margin, maxwidth, maxheight, ...customs}) => {
 
 	const globalStyle = document.createElement('style')
 	globalStyle.innerHTML = `
 	body {
 		font-size: ${fsize}em;
+		max-width: ${maxwidth}px;
+		max-height: ${maxheight}px;
 	}
 	li {
 		line-height: ${spacing};

@@ -105,3 +105,44 @@ ol > li:first-child {
 	}
 }
 
+/* https://codepen.io/912lab/pen/LsplC */
+input[type=search] {
+	font-family: inherit;
+	font-size: 100%;
+	color: inherit;
+	background: url(../icon/search.svg) no-repeat 0;
+	padding: 5px 0;
+	width: 40px;
+	border: 0;
+	
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+	
+	-moz-transition: all .5s;
+	transition: all .5s;
+}
+input[type=search]:focus {
+	background-color: #fff;
+	border: revert;
+	
+	width: 100%;
+	padding-left: 32px;
+	background-color: #fff;
+	cursor: auto;
+}
+
+input[type=search]::placeholder {
+	color: transparent;
+}
+input[type=search]:focus::placeholder {
+	color: inherit;
+}
+
+footer {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 0.4em;
+	align-items: baseline;
+	/* Looks a tad big when it is not full height (no scrollbar) but whatever. */
+	padding-bottom: 1em;
+}
