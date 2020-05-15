@@ -10,6 +10,7 @@ const WIKTIONARYURL = word => `https://en.wiktionary.org/api/rest_v1/page/defini
 const EDITURL = word => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`
 // Link to the actual wiktionary page. For footer.
 const WORDURL = word => `https://en.wiktionary.org/wiki/${word}`
+const SEARCHURL = word => `https://en.wiktionary.org/w/api.php?action=opensearch&search=${word}&profile=engine_autoselect`
 
 // Opening the slider autoscrolls.
 // In ms: the timeout before scrolling lower again. 
@@ -31,6 +32,7 @@ var translations
 // Background script responds with the selection text. Normalize input here.
 // so first normalize here and then start "humanizing" later? great.
 browser.runtime.onMessage.addListener( selectionText => {
+	selectionText = selectionText || ''
 	if (selectionText.toUpperCase() !== selectionText) {
 		selectionText = selectionText.toLowerCase()
 	}
@@ -74,7 +76,7 @@ function translate (selectionText) {
 				]
 			}
 		})
-		.catch( e => {
+		.catch( async e => {
 			if (translations == null) {
 				translations = {}
 			}
@@ -82,41 +84,11 @@ function translate (selectionText) {
 			// Different spellings.
 			let alternate404Spellings = {}
 			if (e.message.indexOf('404') !== -1) {
-    			const trimmedAndHumanized = humanize(selectionText.trim())
-				const uppercase = trimmedAndHumanized.toUpperCase()
-				const titlecase = trimmedAndHumanized.toLowerCase().toTitleCase()
-				const lowercase = trimmedAndHumanized.toLowerCase()
-				const sentencecase = trimmedAndHumanized.charAt(0).toUpperCase() + trimmedAndHumanized.toLowerCase().substring(1)
-
-				const disabler = { upper: '', lower: '', title: '', sentence: '' }
-				// One of these is a match. Gray it out so it appears disabled, because it is currently the active one.
-				// TODO okay, gray will not look great on all styles. Going to let it slide for now, as this is the only gray link out there.
-				switch ( trimmedAndHumanized ) {
-    				case uppercase:
-    					disabler.upper = 'color: gray;'
-    					break;
-
-    				case lowercase:
-    					disabler.lower = 'color: gray;'
-    					break;
-
-    				case titlecase:
-    					disabler.title = 'color: gray;'
-    					break;
-
-    				case sentencecase:
-    					disabler.sentence = 'color: gray;'
-    					break;
-				}
-
+				const searchResults = await fetch(SEARCHURL(selectionText)).then(res => res.ok && res.json() || {}).catch(() => ({}))
+				const found = searchResults[1] || []
 				alternate404Spellings = {
-					'definition': 'Perhaps one of these spellings.',
-					'examples': [
-						`<a href="javascript:;" style="${disabler.upper}" title="${uppercase}">${uppercase}</a>`,
-						`<a href="javascript:;" style="${disabler.title}" title="${titlecase}">${titlecase}</a>`,
-						`<a href="javascript:;" style="${disabler.lower}" title="${lowercase}">${lowercase}</a>`,
-						`<a href="javascript:;" style="${disabler.sentence}" title="${sentencecase}">${sentencecase}</a>`,
-					]
+					definition: 'Similar and related words',
+					examples: found.map(word => `<a href="javascript:;" title="${normalize(word)}">${humanize(word)}</a>`)
 				}
 			}
 
@@ -169,18 +141,20 @@ function translate (selectionText) {
 			// v3.5: links to the current word's page.
 			const footer = document.createElement('footer')
 			footer.innerHTML += `
-				<a id="wiktilink" class="link-actual" title="${humanize(selectionText)}" href="${WORDURL(selectionText)}">
-					'${humanize(selectionText)}' on Wiktionary.org
-				</a>
+				<a id="wiktilink" class="link-actual" rel="noopener noreferrer" target="_blank"></a>
 				<form id="search">
 					<input type="search" name="search" placeholder="Search">
 				</form>`
 			const link = footer.querySelector('#wiktilink')
+			link.title = humanize(selectionText)
+			link.href = WORDURL(selectionText)
+			link.textContent = `'${humanize(selectionText)}' on Wiktionary.org`
 			const search = footer.querySelector('#search')
 			link.addEventListener('click',e => open_page(e, selectionText))
 			search.addEventListener('submit', e => {
 				e.preventDefault()
-				define( e.explicitOriginalTarget.value )
+				console.log('submit', e)
+				define( e.target['0'].value )
 			})
 			document.body.appendChild( footer )
 		})
@@ -304,13 +278,11 @@ function add ( translation, popup, addingExtra ) {
 		const ol = document.createElement('ol')
 		for ( const definition of definitions ) {
 
-			// last min change: p is misnamed-
-			const p = document.createElement('li')
+			const li = document.createElement('li')
 
 			let frag = createFragment( definition.definition )
-			p.appendChild( frag.content )
+			li.appendChild( frag.content )
 
-			ol.appendChild(p)
 
 			if ( definition.examples ) {
 				const ul = document.createElement('ul')
@@ -324,8 +296,10 @@ function add ( translation, popup, addingExtra ) {
 					ul.appendChild( li )
 				}
 			
-				ol.appendChild( ul )
+				li.appendChild( ul )
 			}
+
+			ol.appendChild(li)
 		}
 		popup.appendChild( ol )
 
@@ -384,6 +358,7 @@ function transform_link (link) {
 // Except now we empty the popup first.
 function define (word) {
 	document.body.innerHTML = ''
+	console.log('defining', word)
 	translate( word )
 }
 
