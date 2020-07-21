@@ -1,7 +1,7 @@
 var configs = new Configs({
 	style: 'default',
 	fsize: '1',
-	spacing: '1',
+	spacing: '1.2',
 	margin: '1',
 	maxwidth: '800',
 	maxheight: '600',

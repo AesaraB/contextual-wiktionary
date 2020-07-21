@@ -2,11 +2,11 @@
   "description": "Wiktionary in the context menu",
   "manifest_version": 2,
   "name": "Right Click Wiktionary",
-  "version": "10.0",
+  "version": "10.1",
   "homepage_url": "https://gitlab.com/losnappas/Context-menu-Wiktionary",
 
   "browser_action": {
-    "default_title": "Wiktionary it",
+    "default_title": "Wiktionary Popup",
     "default_popup": "popup/popup.html",
     "browser_style": true,
     "default_icon": "icon/220px-Wiktionary_logo_Diego_UFCG.png"
