@@ -1,3 +1,4 @@
+/* global configs */
 var selectionText
 var alternateapi
 var wiktionaryapi
@@ -8,7 +9,7 @@ browser.contextMenus.create({
 	contexts: ['selection']
 })
 
-configs.$loaded.then(res => { //eslint-disable-line
+configs.$loaded.then(res => {
 	wiktionaryapi = res.wiktionaryapi
 	alternateapi = res.alternateapi
 })
@@ -41,13 +42,9 @@ browser.contextMenus.onClicked.addListener(translate)
 
 /* popup is open, it sends a message */
 browser.runtime.onMessage.addListener( message => {
-	if ( message.type === 'Configs:updated' ) {
-		if ( message.key === 'wiktionaryapi' ) {
-			wiktionaryapi = message.value
-		}
-		if ( message.key === 'alternateapi' ) {
-			alternateapi = message.value
-		}
+	if ( message.type === 'Configs:getLockedKeys' ) {
+		wiktionaryapi = configs.wiktionaryapi
+		alternateapi = configs.alternateapi
 	}
 	/* respond with the word to translate */
 	else if (message.ok) {
