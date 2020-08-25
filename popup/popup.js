@@ -223,8 +223,11 @@ function expand() {
 		Object.keys(translations).forEach((language) => {
 			// English translation already exists.
 			if (language !== 'en') {
+				// Using this to make language header not appear a thousand times.
+				let prevLang;
 				for (const translation of translations[language]) {
-					add(translation, slider, true);
+					add(translation, slider, translation.language !== prevLang);
+					prevLang = translation.language;
 				}
 			}
 		}); //for
