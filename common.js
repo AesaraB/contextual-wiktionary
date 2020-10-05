@@ -9,6 +9,7 @@ var configs = new Configs({
 	background: 'FFFFFF',
 	link: 'FFFFFF',
 	wiktionaryapi: '',
-	alternateapi: true
+	alternateapi: true,
+	_anchor: '',
 })
 

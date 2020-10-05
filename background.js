@@ -17,6 +17,7 @@ configs.$loaded.then(res => {
 function translate ( onClickData ) {
 	selectionText = onClickData.selectionText
 	let popup
+	let anchor = configs._anchor || ''
 	if (wiktionaryapi !== '') {
 		if (!alternateapi) {
 			popup = `https://${wiktionaryapi}/wiki/${normalize(selectionText)}`
@@ -24,8 +25,7 @@ function translate ( onClickData ) {
 			popup = `https://${wiktionaryapi}/api/rest_v1/page/html/${normalize(selectionText)}`
 		}
 	} else {
-    	// Setting to null resets to manifest defined one.
-		popup = null
+		popup = browser.runtime.getURL('popup/popup.html#' + (anchor.replace(/ /g, '_')))
 	}
 
 	browser.browserAction.setPopup({

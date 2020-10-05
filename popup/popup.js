@@ -124,6 +124,7 @@ function translate(selectionText) {
 		.then(() => {
 			//Heading3: the selected word Capitalized Like This
 			const heading = document.createElement('h3');
+			heading.id = 'firstHeading' // Same as wiktionary.org.
 
 			// and underscores back to spaces
 			// titlecase
@@ -167,12 +168,26 @@ function translate(selectionText) {
 			});
 			document.body.appendChild(footer);
 		})
-		// Finally, open the "other languages" box if English had no definitions.
-		// This case only happens if English had no translations thus "translations.en" was touched on in the third ".then" clause.
 		.then(() => {
-			if (translations.en[0].definitions == null) {
+			populateSlider();
+			// Add onclick handlers for language headings.
+			csrunner();
+			const hash = window.location.hash.slice(1);
+			const e = document.getElementById(hash);
+			if ( hash && e ) {
+				// Anchor is in use.
+				expand();
+				e.classList.add('auto-scrolled')
+				setTimeout(() => {
+				e.scrollIntoView({
+					behavior: 'smooth'
+				})}, 300)
+			} else if (translations.en[0].definitions == null) {
+				// Finally, open the "other languages" box if English had no definitions.
+				// This case only happens if English had no translations thus "translations.en" was touched on in the third ".then" clause.
 				expand();
 			}
+
 		})
 		.catch((e) =>
 			console.error(`error in fetch chain wiktionary: ${e}, ${e.lineNumber}`)
@@ -208,16 +223,16 @@ function createSlider() {
 
 	wrapper.appendChild(plusButton);
 
+	
 	wrapper.appendChild(slider);
+
 
 	return wrapper;
 }
 
-// Expander for the button
-function expand() {
+function populateSlider() {
 	const slider = document.getElementById('slider');
-	// Check if content has already been added previously.
-	if (!slider.firstChild) {
+	if (slider && !slider.firstChild) {
 		// Loop through different languages.
 		// alternative was for..in, I guess? for..of even?
 		Object.keys(translations).forEach((language) => {
@@ -232,8 +247,13 @@ function expand() {
 			}
 		}); //for
 	} //if
+}
 
-	if (!slider.classList.toggle('closed')) {
+// Expander for the button
+function expand() {
+	const slider = document.getElementById('slider');
+
+	if (slider && !slider.classList.toggle('closed')) {
 		// Scroll down with the expanding div
 		scrollDown(0, 0);
 	}
@@ -264,8 +284,7 @@ function add(translation, popup, addingExtra) {
 		if (language) {
 			// Put a heading to indicate the language we're using now.
 			const h5 = document.createElement('h4');
-			// TODO: Issue #22
-			// h5.id = language;
+			h5.id = '' + language.replace(/ /g, '_');
 			const slider = document.getElementById('slider');
 			const lang = document.createTextNode(language);
 			h5.appendChild(lang);

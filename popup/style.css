@@ -1,7 +1,57 @@
 body {
 	margin: 2em 2em 4em;
 	-moz-user-select: text;
+	user-select: text;
 	cursor: auto;
+	--hover-opacity: 0.6;
+}
+
+/* These ones are for the anchors. */
+h4 {
+	position: relative;
+}
+h4[id]:hover::after {
+	cursor:pointer;
+	overflow: hidden;
+	white-space: break-spaces;
+	animation: appear 0.5s ease-in;
+	display: inline-flex;
+	word-break: break-word;
+	text-overflow: clip;
+	position: absolute;
+	--hover-opacity: 0.6;
+}
+h4[id]:hover::after{
+	content: ' - Click to set to auto-scroll here';
+}
+h4[id]::before {
+	content: '# ';
+	opacity: 0.2;
+}
+h4.auto-scrolled[id]:hover::after{
+	content: ' - Click to reset auto-scroll';
+}
+h4.auto-scrolled[id] {
+	animation-name: flash;
+	animation-duration: 4.5s;
+	animation-fill-mode: both;
+	animation-iteration-count: 1;
+}
+@keyframes flash {
+	0%, 50%, 100% {
+		opacity: 1;
+	}
+	25%, 75% {
+		opacity: var(--hover-opacity);
+	}
+}
+@keyframes appear {
+	0%, 50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: var(--hover-opacity);
+	}
 }
 
 /* Some chinese definitions come with their own bg-color.

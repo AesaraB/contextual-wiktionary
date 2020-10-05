@@ -2,41 +2,37 @@
   "description": "Wiktionary in the context menu",
   "manifest_version": 2,
   "name": "Right Click Wiktionary",
-  "version": "10.6",
+  "version": "11.0",
   "homepage_url": "https://gitlab.com/losnappas/Context-menu-Wiktionary",
-
   "browser_action": {
     "default_title": "Wiktionary Popup",
     "default_popup": "popup/popup.html",
     "browser_style": true,
     "default_icon": "icon/220px-Wiktionary_logo_Diego_UFCG.png"
   },
-
   "icons": {
     "48": "icon/220px-Wiktionary_logo_Diego_UFCG.png"
   },
-
   "background": {
-    "scripts": ["/options/webextensions-lib-configs/Configs.js","common.js","background.js"]
+    "scripts": [
+      "/options/webextensions-lib-configs/Configs.js",
+      "common.js",
+      "background.js"
+    ]
   },
-
   "permissions": [
     "contextMenus",
     "https://en.wiktionary.org/api/rest_v1/page/definition/*",
     "storage"
   ],
-
   "options_ui": {
     "page": "options/options.html",
     "browser_style": true
   },
-
-
   "applications": {
-    "gecko":{
+    "gecko": {
       "strict_min_version": "57.0",
       "id": "{fccc7c8d-5a40-4644-bec3-59cd351cbd86}"
     }
   }
 }
-
