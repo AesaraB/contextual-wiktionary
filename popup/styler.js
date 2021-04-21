@@ -21,7 +21,7 @@ configs.$loaded.then(({style, fsize, spacing, margin, maxwidth, maxheight, ...cu
 		const link = document.createElement('link')
 		link.rel = 'stylesheet'
 		link.type = 'text/css'
-		link.href = style + '.css'
+		link.href = '/resources/stylesheet/themes/' + style + '.css'
 		document.head.appendChild(link)
 	} else {
 		const styleEl = document.createElement('style')

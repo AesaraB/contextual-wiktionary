@@ -1,0 +1,30 @@
+/* Dark Mode */
+body {
+  background: var(--grey-70);
+  color:var(--white-100);
+}
+a:any-link {
+  color: var(--blue-40);
+  text-decoration: none;
+}
+a:any-link:hover {
+  color: var(--blue-40);
+  text-decoration: underline;
+}
+a:any-link:active {
+	color: var(--blue-50);
+	text-decoration: underline;
+}
+a:any-link:focus {
+	border-radius: 2px;
+	box-shadow: 0 0 0 2px #0a84ff, 0 0 0 6px rgba(10, 132, 255, 0.3);
+}
+
+/* Search Input */
+input[type=search] {
+	background: url(../../icons/searchDark.svg) no-repeat 4px center/16px;
+	color: var(--white-100);
+}
+input[type="search"]:placeholder {
+  color:var(--grey-10)
+}

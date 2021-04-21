@@ -8,10 +8,10 @@
     "default_title": "Wiktionary Popup",
     "default_popup": "popup/popup.html",
     "browser_style": true,
-    "default_icon": "icon/220px-Wiktionary_logo_Diego_UFCG.png"
+    "default_icon": "resources/icons/220px-Wiktionary_logo_Diego_UFCG.png"
   },
   "icons": {
-    "48": "icon/220px-Wiktionary_logo_Diego_UFCG.png"
+    "48": "resources/icons/220px-Wiktionary_logo_Diego_UFCG.png"
   },
   "background": {
     "scripts": [

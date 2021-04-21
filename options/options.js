@@ -9,4 +9,3 @@ for (const el of customs) {
 const reloadIFrame = () => document.querySelector('iframe').contentWindow.location.reload()
 
 configs.$addObserver(reloadIFrame)
-

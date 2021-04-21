@@ -6,12 +6,14 @@
 	<script src="webextensions-lib-configs/Configs.js"></script>
 	<script src="webextensions-lib-options/Options.js"></script>
 	<script src="/common.js"></script>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="/resources/stylesheet/main.css">
+	<link rel="stylesheet" href="/resources/stylesheet/themes/light.css">
+	<link rel="stylesheet" href="/resources/stylesheet/options.css">
 	<script src="jscolor-2.0.4/jscolor.js"></script>
 </head>
 <body>
 	<div>
-		<h1>Wiktionary language</h1>
+		<h2>Wiktionary language</h2>
 		<p>Blank means you are using the pre-set English Wiktionary. Only the pre-set has the customized display style.</p>
 		<div>
 			<input type="text" name="wiktionaryapi" id="wiktionaryapi" placeholder="Specify url. e.g. en.wiktionary.org">
@@ -41,74 +43,31 @@
 		<p>PS. blame Mozilla if the text goes offscreen or similar . . .</p>
 	</div>
 
-	<h1>Default Popup Appearance</h1>
-	<fieldset>
-		<legend>Global settings</legend>
-		<ul>
-		<li>
-			<label><input id="fsize" name="fsize" type="number" step="0.1">Font size</label>
-		</li>
-		<li>
-			<label><input id="spacing" name="spacing" type="number" step="0.1">List row spacing</label>
-		</li>
-		<li>
-			<label><input id="margin" name="margin" type="number" step="0.1">Extra spacing between numbered list items</label>
-		</li>
-		<li>
-			<label><input id="maxwidth" name="maxwidth" type="number" step="1">Max width for popup (px), max 800</label>
-		</li>
-		<li>
-			<label><input id="maxheight" name="maxheight" type="number" step="1">Max height for popup (px), max 600</label>
-		</li>
-		</ul>
-	</fieldset>
-	<fieldset>
-		<legend>Theme</legend>
+<h2>Pop-up Appearance Options</h2> 
+	<h3>Theme</h3>
 		<ul class="theme">
 			<li>
 				<label>
-					<input name="style" type="radio" value="default" checked>Default (Indigo)
-				</label>
+					<input name="style" type="radio" value="light">Light
+					</label>
 			</li>
 			<li>
 				<label>
-					<input name="style" type="radio" value="plain">Plain
-				</label>
-			</li>
-			<li>
-				<label>
-					<input name="style" type="radio" value="dark">Dark
-				</label>
-			</li>
-			<li>
-				<label>
-					<input name="style" type="radio" value="custom">Use custom settings (style it yourself)
+						<input name="style" type="radio" value="dark" checked>Dark
 				</label>
 			</li>
 		</ul>
-	</fieldset>
 
-	<fieldset>
-		<legend>Custom settings</legend>
-		<table>
-			<tbody>
-				<tr>
-					<td>Text</td>
-					<td><input class="jscolor" name="text" id="text" value=""></td>
-				</tr>
-				<tr>
-					<td>Background</td>
-					<td><input type="text" class="jscolor" id="background" value=""></td>
-				</tr>
-				<tr>
-					<td>Links</td>
-					<td><input id="link" class="jscolor" value=""></td>
-				</tr>
-			</tbody>
-		</table>
-	</fieldset>
+	<h3>Pop-up Customisation</h3>
+	<h4> Pop-up Max Size</h4>
+		<label><input id="maxwidth" name="maxwidth" type="number" step="1"> Width (Max 800)</label>
+		<label><input id="maxheight" name="maxheight" type="number" step="1"> Height (Max 600)</label>
+	<h4>Line Height</h4>
+		<label><input id="fsize" name="fsize" type="number" step="0.1"> Font size</label>
+		<label><input id="spacing" name="spacing" type="number" step="0.1"> List row spacing</label>
+		<label><input id="margin" name="margin" type="number" step="0.1"> Extra spacing between numbered list items</label>
 
-	<h2>Preview</h2>
+	<h3>Preview</h2>
 	<div class="iframecontainer"><iframe src="/popup/preview.html" title="preview for popup"></iframe></div>
 	<script src="options.js"></script>
 </body>

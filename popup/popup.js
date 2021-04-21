@@ -19,7 +19,7 @@ const SEARCHURL = (word) =>
 // In ms: the timeout before scrolling lower again.
 const SCROLLDOWNWAIT = 10;
 
-const BUTTONTEXT = 'Show other languages';
+const BUTTONTEXT = 'Other languages';
 
 const HOMEPAGE = `https://gitlab.com/losnappas/Context-menu-Wiktionary`;
 const MYEMAIL = `hanu6@hotmail.com`;
@@ -122,18 +122,40 @@ function translate(selectionText) {
 			];
 		})
 		.then(() => {
-			//Heading3: the selected word Capitalized Like This
-			const heading = document.createElement('h3');
-			heading.id = 'firstHeading' // Same as wiktionary.org.
 
-			// and underscores back to spaces
-			// titlecase
-			const headingText = document.createTextNode(
-				humanize(selectionText).toTitleCase()
-			);
-
-			heading.appendChild(headingText);
-			document.body.appendChild(heading);
+			// Add a header so it's easier to distinguish document end.
+			// v3.5: links to the current word's page.
+			const header = document.createElement('header');
+			header.innerHTML += `
+			<div id="headerFlex">
+				<h3 id="firstHeading">heading</h3>
+				<form id="search">
+					<input type="search" name="search" placeholder="Search">
+				</form>
+			</div>
+			<button id="wiktilink" class="default-color-button micro-button" rel="noopener noreferrer" target="_blank"></button>`;
+			
+			// Definition Heading
+			const heading = header.querySelector('#firstHeading');
+			heading.textContent = `${humanize(selectionText).toTitleCase()}`;
+			
+			
+			// External Link Button
+			const link = header.querySelector('#wiktilink');
+			link.title = humanize(selectionText);
+			link.href = WORDURL(selectionText);
+			link.textContent = `${humanize(selectionText)}' on Wiktionary.org'`;
+			
+			// Search Button
+			const search = header.querySelector('#search');
+			link.addEventListener('click', (e) => open_page(e, selectionText));
+			search.addEventListener('submit', (e) => {
+				e.preventDefault();
+				console.log('submit', e);
+				define(e.target['0'].value);
+			});
+			
+			document.body.appendChild(header);
 
 			// English translations:
 			// translation is an array like [{partofspeect{},definitions:[definition:{},definition:{}]}]
@@ -146,27 +168,6 @@ function translate(selectionText) {
 			if (Object.keys(translations).length > 1) {
 				document.body.appendChild(createSlider());
 			}
-
-			// Add a footer so it's easier to distinguish document end.
-			// v3.5: links to the current word's page.
-			const footer = document.createElement('footer');
-			footer.innerHTML += `
-			<a id="wiktilink" class="link-actual" rel="noopener noreferrer" target="_blank"></a>
-			<form id="search">
-				<input type="search" name="search" placeholder="Search">
-			</form>`;
-			const link = footer.querySelector('#wiktilink');
-			link.title = humanize(selectionText);
-			link.href = WORDURL(selectionText);
-			link.textContent = `'${humanize(selectionText)}' on Wiktionary.org`;
-			const search = footer.querySelector('#search');
-			link.addEventListener('click', (e) => open_page(e, selectionText));
-			search.addEventListener('submit', (e) => {
-				e.preventDefault();
-				console.log('submit', e);
-				define(e.target['0'].value);
-			});
-			document.body.appendChild(footer);
 		})
 		.then(() => {
 			populateSlider();
@@ -194,7 +195,7 @@ function translate(selectionText) {
 		);
 }
 
-// just another function to make a link.. This time for the footer.
+// just another function to make a link.. This time for the header.
 // Could change the other (EDITURL) to use this function too.
 function open_page(e, word) {
 	e.preventDefault();
@@ -213,8 +214,8 @@ function createSlider() {
 	slider.className = 'slider';
 	slider.classList.toggle('closed');
 	wrapper.className = 'slider-wrapper closed';
-	plusButton.className = 'slider-button';
-	plusButton.id = 'plus-button';
+	plusButton.className = 'primary-color-button default-button';
+	plusButton.id = 'languages-button';
 
 	const plus = document.createTextNode(BUTTONTEXT);
 	plusButton.appendChild(plus);

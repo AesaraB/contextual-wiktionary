@@ -1,0 +1,145 @@
+/* These ones are for the anchors. */
+h4 {
+	position: relative;
+}
+h4[id]:hover::after {
+	cursor:pointer;
+	overflow: hidden;
+	white-space: break-spaces;
+	animation: appear 0.5s ease-in;
+	display: inline-flex;
+	word-break: break-word;
+	text-overflow: clip;
+	position: absolute;
+	--hover-opacity: 0.6;
+}
+h4[id]:hover::after{
+	content: ' - Click to set to auto-scroll here';
+}
+h4[id]::before {
+	content: '# ';
+	opacity: 0.2;
+}
+h4.auto-scrolled[id]:hover::after{
+	content: ' - Click to reset auto-scroll';
+}
+h4.auto-scrolled[id] {
+	animation-name: flash;
+	animation-duration: 4.5s;
+	animation-fill-mode: both;
+	animation-iteration-count: 1;
+}
+@keyframes flash {
+	0%, 50%, 100% {
+		opacity: 1;
+	}
+	25%, 75% {
+		opacity: var(--hover-opacity);
+	}
+}
+@keyframes appear {
+	0%, 50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: var(--hover-opacity);
+	}
+}
+
+/* Some chinese definitions come with their own bg-color.
+ * It totally messes up the display.
+ * Remove it with this.
+ */
+body *:not(button):not(a) {
+	background-color: unset !important;
+}
+
+.slider h4 {
+	margin-top: 0.5em;
+	margin-bottom: 0;
+	border-bottom: 1px dotted rgba(128, 128, 128, 0.35); /* transparent grey */
+	width: 95%;
+}
+
+
+.slider h4:first-child {
+	margin-top: 0.3em;
+}
+
+ol > li:first-child {
+	margin-top: 0;
+}
+
+
+@media screen and (min-width: 350px) {
+	body {
+		margin-bottom: 2em;
+	}
+}
+
+@media screen and (max-width: 350px) {
+	body {
+		margin-left: 1em;
+	}
+	ul {
+		padding-inline-start: 11%;
+	}
+	ol {
+		padding-inline-start: 8%;
+	}
+	ol > li:not(:first-child) {
+		margin-top: 0.5em;
+	}
+}
+
+/* Not too sure about this rule. */
+@media screen and (max-height: 621px) {
+	body {
+		margin-bottom: 2em;
+	}
+}
+
+#headerFlex {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+
+/* Custom Headings */
+#firstHeading {
+  margin: 0;
+}
+
+/* Experimental */
+#wiktilink {
+  float: right;
+  max-width: 20em;
+  
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  direction: rtl;
+  text-overflow:ellipsis;
+}
+
+
+/* Slider */
+.slider-wrapper.closed {
+	padding: 0 0 8px;
+}
+.slider {
+	margin: 8px 0 0;
+	padding: 8px 12px;
+	overflow-y: auto;
+	max-height: 500px; /* approximate max height */
+	transition-property: height margin padding;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+.slider.closed {
+	max-height: 0;
+	border: none;
+	padding: 0 12px;
+	margin: 0;
+}
