@@ -21,10 +21,15 @@ a:any-link:focus {
 }
 
 /* Search Input */
-input[type=search] {
-	background: url(../../icons/searchLight.svg) no-repeat 4px center/16px;
+#searchInput {
+	background: url(../../icons/searchLight.svg) no-repeat calc(100% - 4px) center/20px;
+	border-bottom: 2px solid var(--grey-90);
 	color: var(--grey-90);
 }
-input[type="search"]:placeholder {
-  color:var(--grey-50)
+#searchInput:hover {
+  border-color:var(--grey-50)
+}
+#searchInput::placeholder {
+  color:var(--white-90);
+	opacity: 1;
 }

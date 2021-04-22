@@ -1,15 +1,17 @@
 /* Global Stylesheet */
 /* This stylesheet attempts to match Firefox' design guidelines */
 
+/* Text and Layout */
+
 body {
-  margin: 8px 12px 0;
+  margin: 8px 12px;
   font-family: "Segoe UI", "San Francisco", "Ubuntu", "Fira Sans", "Roboto";
   font-size: 15px;
   font-weight: 400;
   max-width: 45em;
 }
 
-/* Headers */
+/* ---- Headers */
 h1 {
   font-size: 36px;
   font-weight: 200;
@@ -40,14 +42,16 @@ h6 {
   font-weight: 400;
 }
 
-/* Lists */
-	ol > li {
-		margin: 0 0 1rem;
-	}
+/* Components */
 
-/* Buttons */
+/* ---- Lists */
+ol > li {
+	margin: 0 0 1rem;
+}
 
-/* ---- Micro Button */
+/* ---- Buttons */
+
+/* -------- Micro Button */
 .micro-button {
   border-radius: 2px;
   border: none;
@@ -59,7 +63,7 @@ h6 {
   text-align:center;
 }
 
-/* ---- Large Button */
+/* -------- Large Button */
 .default-button {
   border-radius: 2px;
   border: none;
@@ -71,9 +75,9 @@ h6 {
   font-size: 13px;
   text-align:center;
 }
-/* ---- Button Colours */
+/* -------- Button Colours */
 
-/* -------- Primary */
+/* ------------ Primary */
 .primary-color-button {
   background:var(--blue-60);
   color:var(--white-100);
@@ -91,7 +95,7 @@ h6 {
   opacity: 40%;
 }
 
-/* -------- Default */
+/* ------------ Default */
 .default-color-button {
   background-color:var(--grey-90-a10);
   color: var(--grey-90);
@@ -109,21 +113,20 @@ h6 {
   opacity: 40%;
 }
 
-/* Search */
+/* ---- Search */
 input[type="search"] {
-  margin: 0 0 8px 0;
   border-radius: 2px;
-  padding: 0 8px 0 28px;
+  padding: 0 8px;
   width: auto;
   height: 32px;
-  border: 1px solid var(--grey-90-a20);
+  border: 1px solid var(--white-100);
   cursor: auto;
 }
 input[type="search"]:hover {
   border-color:var(--grey-90-a30)
 }
 input[type="search"]:focus {
-  border-color:var(--blue-50);
+  border-color:var(--blue-50)!important;
   outline: 0;
 }
 

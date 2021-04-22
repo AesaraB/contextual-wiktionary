@@ -122,38 +122,34 @@ function translate(selectionText) {
 			];
 		})
 		.then(() => {
-
-			// Add a header so it's easier to distinguish document end.
+			
+			// DEFINITION FOUND
+			
+			// Popup Header Section
+			// This area contains the definition title, search bar, and external site link.
 			// v3.5: links to the current word's page.
 			const header = document.createElement('header');
 			header.innerHTML += `
-			<div id="headerFlex">
-				<h3 id="firstHeading">heading</h3>
-				<form id="search">
-					<input type="search" name="search" placeholder="Search">
-				</form>
-			</div>
-			<button id="wiktilink" class="default-color-button micro-button" rel="noopener noreferrer" target="_blank"></button>`;
-			
-			// Definition Heading
-			const heading = header.querySelector('#firstHeading');
-			heading.textContent = `${humanize(selectionText).toTitleCase()}`;
-			
-			
-			// External Link Button
-			const link = header.querySelector('#wiktilink');
-			link.title = humanize(selectionText);
-			link.href = WORDURL(selectionText);
-			link.textContent = `${humanize(selectionText)}' on Wiktionary.org'`;
-			
+			<form id="search">
+				<input id="searchInput" type="search" name="search" title="Search Wiktionary.org">
+			</form>
+			<button id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></button>`;
+
 			// Search Button
 			const search = header.querySelector('#search');
-			link.addEventListener('click', (e) => open_page(e, selectionText));
+			const searchInput = header.querySelector('#searchInput');
+			searchInput.placeholder = `${humanize(selectionText).toTitleCase()}`;
 			search.addEventListener('submit', (e) => {
 				e.preventDefault();
 				console.log('submit', e);
 				define(e.target['0'].value);
 			});
+			
+			// External Link Button
+			const link = header.querySelector('#externalLink');
+			link.title = `${humanize(selectionText)} on Wiktionary.org`;
+			link.href = WORDURL(selectionText);
+			link.addEventListener('click', (e) => open_page(e, selectionText));
 			
 			document.body.appendChild(header);
 

@@ -54,83 +54,52 @@ body *:not(button):not(a) {
 	background-color: unset !important;
 }
 
-.slider h4 {
-	margin-top: 0.5em;
-	margin-bottom: 0;
-	border-bottom: 1px dotted rgba(128, 128, 128, 0.35); /* transparent grey */
-	width: 95%;
-}
-
-
-.slider h4:first-child {
-	margin-top: 0.3em;
-}
-
 ol > li:first-child {
 	margin-top: 0;
 }
 
 
-@media screen and (min-width: 350px) {
-	body {
-		margin-bottom: 2em;
-	}
+/* New CSS Starts Here */
+
+body {
+  margin: 8px 12px 0;
 }
 
-@media screen and (max-width: 350px) {
-	body {
-		margin-left: 1em;
-	}
-	ul {
-		padding-inline-start: 11%;
-	}
-	ol {
-		padding-inline-start: 8%;
-	}
-	ol > li:not(:first-child) {
-		margin-top: 0.5em;
-	}
-}
+/* Header */ 
 
-/* Not too sure about this rule. */
-@media screen and (max-height: 621px) {
-	body {
-		margin-bottom: 2em;
-	}
-}
-
-#headerFlex {
+header {
 	display: flex;
 	justify-content: space-between;
-	align-items: baseline;
+	align-items: center;
 }
 
-
-/* Custom Headings */
-#firstHeading {
-  margin: 0;
+/* ---- Definition Title & Search Bar */
+#searchInput {
+  font-size: 36px;
+  font-weight: 200;
+  margin: 0 0 8px 0;
+  border-radius: 0px;
+  padding: 0 32px 4px 0;
+  height: auto;
+  border: none;
 }
 
-/* Experimental */
-#wiktilink {
-  float: right;
-  max-width: 20em;
-  
-  display: block;
-  overflow: hidden;
-  white-space: nowrap;
-  direction: rtl;
-  text-overflow:ellipsis;
+/* ---- External Link to Wiktionary.org */
+#externalLink {
+	min-width: 0;
+	width: 32px;
+	height: 32px;
+	background: var(--grey-90-a10) url(../icons/externalLink.svg) no-repeat center/16px;
 }
 
-
-/* Slider */
-.slider-wrapper.closed {
+/* Languages Slider */
+.slider-wrapper {
 	padding: 0 0 8px;
 }
+
 .slider {
 	margin: 8px 0 0;
-	padding: 8px 12px;
+	padding: 0 12px;
 	overflow-y: auto;
 	max-height: 500px; /* approximate max height */
 	transition-property: height margin padding;
@@ -142,4 +111,14 @@ ol > li:first-child {
 	border: none;
 	padding: 0 12px;
 	margin: 0;
+}
+.slider h4 {
+	margin-top: 0.5em;
+	margin-bottom: 0;
+	border-bottom: 1px dotted rgba(128, 128, 128, 0.35); /* transparent grey */
+	width: 95%;
+}
+
+.slider h4:first-child {
+	margin-top: 0.3em;
 }
