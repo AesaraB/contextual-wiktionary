@@ -1,44 +1,54 @@
 // https://gitlab.com/losnappas/Context-menu-Wiktionary
+
+/* --- TODO --- 
+- Add a search function
+- Find a way to properly integrate proper nouns, whether or not they have definitions in lowercase.
+- Add a footer and stuff
+- Add a loading screen
+- Fill no definition popup with content, and find workaround for 400px min-height rule
+*/
+
 'use strict';
 
 // CONSTANT AND VARIABLE DECLARATIONS
 
+// searchText string modification 
 const normalize = (word) => word.trim().replace(/ /g, '_');		// This converts a string into a Wiktionary API URL. Don't conflate this with "humanize".
 const humanize = (word) => word.trim().replace(/_/g, ' ');		// This converts a Wiktionary API URL to format better suited for reading.
 
+// Wiktionary search strings
 const WIKTIONARYURL = (word) => `https://en.wiktionary.org/api/rest_v1/page/definition/${word}`;
 const EDITURL = (word) => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`;
-
-const WORDURL = (word) => `https://en.wiktionary.org/wiki/${word}`;		// This is the link called by the externalLink element.
+const WORDURL = (word) => `https://en.wiktionary.org/wiki/${word}`;		// This becomes the link called by the externalLink element.
 const SEARCHURL = (word) =>
-	`https://en.wiktionary.org/w/api.php?action=opensearch&search=${word}&profile=engine_autoselect`;
+	`https://en.wiktionary.org/w/api.php?action=opensearch&search=${word}&profile=engine_autoselect`; // This is used to find alternative searchText spellings
 
-// Opening the slider autoscrolls.
-// In ms: the timeout before scrolling lower again.
-const SCROLLDOWNWAIT = 10;
-
-const BUTTONTEXT = 'Other languages';
+const SCROLLDOWNWAIT = 10; // Opening the slider autoscrolls. -- In ms: the timeout before scrolling lower again.
 
 // User-agent information
 const HOMEPAGE = `https://gitlab.com/losnappas/Context-menu-Wiktionary`;
 const MYEMAIL = `hanu6@hotmail.com`;
 
 
-const ALLOWED_TAGS = '<b><i><u><strong><a><span><div><small>';
+const ALLOWED_TAGS = '<b><i><u><strong><a><span><div><small>'; // Used to whitelist certain tags we want in our definitions.
+
+var translations;
+
+// Stand-in to remove ambiguity from selectionText.
+var searchText;
+
+// Used when building the pop-up HTML
+var searchPlaceholder;
+var extLinkTitle;
+var extLinkHref;
 
 // Send message back indicating that the popup is now open & ready.
 window.onload = () => {
 	browser.runtime.sendMessage({ ok: true });
 };
 
-
-var translations;
-
-// If we want to create a menu for when the selectionText is empty, then it should be here or maybe in the first call for the selectionText should be it.
-// Same goes for a loading screen. 400x400px maybe?
-
 browser.runtime.onMessage.addListener((selectionText) => { // Background.js responds with the selection text.
-	selectionText = selectionText || '';
+	searchText = selectionText || '';
 
 /*
 	Instead of normalising, perhaps integrate checks for proper nouns?
@@ -47,55 +57,32 @@ browser.runtime.onMessage.addListener((selectionText) => { // Background.js resp
 	if there is a definition for non-english language, then add a button to search for the normalised string
 */
 	switch (true) {
-		case (selectionText === ''):
+		case (searchText === ''):
 			noDefinition();
 			break;
-		case (selectionText.toUpperCase() !== selectionText):  // Don't normalise selections that are written in allcaps (for acronyms).
-			selectionText = selectionText.toLowerCase(); // This code normalises the selectionText for translation.
-			translate(normalize(selectionText));
+		case (searchText.toUpperCase() !== searchText):  // Don't normalise selections that are written in allcaps (for acronyms).
+			searchText = searchText.toLowerCase(); // This code normalises the searchText for translation.
+			translate(normalize(searchText));
 			break;
 		default:
-			translate(normalize(selectionText));
+			translate(normalize(searchText));
 	}
 });
 
-function noDefinition() {
-			// NO DEFINITION FOUND
+function noDefinition() { // This script runs when searchText is blank.
+			searchPlaceholder = `Wiktionary`;
+			extLinkTitle = `Open Wiktionary.org in a new tab`;
+			extLinkHref = `https://en.wiktionary.org/`;
 			
-			// Popup Header Section
-			// This area contains the definition title, search bar, and external site link.
-			// v3.5: links to the current word's page.
-			const header = document.createElement('header');
-			header.innerHTML += `
-			<form id="search">
-				<input id="searchInput" type="search" name="search" title="Search Wiktionary.org" placeholder="Wiktionary">
-			</form>
-			<a id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></a>`;
-
-			// Search Button
-			const search = header.querySelector('#search');
-			const searchInput = header.querySelector('#searchInput');
-			search.addEventListener('submit', (e) => {
-				e.preventDefault();
-				console.log('submit', e);
-				define(e.target['0'].value);
-			});
-			
-			// External Link Button
-			const link = header.querySelector('#externalLink');
-			link.title = `Open Wiktionary.org in a new tab`;
-			link.href = `https://en.wiktionary.org/`;
-			link.addEventListener('click', (e) => open_page(e, selectionText));
-			
-			document.body.appendChild(header);
+			defPageTemplate(searchPlaceholder, extLinkTitle, extLinkHref);
 }
 
-function translate(selectionText) {
+function translate(searchText) {
 	/*
 		Fetches Wiki dictionary (Wiktionary) meaning for selected word.
 		Wiktionary gives <b> and <i> etc tags too.
 	*/
-	fetch(WIKTIONARYURL(selectionText), {
+	fetch(WIKTIONARYURL(searchText), {
 		method: 'GET',
 		headers: new Headers({
 			'Api-User-Agent': `Context_Menu_Dictionary_Firefox_extension/1.0; (${HOMEPAGE}; ${MYEMAIL})`,
@@ -130,7 +117,7 @@ function translate(selectionText) {
 			// Different spellings.
 			let alternate404Spellings = {};
 			if (e.message.indexOf('404') !== -1) {
-				const searchResults = await fetch(SEARCHURL(selectionText))
+				const searchResults = await fetch(SEARCHURL(searchText))
 					.then((res) => (res.ok && res.json()) || {})
 					.catch(() => ({}));
 				const found = searchResults[1] || [];
@@ -154,12 +141,12 @@ function translate(selectionText) {
 						},
 						{
 							definition: `The word <b>${humanize(
-								selectionText
+								searchText
 							)}</b> was not found.`,
 							examples: [
 								'<i>Know what it means?</i>',
 								`<a title="${humanize(
-									selectionText
+									searchText
 								)}" class="link-actual" target="_blank" id="addWord">Submit it to the Wiktionary.</a> <small>(Opens in a new tab.)</small>`,
 							],
 						},
@@ -168,37 +155,16 @@ function translate(selectionText) {
 				},
 			];
 		})
-		.then(() => {
+		.then(() => { // DEFINITION FOUND
 			
-			// DEFINITION FOUND
-			
-			// Popup Header Section
-			// This area contains the definition title, search bar, and external site link.
-			// v3.5: links to the current word's page.
-			const header = document.createElement('header');
-			header.innerHTML += `
-			<form id="search">
-				<input id="searchInput" type="search" name="search" title="Search Wiktionary.org">
-			</form>
-			<a id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></a>`;
-
 			// Search Button
-			const search = header.querySelector('#search');
-			const searchInput = header.querySelector('#searchInput');
-			searchInput.placeholder = `${humanize(selectionText).toTitleCase()}`;
-			search.addEventListener('submit', (e) => {
-				e.preventDefault();
-				console.log('submit', e);
-				define(e.target['0'].value);
-			});
+			searchPlaceholder = `${humanize(searchText).toTitleCase()}`;
 			
 			// External Link Button
-			const link = header.querySelector('#externalLink');
-			link.title = `Open '${humanize(selectionText)}' in a new tab`;
-			link.href = WORDURL(selectionText);
-			link.addEventListener('click', (e) => open_page(e, selectionText));
+			extLinkTitle = `Open '${humanize(searchText)}' in a new tab`;
+			extLinkHref = WORDURL(searchText);
 			
-			document.body.appendChild(header);
+			defPageTemplate(searchPlaceholder, extLinkTitle, extLinkHref);
 
 			// English translations:
 			// translation is an array like [{partofspeect{},definitions:[definition:{},definition:{}]}]
@@ -238,6 +204,51 @@ function translate(selectionText) {
 		);
 }
 
+function defPageTemplate() { // "definition" Page Template
+/*
+	elements universal to all pages on the popup should be:
+		- search bar (maybe not in a help or settings page)
+		- external link to wiktionary.org
+		- the footer (maybe we can call this in another function)
+*/
+
+			// Popup Header Template
+			// This area contains the definition title, search bar, and external site link.
+			const header = document.createElement('header');
+			header.innerHTML += `
+			<form id="search">
+				<input id="searchInput" type="search" name="search" title="Search Wiktionary.org">
+			</form>
+			<a id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></a>`;
+			
+			// ---- Search Button
+			const search = header.querySelector('#search');
+			const searchInput = header.querySelector('#searchInput');
+			searchInput.placeholder = `${searchPlaceholder}`;
+			search.addEventListener('submit', (e) => {
+				e.preventDefault();
+				console.log('submit', e);
+				define(e.target['0'].value);
+			});
+			// ---- External Link Button
+			const link = header.querySelector('#externalLink');
+			link.title = `${extLinkTitle}`;
+			link.href = `${extLinkHref}`;
+			link.addEventListener('click', (e) => open_page(e, searchText));
+			
+			document.body.appendChild(header);
+
+}
+
+// Search wiktionary and display result on popup. The same thing as using the context menu.
+// Except now we empty the popup first.
+function define(word) {
+	document.body.innerHTML = '';
+	searchText = `${word}`;
+	console.log('defining', searchText);
+	translate(searchText);
+}
+
 // just another function to make a link.. This time for the header.
 // Could change the other (EDITURL) to use this function too.
 function open_page(e, word) {
@@ -260,7 +271,7 @@ function createSlider() {
 	plusButton.className = 'primary-color-button default-button';
 	plusButton.id = 'languages-button';
 
-	const plus = document.createTextNode(BUTTONTEXT);
+	const plus = document.createTextNode('Other languages');
 	plusButton.appendChild(plus);
 
 	plusButton.onclick = expand;
@@ -419,14 +430,6 @@ function transform_link(link) {
 		link.removeAttribute('href');
 		link.removeAttribute('title');
 	}
-}
-
-// Search wiktionary and display result on popup. The same thing as using the context menu.
-// Except now we empty the popup first.
-function define(word) {
-	document.body.innerHTML = '';
-	console.log('defining', word);
-	translate(word);
 }
 
 //http://locutus.io/php/strings/strip_tags/
