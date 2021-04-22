@@ -1,9 +1,9 @@
 var configs = new Configs({
-	style: 'default',
+	style: 'light',
 	fsize: '1',
 	spacing: '1.2',
 	margin: '1',
-	maxwidth: '800',
+	maxwidth: '400',
 	maxheight: '600',
 	text: 'FFFFFF',
 	background: 'FFFFFF',
