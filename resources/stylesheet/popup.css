@@ -63,7 +63,6 @@ ol > li:first-child {
 
 body {
 	min-height: 400px;
-	min-width: 400px;
 	margin: 8px 12px 0;
 }
 
@@ -94,6 +93,7 @@ header {
 	height: 32px;
 	background: var(--grey-90-a10) url(../icons/externalLink.svg) no-repeat center/16px;
 	margin: 0 0 0 12px;
+	padding: 0;
 }
 
 /* Languages Slider */
