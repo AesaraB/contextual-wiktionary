@@ -3,7 +3,7 @@ var configs = new Configs({
 	fsize: '1',
 	spacing: '1.2',
 	margin: '1',
-	maxwidth: '400',
+	maxwidth: '600',
 	maxheight: '600',
 	text: 'FFFFFF',
 	background: 'FFFFFF',

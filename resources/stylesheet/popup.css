@@ -81,15 +81,17 @@ header {
   border-radius: 0px;
   padding: 0 32px 4px 0;
   height: auto;
+  width: 100%;
   border: none;
 }
 
 /* ---- External Link to Wiktionary.org */
 #externalLink {
-	min-width: 0;
+	min-width: 32px;
 	width: 32px;
 	height: 32px;
 	background: var(--grey-90-a10) url(../icons/externalLink.svg) no-repeat center/16px;
+	margin: 0 0 0 12px;
 }
 
 /* Languages Slider */
