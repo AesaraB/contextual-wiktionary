@@ -1,17 +1,15 @@
 // https://gitlab.com/losnappas/Context-menu-Wiktionary
 'use strict';
 
-// Keep it in uppercase if all the letters are in uppercase. This helps in case of acronyms like CE.
-// Normalize means "turn into wiktionary api url" in this context. Not "normalize for humans".
-const normalize = (word) => word.trim().replace(/ /g, '_');
-const humanize = (word) => word.trim().replace(/_/g, ' ');
+// CONSTANT AND VARIABLE DECLARATIONS
 
-const WIKTIONARYURL = (word) =>
-	`https://en.wiktionary.org/api/rest_v1/page/definition/${word}`;
-const EDITURL = (word) =>
-	`https://en.wiktionary.org/w/index.php?title=${word}&action=edit`;
-// Link to the actual wiktionary page. For footer.
-const WORDURL = (word) => `https://en.wiktionary.org/wiki/${word}`;
+const normalize = (word) => word.trim().replace(/ /g, '_');		// This converts a string into a Wiktionary API URL. Don't conflate this with "humanize".
+const humanize = (word) => word.trim().replace(/_/g, ' ');		// This converts a Wiktionary API URL to format better suited for reading.
+
+const WIKTIONARYURL = (word) => `https://en.wiktionary.org/api/rest_v1/page/definition/${word}`;
+const EDITURL = (word) => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`;
+
+const WORDURL = (word) => `https://en.wiktionary.org/wiki/${word}`;		// This is the link called by the externalLink element.
 const SEARCHURL = (word) =>
 	`https://en.wiktionary.org/w/api.php?action=opensearch&search=${word}&profile=engine_autoselect`;
 
@@ -21,8 +19,11 @@ const SCROLLDOWNWAIT = 10;
 
 const BUTTONTEXT = 'Other languages';
 
+// User-agent information
 const HOMEPAGE = `https://gitlab.com/losnappas/Context-menu-Wiktionary`;
 const MYEMAIL = `hanu6@hotmail.com`;
+
+
 const ALLOWED_TAGS = '<b><i><u><strong><a><span><div><small>';
 
 // Send message back indicating that the popup is now open & ready.
@@ -30,18 +31,64 @@ window.onload = () => {
 	browser.runtime.sendMessage({ ok: true });
 };
 
+
 var translations;
 
-// Background script responds with the selection text. Normalize input here.
-// so first normalize here and then start "humanizing" later? great.
-browser.runtime.onMessage.addListener((selectionText) => {
-	selectionText = selectionText || '';
-	if (selectionText.toUpperCase() !== selectionText) {
-		selectionText = selectionText.toLowerCase();
-	}
+// If we want to create a menu for when the selectionText is empty, then it should be here or maybe in the first call for the selectionText should be it.
+// Same goes for a loading screen. 400x400px maybe?
 
-	translate(normalize(selectionText));
+browser.runtime.onMessage.addListener((selectionText) => { // Background.js responds with the selection text.
+	selectionText = selectionText || '';
+
+/*
+	Instead of normalising, perhaps integrate checks for proper nouns?
+	i.e. search for original string (if not all caps)
+	if there isn't any definition in any language, search for normalised string
+	if there is a definition for non-english language, then add a button to search for the normalised string
+*/
+	switch (true) {
+		case (selectionText === ''):
+			noDefinition();
+			break;
+		case (selectionText.toUpperCase() !== selectionText):  // Don't normalise selections that are written in allcaps (for acronyms).
+			selectionText = selectionText.toLowerCase(); // This code normalises the selectionText for translation.
+			translate(normalize(selectionText));
+			break;
+		default:
+			translate(normalize(selectionText));
+	}
 });
+
+function noDefinition() {
+			// NO DEFINITION FOUND
+			
+			// Popup Header Section
+			// This area contains the definition title, search bar, and external site link.
+			// v3.5: links to the current word's page.
+			const header = document.createElement('header');
+			header.innerHTML += `
+			<form id="search">
+				<input id="searchInput" type="search" name="search" title="Search Wiktionary.org" placeholder="Wiktionary">
+			</form>
+			<a id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></a>`;
+
+			// Search Button
+			const search = header.querySelector('#search');
+			const searchInput = header.querySelector('#searchInput');
+			search.addEventListener('submit', (e) => {
+				e.preventDefault();
+				console.log('submit', e);
+				define(e.target['0'].value);
+			});
+			
+			// External Link Button
+			const link = header.querySelector('#externalLink');
+			link.title = `Open Wiktionary.org in a new tab`;
+			link.href = `https://en.wiktionary.org/`;
+			link.addEventListener('click', (e) => open_page(e, selectionText));
+			
+			document.body.appendChild(header);
+}
 
 function translate(selectionText) {
 	/*
@@ -133,7 +180,7 @@ function translate(selectionText) {
 			<form id="search">
 				<input id="searchInput" type="search" name="search" title="Search Wiktionary.org">
 			</form>
-			<button id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></button>`;
+			<a id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></a>`;
 
 			// Search Button
 			const search = header.querySelector('#search');
@@ -147,7 +194,7 @@ function translate(selectionText) {
 			
 			// External Link Button
 			const link = header.querySelector('#externalLink');
-			link.title = `${humanize(selectionText)} on Wiktionary.org`;
+			link.title = `Open '${humanize(selectionText)}' in a new tab`;
 			link.href = WORDURL(selectionText);
 			link.addEventListener('click', (e) => open_page(e, selectionText));
 			

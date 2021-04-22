@@ -62,7 +62,9 @@ ol > li:first-child {
 /* New CSS Starts Here */
 
 body {
-  margin: 8px 12px 0;
+	min-height: 400px;
+	min-width: 400px;
+	margin: 8px 12px 0;
 }
 
 /* Header */ 
