@@ -47,6 +47,11 @@ window.onload = () => {
 	browser.runtime.sendMessage({ ok: true });
 };
 
+// Prevents undesireable inputs from being translated.
+function isUndesirable(str){
+    return str === null || str.match(/^ *$/) !== null;
+}
+
 browser.runtime.onMessage.addListener((selectionText) => { // Background.js responds with the selection text.
 	searchText = selectionText || '';
 
@@ -57,7 +62,7 @@ browser.runtime.onMessage.addListener((selectionText) => { // Background.js resp
 	if there is a definition for non-english language, then add a button to search for the normalised string
 */
 	switch (true) {
-		case (searchText === ''):
+		case (isUndesirable(searchText)):
 			noDefinition();
 			break;
 		case (searchText.toUpperCase() !== searchText):  // Don't normalise selections that are written in allcaps (for acronyms).
@@ -258,8 +263,12 @@ function defPageFooterTemplate() { //Merge this with defPageTemplate later
 function define(word) {
 	document.body.innerHTML = '';
 	searchText = `${word}`;
+	if (isUndesirable(searchText)) { // I really don't like this if statement, ideally we would sort out the normalisation function and call it here.
+		noDefinition();
+	} else {
+		translate(searchText);
+	}
 	console.log('defining', searchText);
-	translate(searchText);
 }
 
 // just another function to make a link.. This time for the header.
@@ -351,7 +360,7 @@ function add(translation, popup, addingExtra) {
 		const language = translation.language;
 		if (language) {
 			// Put a heading to indicate the language we're using now.
-			const h5 = document.createElement('h4');
+			const h5 = document.createElement('h2');
 			h5.id = '' + language.replace(/ /g, '_');
 			const slider = document.getElementById('slider');
 			const lang = document.createTextNode(language);

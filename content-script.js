@@ -5,7 +5,7 @@ function csrunner() {
      * Adds the anchor gimmick to language headings
      */
 
-    const els = document.querySelectorAll('#content h4[id]');
+    const els = document.querySelectorAll('#content h2[id]');
 
     const listener = e => {
         e.preventDefault();

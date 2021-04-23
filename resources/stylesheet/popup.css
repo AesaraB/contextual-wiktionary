@@ -1,29 +1,49 @@
 /* These ones are for the anchors. */
-h4 {
+h2 {
 	position: relative;
 }
-h4[id]:hover::after {
+
+h2:hover {
 	cursor:pointer;
-	overflow: hidden;
-	white-space: break-spaces;
-	animation: appear 0.5s ease-in;
-	display: inline-flex;
-	word-break: break-word;
-	text-overflow: clip;
-	position: absolute;
-	--hover-opacity: 0.6;
 }
-h4[id]:hover::after{
-	content: ' - Click to set to auto-scroll here';
-}
-h4[id]::before {
+
+h2[id]::before {
 	content: '# ';
-	opacity: 0.2;
+	opacity: 0.4;
+	transition: opacity 0.2s;
 }
-h4.auto-scrolled[id]:hover::after{
-	content: ' - Click to reset auto-scroll';
+h2.auto-scrolled[id]::before {
+	opacity: 1;
 }
-h4.auto-scrolled[id] {
+
+
+h2[id]:hover::after {
+	overflow: hidden;
+	
+	display: inline-flex;
+	position: absolute;
+	right: 0;
+	margin: 6px 0;
+	
+	animation: appear 0.5s ease-in;
+	--hover-opacity: 0.4;
+	
+	word-break: break-word;
+	white-space: break-spaces;
+	text-overflow: clip;
+	
+	
+	font-size: 15px;
+	font-weight: 400;
+}
+h2[id]:hover::after{
+	content: 'Set auto-scroll';
+	opacity: 0.4;
+}
+h2.auto-scrolled[id]:hover::after{
+	content: 'Unset auto-scroll';
+}
+h2.auto-scrolled[id] {
 	animation-name: flash;
 	animation-duration: 4.5s;
 	animation-fill-mode: both;
@@ -66,6 +86,10 @@ header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+h3 {
+	margin: 0
 }
 
 /* ---- Definition Title & Search Bar */
@@ -123,6 +147,6 @@ header {
 
 /* Footer */
 footer {
-	padding: 0 0 4px;
+	padding: 0 0 8px;
 	line-height: 1em;
 }
