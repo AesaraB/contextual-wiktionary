@@ -4,7 +4,7 @@
 /* Text and Layout */
 
 body {
-	box-sizing: border-box;
+	box-sizing: border-box!important;
 	margin: 0;
 	padding: 8px 12px;
   font-family: "Segoe UI", "San Francisco", "Ubuntu", "Fira Sans", "Roboto";
@@ -16,7 +16,7 @@ body {
 body *,
 body *:before,
 body *:after {
-	box-sizing: border-box;
+	box-sizing: border-box!important;
 }
 
 /* ---- Headers */

@@ -40,3 +40,8 @@ input[type="url"] {
   color:var(--white-100);
 	opacity: 1;
 }
+
+/* Footer */
+footer {
+	color:var(--grey-40);
+} 

@@ -75,6 +75,7 @@ function noDefinition() { // This script runs when searchText is blank.
 			extLinkHref = `https://en.wiktionary.org/`;
 			
 			defPageTemplate(searchPlaceholder, extLinkTitle, extLinkHref);
+			defPageFooterTemplate()
 }
 
 function translate(searchText) {
@@ -177,7 +178,9 @@ function translate(searchText) {
 			if (Object.keys(translations).length > 1) {
 				document.body.appendChild(createSlider());
 			}
+			defPageFooterTemplate()
 		})
+		
 		.then(() => {
 			populateSlider();
 			// Add onclick handlers for language headings.
@@ -238,6 +241,16 @@ function defPageTemplate() { // "definition" Page Template
 			
 			document.body.appendChild(header);
 
+}
+
+function defPageFooterTemplate() { //Merge this with defPageTemplate later
+			// Footer Template
+			// This area contains the text license.
+			const footer = document.createElement('footer');
+			footer.innerHTML += `
+			<small><i>Wiktionary defintions are available under the <a rel="noopener noreferrer" target="_blank" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.</i></small>`;
+			
+			document.body.appendChild(footer);
 }
 
 // Search wiktionary and display result on popup. The same thing as using the context menu.
@@ -349,7 +362,7 @@ function add(translation, popup, addingExtra) {
 
 	// noun/verb/etc
 	if (partOfSpeech) {
-		const p = document.createElement('p');
+		const p = document.createElement('h3');
 		const t = document.createTextNode(partOfSpeech);
 		p.appendChild(t);
 		popup.appendChild(p);

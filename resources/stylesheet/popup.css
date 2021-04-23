@@ -52,7 +52,6 @@ ol > li:first-child {
 
 
 /* New CSS Starts Here */
-
 body {
 	padding: 8px 12px 0;
 }
@@ -120,4 +119,10 @@ header {
 
 .slider h4:first-child {
 	margin-top: 0.3em;
+}
+
+/* Footer */
+footer {
+	padding: 0 0 4px;
+	line-height: 1em;
 }

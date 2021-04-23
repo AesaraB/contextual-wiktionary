@@ -46,9 +46,9 @@
 		</ul>
 
 	<h3>Pop-up Customisation</h3>
-		<label class="flexLabel">Pop-up width and height
+		<label class="flexLabel">Pop-up width and maximum height
 			<div>
-				<input id="maxwidth" class="sizeInput" title="Width" name="maxwidth" type="number" min="200" max="800" step="1"><input id="maxheight" class="sizeInput" title="Height" name="maxheight" type="number" min="100" max="600" step="1">
+				<input id="popupWidth" class="sizeInput" title="Width" name="popupWidth" type="number" min="200" max="800" step="1"><input id="popupHeight" class="sizeInput" title="Height" name="popupHeight" type="number" min="100" max="600" step="1">
 			</div>
 		</label>
 		<label class="flexLabel">Font size<input id="fsize" name="fsize" type="number" step="0.1"></label>
@@ -56,7 +56,7 @@
 		<label class="flexLabel">Additional spacing between numbered list items<input id="margin" name="margin" type="number" step="0.1"></label>
 
 	<h3>Preview</h2>
-	<div class="iframecontainer"><iframe src="/popup/preview.html" title="preview for popup"></iframe></div>
+	<div id="previewContainer"><iframe src="/popup/preview.html" title="preview for popup"></iframe></div>
 	<script src="options.js"></script>
 </body>
 </html>
