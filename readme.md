@@ -3,10 +3,10 @@ Right Click Wiktionary is a Firefox web-extension that enables the user to searc
 
 The Right Click Wiktionary extension is unlicense'd.
 
-# Requirements
+## Requirements
 This extension requires Firefox 57. [https://addons.mozilla.org/en-US/firefox/addon/right-click-wiktionary/](https://addons.mozilla.org/en-US/firefox/addon/right-click-wiktionary/)
 
-# Debugging the Extension
+## Debugging the Extension
 To debug Right Click Wiktionary:
 1. Clone this repository
 2. Init submodules with `git submodule update --init`
