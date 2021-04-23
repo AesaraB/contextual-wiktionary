@@ -46,14 +46,6 @@ h4.auto-scrolled[id] {
 	}
 }
 
-/* Some chinese definitions come with their own bg-color.
- * It totally messes up the display.
- * Remove it with this.
- */
-body *:not(button):not(a) {
-	background-color: unset !important;
-}
-
 ol > li:first-child {
 	margin-top: 0;
 }
@@ -62,7 +54,11 @@ ol > li:first-child {
 /* New CSS Starts Here */
 
 body {
-	margin: 8px 12px 0;
+	padding: 8px 12px 0;
+}
+/* Strip characters of any defined background-color, useful for some Chinese characters. */
+body *:not(button):not(a) {
+	background-color: unset !important;
 }
 
 /* Header */ 

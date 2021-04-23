@@ -4,11 +4,19 @@
 /* Text and Layout */
 
 body {
-  margin: 8px 12px;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 8px 12px;
   font-family: "Segoe UI", "San Francisco", "Ubuntu", "Fira Sans", "Roboto";
   font-size: 15px;
   font-weight: 400;
   max-width: 45em;
+}
+
+body *,
+body *:before,
+body *:after {
+	box-sizing: border-box;
 }
 
 /* ---- Headers */
@@ -32,6 +40,7 @@ h4 {
   font-weight: 400;
 }
 
+small,
 h5 {
   font-size: 13px;
   font-weight: 400;
@@ -113,23 +122,56 @@ ol > li {
   opacity: 40%;
 }
 
-/* ---- Search */
-input[type="search"] {
+/* ---- Alphabetical and Numerical Input Fields */
+input[type="text"],
+input[type="number"],
+input[type="search"],
+input[type="url"] {
   border-radius: 2px;
   padding: 0 8px;
   width: auto;
   height: 32px;
+  margin: 4px 8px 4px 4px;
   border: 1px solid var(--white-100);
   cursor: auto;
 }
-input[type="search"]:hover {
+input[type="text"]:hover,
+input[type="number"]:hover,
+input[type="search"]:hover,
+input[type="url"]:hover {
   border-color:var(--grey-90-a30)
 }
-input[type="search"]:focus {
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus {
   border-color:var(--blue-50)!important;
   outline: 0;
 }
 
+/* ---- Checkboxes */
+input[type="checkbox"] {
+  display: none;
+}
+input[type="checkbox"] + label {
+	display: inline-block;
+	margin: 4px 0;
+}
+input[type="checkbox"] + label:before {
+	display: inline-block;
+	content: "";
+	
+	height: 16px;
+	width: 16px;
+	border: 1px solid var(--grey-90-a30);
+	border-radius: 2px;
+	margin: 0 4px -3px;
+	background: var(--grey-90-a10);
+}
+input[type="checkbox"]:checked + label:before {
+	background: var(--blue-60) url(../icons/checkboxCheck.svg) no-repeat center/16px;
+	border: none;
+}
 
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this

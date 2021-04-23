@@ -29,3 +29,14 @@ ul.radios {
 	list-style: none;
 }
 
+/* Justify input alignment */
+.flexLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Numerical Input Boxes */
+.sizeInput {
+	max-width: 5em;
+}

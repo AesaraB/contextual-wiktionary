@@ -13,34 +13,21 @@
 </head>
 <body>
 	<div>
-		<h2>Wiktionary language</h2>
-		<p>Blank means you are using the pre-set English Wiktionary. Only the pre-set has the customized display style.</p>
+		<h2>Wiktionary Source URL</h2>
 		<div>
-			<input type="text" name="wiktionaryapi" id="wiktionaryapi" placeholder="Specify url. e.g. en.wiktionary.org">
-			<label><input type="checkbox" name="alternateapi" id="alternateapi" checked>Use compact formatting.</label>
+			<label>
+				Use a custom Wiktionary URL.
+				<br>
+				<input type="text" name="wiktionaryapi" id="wiktionaryapi" placeholder="e.g. en.wiktionary.org">
+			</label>
+			<br>
+			<input type="checkbox" name="alternateapi" id="alternateapi" checked>
+			<label class="labelCheckbox" for="alternateapi"><small>Use compact formatting.</small></label>
+			<br>
+			<small><i>
+				Due to API limitations, only the English Wiktionary (en.wiktionary.org) supports custom styling & formatting.
+			</i></small>
 		</div>
-
-		<div>
-			<p>Example values:</p>
-			<ul>
-				<li>zh.wiktionary.org</li>
-				<li>fr.wiktionary.org</li>
-				<li>pl.wiktionary.org</li>
-				<li>en.wiktionary.org
-					<ul>
-						<li>This will result in the results displaying differently than the pre-set.</li>
-					</ul>
-				</li>
-				<li>la.wiktionary.org
-					<ul>
-						<li>The "compact formatting" setting doesn't work for all versions of wiktionary, so uncheck it if you get errors.</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-
-		<p>Styling isn't applied if using non-default. Instead, it will open the full Wiktionary page in the popup. Saves automatically.</p>
-		<p>PS. blame Mozilla if the text goes offscreen or similar . . .</p>
 	</div>
 
 <h2>Pop-up Appearance Options</h2> 
@@ -59,13 +46,14 @@
 		</ul>
 
 	<h3>Pop-up Customisation</h3>
-	<h4> Pop-up Max Size</h4>
-		<label><input id="maxwidth" name="maxwidth" type="number" step="1"> Width (Max 800)</label>
-		<label><input id="maxheight" name="maxheight" type="number" step="1"> Height (Max 600)</label>
-	<h4>Line Height</h4>
-		<label><input id="fsize" name="fsize" type="number" step="0.1"> Font size</label>
-		<label><input id="spacing" name="spacing" type="number" step="0.1"> List row spacing</label>
-		<label><input id="margin" name="margin" type="number" step="0.1"> Extra spacing between numbered list items</label>
+		<label class="flexLabel">Pop-up width and height
+			<div>
+				<input id="maxwidth" class="sizeInput" title="Width" name="maxwidth" type="number" min="200" max="800" step="1"><input id="maxheight" class="sizeInput" title="Height" name="maxheight" type="number" min="100" max="600" step="1">
+			</div>
+		</label>
+		<label class="flexLabel">Font size<input id="fsize" name="fsize" type="number" step="0.1"></label>
+		<label class="flexLabel">Spacing between listed items<input id="spacing" name="spacing" type="number" step="0.1"></label>
+		<label class="flexLabel">Additional spacing between numbered list items<input id="margin" name="margin" type="number" step="0.1"></label>
 
 	<h3>Preview</h2>
 	<div class="iframecontainer"><iframe src="/popup/preview.html" title="preview for popup"></iframe></div>

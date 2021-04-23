@@ -20,7 +20,14 @@ a:any-link:focus {
 	box-shadow: 0 0 0 2px #0a84ff, 0 0 0 6px rgba(10, 132, 255, 0.3);
 }
 
-/* Search Input */
+/* Input Colors */
+input[type="text"],
+input[type="number"],
+input[type="search"],
+input[type="url"] {
+	border-color: var(--grey-90-a20);
+}
+/* ---- Search Input */
 #searchInput {
 	background: url(../../icons/searchDark.svg) no-repeat calc(100% - 4px) center/20px;
 	border-bottom: 2px solid var(--white-100);

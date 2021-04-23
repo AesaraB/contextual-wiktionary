@@ -5,8 +5,8 @@ var wiktionaryapi
 const normalize = word => word.trim().toUpperCase()===word.trim() ? word.trim() : word.trim().replace(/ /g, '_').toLowerCase()
 browser.contextMenus.create({
 	id: 'Wiktionary',
-	title: 'Wiktionary',//browser.i18n.getMessage("contextMenuItem"),
-	contexts: ['selection']
+	title: "Define '%s'",//browser.i18n.getMessage("contextMenuItem"),
+	contexts: ['selection'] 
 })
 
 configs.$loaded.then(res => {
@@ -18,7 +18,7 @@ function translate ( onClickData ) {
 	selectionText = onClickData.selectionText
 	let popup
 	let anchor = configs._anchor || ''
-	if (wiktionaryapi !== '') {
+	if (wiktionaryapi !== 'en.wiktionary.org' || '') {
 		if (!alternateapi) {
 			popup = `https://${wiktionaryapi}/wiki/${normalize(selectionText)}`
 		} else {
