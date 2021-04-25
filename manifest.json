@@ -8,10 +8,29 @@
     "default_title": "Wiktionary Popup",
     "default_popup": "popup/popup.html",
     "browser_style": true,
-    "default_icon": "resources/icons/WiktionaryLogo.svg"
+	"theme_icons": [{
+		"light": "resources/icons/WiktionaryLogoDark.svg",
+		"dark": "resources/icons/WiktionaryLogoLight.svg",
+		"size": 16
+	}, {
+		"light": "resources/icons/WiktionaryLogoDark.svg",
+		"dark": "resources/icons/WiktionaryLogoLight.svg",
+		"size": 32
+	}, {
+		"light": "resources/icons/WiktionaryLogoDark.svg",
+		"dark": "resources/icons/WiktionaryLogoLight.svg",
+		"size": 48
+	}, {
+		"light": "resources/icons/WiktionaryLogoDark.svg",
+		"dark": "resources/icons/WiktionaryLogoLight.svg",
+		"size": 96
+	}]
   },
   "icons": {
-    "48": "resources/icons/WiktionaryLogo.svg"
+	"16": "resources/icons/WiktionaryLogo.svg",
+	"32": "resources/icons/WiktionaryLogo.svg",
+	"48": "resources/icons/WiktionaryLogo.svg",
+	"96": "resources/icons/WiktionaryLogo.svg"
   },
   "background": {
     "scripts": [
