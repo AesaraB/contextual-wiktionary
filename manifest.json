@@ -16,8 +16,8 @@
   "background": {
     "scripts": [
       "/options/webextensions-lib-configs/Configs.js",
-      "common.js",
-      "background.js"
+      "/scripts/defaultConfig.js",
+      "/scripts/defineSelection.js"
     ]
   },
   "permissions": [

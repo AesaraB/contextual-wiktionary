@@ -1,11 +1,8 @@
 // https://gitlab.com/losnappas/Context-menu-Wiktionary
 
 /* --- TODO --- 
-- Add a search function
 - Find a way to properly integrate proper nouns, whether or not they have definitions in lowercase.
-- Add a footer and stuff
 - Add a loading screen
-- Fill no definition popup with content, and find workaround for 400px min-height rule
 */
 
 'use strict';
@@ -79,50 +76,50 @@ function noDefinition() { // This script runs when searchText is blank.
 			extLinkTitle = `Open Wiktionary.org in a new tab`;
 			extLinkHref = `https://en.wiktionary.org/`;
 			
-			defPageTemplate(searchPlaceholder, extLinkTitle, extLinkHref);
-			defPageFooterTemplate()
+			populateHeader(searchPlaceholder, extLinkTitle, extLinkHref);
+			populateFooter()
 }
 
 function translate(searchText) {
-	/*
-		Fetches Wiki dictionary (Wiktionary) meaning for selected word.
-		Wiktionary gives <b> and <i> etc tags too.
-	*/
-	fetch(WIKTIONARYURL(searchText), {
+	// Wiktionary gives <b> and <i> etc tags too.
+	fetch(WIKTIONARYURL(searchText), { // Fetches Wiki dictionary (Wiktionary) meaning for selected word.
 		method: 'GET',
 		headers: new Headers({
 			'Api-User-Agent': `Context_Menu_Dictionary_Firefox_extension/1.0; (${HOMEPAGE}; ${MYEMAIL})`,
 			redirect: true,
 		}),
 	})
-		.then((res) => {
+
+		// The next few sections are for errors and the likes, imo they should be put in some sort of function, instead of this one giant function.
+
+		.then((res) => { // I think this is for errors in general?
 			if (res.ok) {
 				return res.json();
 			} else {
 				throw new Error('' + res.status + ': ' + res.statusText);
 			}
 		})
-		.then((res) => {
+		
+		.then((res) => { // This section is for words with defintions, but not in English.	
 			//store result in upper scope
 			translations = res;
 			if (!translations.en) {
-				// old way: // throw new Error("No English meaning found. Try the <b><i>"+ BUTTONTEXT +"</i></b> button below.")
-				// see: last .then of this chain.
 				translations.en = [
 					{
-						partOfSpeech: 'No English meaning found.',
+						partOfSpeech: 'No English definition found.',
 					},
 				];
 			}
 		})
-		.catch(async (e) => {
-			if (translations == null) {
+		
+		.catch(async (e) => { 
+			if (translations == null) { // This section is for words with no definitions whatsoever.
 				translations = {};
 			}
 
 			// Different spellings.
 			let alternate404Spellings = {};
-			if (e.message.indexOf('404') !== -1) {
+			if (e.message.indexOf('404') !== -1) { // If other similar words are found. I don't think this is working.
 				const searchResults = await fetch(SEARCHURL(searchText))
 					.then((res) => (res.ok && res.json()) || {})
 					.catch(() => ({}));
@@ -153,7 +150,7 @@ function translate(searchText) {
 								'<i>Know what it means?</i>',
 								`<a title="${humanize(
 									searchText
-								)}" class="link-actual" target="_blank" id="addWord">Submit it to the Wiktionary.</a> <small>(Opens in a new tab.)</small>`,
+								)}" class="link-actual" target="_blank" id="addWord">Submit it to the Wiktionary.</a>`,
 							],
 						},
 						alternate404Spellings,
@@ -165,12 +162,11 @@ function translate(searchText) {
 			
 			// Search Button
 			searchPlaceholder = `${humanize(searchText).toTitleCase()}`;
-			
 			// External Link Button
 			extLinkTitle = `Open '${humanize(searchText)}' in a new tab`;
 			extLinkHref = WORDURL(searchText);
 			
-			defPageTemplate(searchPlaceholder, extLinkTitle, extLinkHref);
+			populateHeader(searchPlaceholder, extLinkTitle, extLinkHref);
 
 			// English translations:
 			// translation is an array like [{partofspeect{},definitions:[definition:{},definition:{}]}]
@@ -183,7 +179,7 @@ function translate(searchText) {
 			if (Object.keys(translations).length > 1) {
 				document.body.appendChild(createSlider());
 			}
-			defPageFooterTemplate()
+			populateFooter()
 		})
 		
 		.then(() => {
@@ -212,22 +208,13 @@ function translate(searchText) {
 		);
 }
 
-function defPageTemplate() { // "definition" Page Template
-/*
-	elements universal to all pages on the popup should be:
-		- search bar (maybe not in a help or settings page)
-		- external link to wiktionary.org
-		- the footer (maybe we can call this in another function)
-*/
-
-			// Popup Header Template
-			// This area contains the definition title, search bar, and external site link.
+function populateHeader() { // This function creates the popup header.
 			const header = document.createElement('header');
 			header.innerHTML += `
 			<form id="search">
 				<input id="searchInput" type="search" name="search" title="Search Wiktionary.org">
 			</form>
-			<a id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></a>`;
+			<a id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></a>`; // This area contains the search term/search bar, and external site link.
 			
 			// ---- Search Button
 			const search = header.querySelector('#search');
@@ -248,7 +235,61 @@ function defPageTemplate() { // "definition" Page Template
 
 }
 
-function defPageFooterTemplate() { //Merge this with defPageTemplate later
+function add(translation, popup, addingExtra) { // This function is responsible for populating the popup body. // popup means context
+	const definitions = translation.definitions;
+
+	const partOfSpeech = translation.partOfSpeech;
+
+	if (addingExtra) { // (Languages expander) Create a section for each language definition.
+		const language = translation.language;
+		if (language) {
+			const langHeading = document.createElement('h2');
+			langHeading.id = '' + language.replace(/ /g, '_');
+			const slider = document.getElementById('slider');
+			const lang = document.createTextNode(language);
+			langHeading.appendChild(lang);
+			slider.appendChild(langHeading);
+		}
+	}
+
+	if (partOfSpeech) { // This is mainly used as a heading to categorise definitions (as a noun, verb, adjective, etc). Also used when spitting out errors.
+		const p = document.createElement('h3');
+		const t = document.createTextNode(partOfSpeech);
+		p.appendChild(t);
+		popup.appendChild(p);
+	}
+
+	if (definitions) {
+		//definitions
+		const ol = document.createElement('ol');
+		for (const definition of definitions) {
+			const li = document.createElement('li');
+
+			let frag = createFragment(definition.definition);
+			li.appendChild(frag.content);
+
+			if (definition.examples) {
+				const ul = document.createElement('ul');
+
+				//definition used in a sentence
+				for (const example of definition.examples) {
+					const li = document.createElement('li');
+					frag = createFragment(example);
+
+					li.appendChild(frag.content);
+					ul.appendChild(li);
+				}
+
+				li.appendChild(ul);
+			}
+
+			ol.appendChild(li);
+		}
+		popup.appendChild(ol);
+	}
+}
+
+function populateFooter() { // This function creates the popup footer.
 			// Footer Template
 			// This area contains the text license.
 			const footer = document.createElement('footer');
@@ -347,63 +388,6 @@ function scrollDown(cur, tries) {
 		setTimeout(() => scrollDown(x, 0), SCROLLDOWNWAIT);
 	} else if (tries < 10) {
 		setTimeout(() => scrollDown(cur, tries + 1), SCROLLDOWNWAIT);
-	}
-}
-
-// popup means context
-function add(translation, popup, addingExtra) {
-	const definitions = translation.definitions;
-
-	const partOfSpeech = translation.partOfSpeech;
-
-	if (addingExtra) {
-		const language = translation.language;
-		if (language) {
-			// Put a heading to indicate the language we're using now.
-			const h5 = document.createElement('h2');
-			h5.id = '' + language.replace(/ /g, '_');
-			const slider = document.getElementById('slider');
-			const lang = document.createTextNode(language);
-			h5.appendChild(lang);
-			slider.appendChild(h5);
-		}
-	}
-
-	// noun/verb/etc
-	if (partOfSpeech) {
-		const p = document.createElement('h3');
-		const t = document.createTextNode(partOfSpeech);
-		p.appendChild(t);
-		popup.appendChild(p);
-	}
-
-	if (definitions) {
-		//definitions
-		const ol = document.createElement('ol');
-		for (const definition of definitions) {
-			const li = document.createElement('li');
-
-			let frag = createFragment(definition.definition);
-			li.appendChild(frag.content);
-
-			if (definition.examples) {
-				const ul = document.createElement('ul');
-
-				//definition used in a sentence
-				for (const example of definition.examples) {
-					const li = document.createElement('li');
-					frag = createFragment(example);
-
-					li.appendChild(frag.content);
-					ul.appendChild(li);
-				}
-
-				li.appendChild(ul);
-			}
-
-			ol.appendChild(li);
-		}
-		popup.appendChild(ol);
 	}
 }
 
