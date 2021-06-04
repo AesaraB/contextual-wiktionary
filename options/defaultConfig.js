@@ -12,4 +12,3 @@ var configs = new Configs({
 	alternateapi: true,
 	_anchor: '',
 })
-

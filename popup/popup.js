@@ -49,8 +49,9 @@ function isUndesirable(str){
     return str === null || str.match(/^ *$/) !== null;
 }
 
-browser.runtime.onMessage.addListener((selectionText) => { // Background.js responds with the selection text.
+browser.runtime.onMessage.addListener((selectionText) => { // defineSelection.js responds with the selection text.
 	searchText = selectionText || '';
+	
 
 /*
 	Instead of normalising, perhaps integrate checks for proper nouns?
@@ -304,12 +305,23 @@ function populateFooter() { // This function creates the popup footer.
 function define(word) {
 	document.body.innerHTML = '';
 	searchText = `${word}`;
+	console.log('defining', searchText);
+	
+	
+	// Workaround to make sure that autoscroll works when searching for a word.
+	// This solution has an issue where autoscroll only begins to work when the popup is refreshed.
+	let popup
+	let anchor = configs._anchor || ''
+	popup = browser.runtime.getURL('popup/popup.html#' + (anchor.replace(/ /g, '_')))
+	browser.browserAction.setPopup({
+		'popup': popup
+	})
+	
 	if (isUndesirable(searchText)) { // I really don't like this if statement, ideally we would sort out the normalisation function and call it here.
 		noDefinition();
 	} else {
 		translate(searchText);
 	}
-	console.log('defining', searchText);
 }
 
 // just another function to make a link.. This time for the header.

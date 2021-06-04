@@ -1,9 +1,10 @@
 {
-  "description": "Wiktionary in the context menu",
+  "name": "Right Click Wiktionary Neue",
+  "description": "A seamless Wiktionary integration for Firefox.",
+  "version": "1.0",
+  "homepage_url": "https://github.com/aesarab/right-click-wiktionary",
   "manifest_version": 2,
-  "name": "Right Click Wiktionary",
-  "version": "11.0",
-  "homepage_url": "https://gitlab.com/losnappas/Context-menu-Wiktionary",
+  
   "browser_action": {
     "default_title": "Wiktionary Popup",
     "default_popup": "popup/popup.html",
@@ -26,28 +27,38 @@
 		"size": 96
 	}]
   },
+  
+  
   "icons": {
 	"16": "resources/icons/WiktionaryLogo.svg",
 	"32": "resources/icons/WiktionaryLogo.svg",
 	"48": "resources/icons/WiktionaryLogo.svg",
 	"96": "resources/icons/WiktionaryLogo.svg"
   },
+  
+  
   "background": {
     "scripts": [
       "/options/webextensions-lib-configs/Configs.js",
-      "/scripts/defaultConfig.js",
+      "/options/defaultConfig.js",
       "/scripts/defineSelection.js"
     ]
   },
+  
+  
   "permissions": [
     "contextMenus",
     "https://en.wiktionary.org/api/rest_v1/page/definition/*",
     "storage"
   ],
+  
+  
   "options_ui": {
     "page": "options/options.html",
     "browser_style": true
   },
+  
+  
   "applications": {
     "gecko": {
       "strict_min_version": "57.0",
