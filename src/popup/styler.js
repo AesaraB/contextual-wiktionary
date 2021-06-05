@@ -1,4 +1,6 @@
-/* global configs */
+// This script loads the theme chosen in the config.
+
+
 configs.$loaded.then(({style, fsize, spacing, margin, popupWidth, popupHeight, ...customs}) => {
 
 	const globalStyle = document.createElement('style')

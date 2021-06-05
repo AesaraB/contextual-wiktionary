@@ -1,5 +1,4 @@
-// Was gonna add this to wiktionary.org popup, but decided against that.
-// That's why this was put in a separate file.
+// This script modifies the config to accomodate any other languages the user may want to see first.
 
 function csrunner() {
     const els = document.querySelectorAll('#content h2[id]');

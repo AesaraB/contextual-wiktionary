@@ -1,4 +1,4 @@
-// This script is used when defining a word from the context menu, and to listen to initialisation of the popup otherwise.
+// This script is used when defining a word from the context menu, and to listen for initialisation of the popup otherwise.
 
 var selectionText
 var alternateapi
