@@ -313,7 +313,13 @@ function populateFooter() { // This function creates the popup footer.
 function define(word) {
 	console.log("define function called")
 	searchText = `${word}`;
+	
+	if (isUndesirable(searchText)) {
+		noDefinition();
+	}
+	else {
 	translate(searchText);
+	}
 }
 
 // just another function to make a link.. This time for the header.
