@@ -1,39 +1,31 @@
 {
-  "name": "Right Click Wiktionary",
-  "version": "1.0",
-  "description": "A seamless Wiktionary integration for Firefox.",
-  "main": ".eslintrc.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint . --ext=.js --report-unused-disable-directives",
-    "fix": "eslint . --ext=.js --report-unused-disable-directives --fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aesarab/right-click-wiktionary"
-  },
-  "author": "Aesara",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aesarab/right-click-wiktionary/issues"
-  },
-  "homepage": "https://github.com/aesarab/right-click-wiktionary#readme",
-  
-  
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^9.2.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
-  },
-  "dependencies": {},
-  "keywords": [
-    "wiktionary",
-    "web",
-    "extension",
-    "firefox",
-    "dictionary"
-  ]
+	"name": "Right Click Wiktionary Neue",
+	"version": "1.0",
+	"description": "A seamless Wiktionary integration for Firefox.",
+	"main": "src/manifest.json",
+	},
+	
+	"author": "Aesara",
+	"license": "Unlicense",
+	
+	"bugs": {
+		"url": "https://github.com/aesarab/right-click-wiktionary/issues"
+	},	
+	"homepage": "https://github.com/aesarab/right-click-wiktionary#readme",
+	
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/aesarab/right-click-wiktionary"
+	},
+	
+	"devDependencies": {},
+	"dependencies": {},
+	
+	"keywords": [
+		"wiktionary",
+		"web",
+		"extension",
+		"firefox",
+		"dictionary"
+	]
 }

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Right Click Wiktionary</title>
+	<link rel="stylesheet" href="/resources/stylesheet/main.css">
+	<link rel="stylesheet" href="/resources/stylesheet/popup.css">
+	<script src="/options/webextensions-lib-configs/Configs.js"></script>
+	<script src="/options/defaultConfig.js"></script>
+	<script src="styler.js"></script>
+</head>
+<body id="content" class="right-click-wiktionary">
+	<header>
+		<form id="search">
+			<input id="searchInput" type="search" name="search" title="Search Wiktionary.org" placeholder="The">
+		</form>
+		<a id="externalLink" class="default-color-button default-button" title="Open 'the' in a new tab" href="#"></a>
+	</header>
+	<p>Article</p>
+	<ol>
+		<li><span class="use-with-mention" about="#mwt64"><a href="#" title="definite">Definite</a> grammatical <a href="#" title="article">article</a> that implies necessarily that an entity it articulates is <a href="#" title="presuppose">presupposed</a>; something already <a href="#" title="mention">mentioned</a>, or completely <a href="#" title="specify">specified</a> later in that same sentence, or <a href="#" title="assume">assumed</a> already completely specified.</span>
+			<ul>
+				<li><i>I’m reading <b>the</b> book.</i> (Compare <i>I’m reading <b>a</b> book.</i>)</li>
+				<li><i><b>The</b> street in front of your house.</i> (Compare <i><b>A</b> street in Paris.</i>)</li>
+				<li><i><b>The</b> men and women watched <b>the</b> man give <b>the</b> birdseed to <b>the</b> bird.</i>
+				</li>
+			</ul>
+		</li>
+		<li><span class="use-with-mention" about="#mwt66">Used before a noun modified by a <a href="#" title="restrictive">restrictive</a> <a href="#" title="relative clause">relative clause</a>, indicating that the noun refers to a single referent defined by the relative clause.</span>
+			<ul>
+				<li><i><b>The</b> street that runs through my hometown.</i>
+				</li>
+			</ul>
+		</li>
+		<li><span class="use-with-mention" about="#mwt67">Used before an object considered to be <a href="#" title="unique">unique</a>, or of which there is only one at a time.</span>
+			<ul>
+				<li><i>No one knows how many galaxies there are in <b>the</b> universe.</i>
+				</li>
+				<li><i>God save <b>the</b> Queen!</i>
+				</li>
+			</ul>
+		</li>
+		<li><span class="use-with-mention" about="#mwt70">Used before a <a href="#" title="superlative">superlative</a> or an <a href="#" title="ordinal number">ordinal number</a> modifying a noun, to indicate that the noun refers to a single item.</span>
+			<ul>
+				<li><i>That was <b>the</b> best apple pie ever.</i>
+				</li>
+			</ul>
+		</li>
+		<li><span class="use-with-mention" about="#mwt71">Added to a superlative or an ordinal number to make it into a substantive.</span>
+			<ul>
+				<li><i>That apple pie was <b>the</b> best.</i>
+				</li>
+			</ul>
+		</li>
+		<li><span class="use-with-mention" about="#mwt73">Introducing a singular term to be taken <a href="#" title="generically">generically</a>: preceding a name of something standing for a whole class.</span>
+		</li>
+		<li><span class="use-with-mention" about="#mwt75">Used before an adjective, indicating all things (especially persons) described by that adjective.</span>
+			<ul>
+				<li><i>Feed <b>the</b> hungry, clothe <b>the</b> naked, comfort <b>the</b> afflicted, and afflict <b>the</b> comfortable.</i>
+				</li>
+			</ul>
+		</li>
+		<li><span class="use-with-mention" about="#mwt77">Used to indicate a certain example of (a noun) which is usually of most concern or most common or familiar.</span>
+			<ul>
+				<li><i>No one in <b>the</b> whole country had seen it before.</i>
+				</li>
+				<li><i>I don't think I'll get to it until <b>the</b> morning.</i>
+				</li>
+			</ul>
+		</li>
+		<li><span class="use-with-mention" about="#mwt79">Used before a body part (especially of someone previously mentioned), as an alternative to a <a href="#" title="possessive pronoun">possessive pronoun</a>.</span>
+			<ul>
+				<li><i>A stone hit him on <b>the</b> head.</i> (= “A stone hit him on his head.”)</li>
+			</ul>
+		</li>
+		<li><span class="use-with-mention" about="#mwt81">When stressed, indicates that it describes an object which is considered to be best or exclusively worthy of attention.</span>
+			<ul>
+				<li><i>That is</i>  <b>the</b>  <i>hospital to go to for heart surgery.</i>
+				</li>
+			</ul>
+		</li>
+	</ol>
+	<p>Adverb</p>
+	<ol>
+		<li><span class="use-with-mention" about="#mwt520">With a <a href="#" title="comparative">comparative</a> or with <i class="Latn mention" lang="en"><a href="#" title="more">more</a></i> and a verb phrase, establishes a correlation with one or more other such comparatives.</span>
+			<ul>
+				<li><i><b>The</b> hotter(,) <b>the</b> better.</i>  <span class="gloss-brac" about="#mwt521">(</span><span class="gloss-content" about="#mwt521">comma usually omitted in such very short expressions</span><span class="gloss-brac" about="#mwt521">)</span>
+				</li>
+				<li><i><b>The</b> more I think about it, <b>the</b> weaker it looks.</i>
+				</li>
+				<li><i><b>The</b> more money donated, <b>the</b> more books purchased, and <b>the</b> more happy children.</i>
+				</li>
+				<li><i>It looks weaker and weaker, <b>the</b> more I think about it.</i>
+				</li>
+			</ul>
+		</li>
+		<li>{{non-gloss definition|1=With a <a href="#" title="comparative">comparative</a>, and often with <i class="Latn mention" about="#mwt522" lang="en"><a href="#" title="for it">for it</a></i>, indicates a result more like said comparative. This can be negated with <i class="Latn mention" about="#mwt523" lang="en"><a href="#" title="none">none</a></i>.
+			<ul>
+				<li><i>It was a difficult time, but I’m <b>the</b> wiser for it.</i>
+				</li>
+				<li><i>It was a difficult time, and I’m {none - not any} <b>the</b> wiser for it.</i>
+				</li>
+				<li><i>I'm much <b>the</b> wiser for having had a difficult time like that.</i>
+				</li>
+			</ul>
+		</li>
+	</ol>
+	<p>Preposition</p>
+	<ol>
+		<li>For each; <a href="#" title="per">per</a>.
+			<ul>
+				<li>valued at half a pound <b>the</b> bushel; paying seven dollars <b>the</b> year interest</li>
+			</ul>
+		</li>
+	</ol>
+	<div class="slider-wrapper closed">
+		<button class="primary-color-button default-button" id="languages-button">Other languages</button>
+		<div id="slider" class="slider">
+			<h4 id="Crimean_Gothic">Crimean Gothic</h4>
+			<p>Article</p>
+			<ol>
+				<li><a href="#">the</a>
+				</li>
+			</ol>
+			<h4 id="Eastern_Arrernte">Eastern Arrernte</h4>
+			<p>Pronoun</p>
+			<ol>
+				<li><a href="#" title="I">I</a>  <span class="gloss-brac" about="#mwt596">(</span><span class="gloss-content" about="#mwt596">first person singular pronoun</span><span class="gloss-brac" about="#mwt596">)</span>
+				</li>
+			</ol>
+			<h4 id="Hadza">Hadza</h4>
+			<p>Pronoun</p>
+			<ol>
+				<li>you (thou)</li>
+			</ol>
+			<h4 id="Middle_English">Middle English</h4>
+			<p>Article</p>
+			<ol>
+				<li><span class="form-of-definition use-with-mention" about="#mwt606">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a href="#" title="þe">þe</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">the</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span>
+					</span>
+				</li>
+			</ol>
+			<p>Pronoun</p>
+			<ol>
+				<li><span class="form-of-definition use-with-mention" about="#mwt610">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a href="#" title="þe">þe</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">thee</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span>
+					</span>
+				</li>
+			</ol>
+			<p>Pronoun</p>
+			<ol>
+				<li><span class="form-of-definition use-with-mention" about="#mwt612">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a href="#" title="þei">þei</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">they</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span>
+					</span>
+				</li>
+			</ol>
+			<p>Verb</p>
+			<ol>
+				<li><span class="form-of-definition use-with-mention" about="#mwt614">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a href="#" title="theen">theen</a></i></span></span>
+				</li>
+			</ol>
+			<h4 id="Murrinh-Patha">Murrinh-Patha</h4>
+			<p>Noun</p>
+			<ol>
+				<li><a href="#" title="ear">ear</a>
+				</li>
+			</ol>
+			<h4 id="Old_High_German">Old High German</h4>
+			<p>Particle</p>
+			<ol>
+				<li><a href="#" title="that">that</a>, <a href="#" title="who">who</a>, <a href="#" title="which">which</a>
+				</li>
+			</ol>
+			<h4 id="Old_Saxon">Old Saxon</h4>
+			<p>Determiner</p>
+			<ol>
+				<li><a href="#" title="that">that</a>, <a href="#" title="that one">that one</a>
+					<ul>
+						<li><i><b>them</b> uuīha uuīsa lēstean</i>: To obey <b>that</b> holy wise.</li>
+					</ul>
+				</li>
+			</ol>
+			<p>Particle</p>
+			<ol>
+				<li><a href="#" title="that">that</a>, <a href="#" title="who">who</a>, <a href="#" title="which">which</a>
+				</li>
+			</ol>
+			<h4 id="South_Slavey">South Slavey</h4>
+			<p>Noun</p>
+			<ol>
+				<li><a href="#" title="belt">belt</a>
+				</li>
+			</ol>
+			<h4 id="Danish">Danish</h4>
+			<p>Noun</p>
+			<ol>
+				<li><span class="form-of-definition use-with-mention" about="#mwt591">Alternative spelling of <span class="form-of-definition-link"><i class="Latn mention" lang="da"><a href="#" title="te">te</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">tea</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span>
+					</span>
+				</li>
+			</ol>
+			<h4 id="Interlingua">Interlingua</h4>
+			<p>Noun</p>
+			<ol>
+				<li><a href="#" title="tea">tea</a>
+				</li>
+			</ol>
+			<h4 id="Irish">Irish</h4>
+			<p>Adjective</p>
+			<ol>
+				<li><span class="form-of-definition use-with-mention" about="#mwt604">Lenited form of <span class="form-of-definition-link"><i class="Latn mention" lang="ga"><a href="#" title="te">te</a></i></span></span><span about="#mwt604">.</span>
+				</li>
+			</ol>
+			<h4 id="Scots">Scots</h4>
+			<p>Determiner</p>
+			<ol>
+				<li><span class="Latn" about="#mwt640" lang="en"><a href="#" title="the">the</a></span>
+				</li>
+			</ol>
+			<h4 id="Serbo-Croatian">Serbo-Croatian</h4>
+			<p>Conjunction</p>
+			<ol>
+				<li><span class="form-of-definition use-with-mention" about="#mwt645">Alternative spelling of <span class="form-of-definition-link"><i class="Latn mention" lang="sh"><a href="#" title="da">da</a></i></span></span>
+					<ul>
+						<li><i>neki kreten <b>the</b> ih <a href="#" title="drkati">drka</a> emotivno</i>
+						</li>
+						<li><i><b>the</b> ovo okačim na <a href="#" title="fb">fb</a> wall, garant ne bih opstala od borKINJa za ženska prava</i>
+						</li>
+					</ul>
+				</li>
+			</ol>
+			<h4 id="Swedish">Swedish</h4>
+			<p>Noun</p>
+			<ol>
+				<li><span class="form-of-definition use-with-mention" about="#mwt650">Alternative spelling of <span class="form-of-definition-link"><i class="Latn mention" lang="sv"><a href="#" title="te">te</a></i></span></span>(<a href="#" title="tea">tea</a>)</li>
+			</ol>
+			<h4 id="Vietnamese">Vietnamese</h4>
+			<p>Noun</p>
+			<ol>
+				<li>a kind of <a href="#" title="silk">silk</a>  <a href="#" title="gauze">gauze</a>
+				</li>
+			</ol>
+			<p>Adjective</p>
+			<ol>
+				<li>having a <a href="#" title="strong">strong</a> and <a href="#" title="fragrant">fragrant</a> smell</li>
+			</ol>
+			<h4 id="Welsh">Welsh</h4>
+			<p>Noun</p>
+			<ol>
+				<li><span class="form-of-definition use-with-mention" about="#mwt659">Aspirate mutation of <span class="form-of-definition-link"><i class="Latn mention" lang="cy"><a href="#" title="te">te</a></i></span></span><span about="#mwt659">.</span>
+				</li>
+			</ol>
+		</div>
+	</div>
+</body>
+
+</html>
