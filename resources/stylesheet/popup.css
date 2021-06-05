@@ -72,9 +72,20 @@ ol > li:first-child {
 
 
 /* New CSS Starts Here */
-body {
-	padding: 8px 12px 0;
+
+html {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 }
+
+html::-webkit-scrollbar {
+	display: none;
+}
+
+body {
+	padding: 8px 12px 0
+}
+
 /* Strip characters of any defined background-color, useful for some Chinese characters. */
 body *:not(button):not(a) {
 	background-color: unset !important;
@@ -129,6 +140,7 @@ h3 {
 	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 .slider.closed {
+	display:block;
 	max-height: 0;
 	border: none;
 	padding: 0 12px;

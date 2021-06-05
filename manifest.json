@@ -6,7 +6,7 @@
   "manifest_version": 2,
   
   "browser_action": {
-    "default_title": "Wiktionary Popup",
+    "default_title": "Search Wiktionary",
     "default_popup": "popup/popup.html",
     "browser_style": true,
 	"theme_icons": [{

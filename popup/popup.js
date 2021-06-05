@@ -1,13 +1,7 @@
 // https://gitlab.com/losnappas/Context-menu-Wiktionary
-
-/* --- TODO --- 
-- Find a way to properly integrate proper nouns, whether or not they have definitions in lowercase.
-- Add a loading screen
-*/
+// https://github.com/aesarab/right-click-wiktionary/
 
 'use strict';
-
-// CONSTANT AND VARIABLE DECLARATIONS
 
 // searchText string modification 
 const normalize = (word) => word.trim().replace(/ /g, '_');		// This converts a string into a Wiktionary API URL. Don't conflate this with "humanize".
@@ -33,26 +27,28 @@ var translations;
 
 // Stand-in to remove ambiguity from selectionText.
 var searchText;
+var dontNormalise;
 
 // Used when building the pop-up HTML
 var searchPlaceholder;
 var extLinkTitle;
 var extLinkHref;
 
-// Send message back indicating that the popup is now open & ready.
-window.onload = () => {
-	browser.runtime.sendMessage({ ok: true });
-};
-
-// Prevents undesireable inputs from being translated.
+// Prevents undesirable inputs from being translated.
 function isUndesirable(str){
     return str === null || str.match(/^ *$/) !== null;
 }
 
-browser.runtime.onMessage.addListener((selectionText) => { // defineSelection.js responds with the selection text.
+window.onload = () => { // First, we tell the background script that the popup is initialised.
+	browser.runtime.sendMessage({ok: true});
+};
+browser.runtime.onMessage.addListener((selectionText) => { // Then, the background script replies with the selectionText.
 	searchText = selectionText || '';
-	
+	noDefinition();
+	searchValidation()
+});
 
+function searchValidation() {
 /*
 	Instead of normalising, perhaps integrate checks for proper nouns?
 	i.e. search for original string (if not all caps)
@@ -63,25 +59,36 @@ browser.runtime.onMessage.addListener((selectionText) => { // defineSelection.js
 		case (isUndesirable(searchText)):
 			noDefinition();
 			break;
-		case (searchText.toUpperCase() !== searchText):  // Don't normalise selections that are written in allcaps (for acronyms).
+		case (searchText.toUpperCase() !== searchText):  // Don't normalise strings that are written in allcaps (for acronyms).
 			searchText = searchText.toLowerCase(); // This code normalises the searchText for translation.
 			translate(normalize(searchText));
 			break;
 		default:
+			noDefinition();
 			translate(normalize(searchText));
 	}
-});
+}
 
 function noDefinition() { // This script runs when searchText is blank.
-			searchPlaceholder = `Wiktionary`;
-			extLinkTitle = `Open Wiktionary.org in a new tab`;
-			extLinkHref = `https://en.wiktionary.org/`;
-			
-			populateHeader(searchPlaceholder, extLinkTitle, extLinkHref);
-			populateFooter()
+	if(isUndesirable(searchText)) {
+		searchPlaceholder = `Wiktionary`;
+	}
+	else {
+		searchPlaceholder = `${humanize(searchText).toLowerCase()}`;
+	}
+	
+	extLinkTitle = `Open Wiktionary.org in a new tab`;
+	extLinkHref = `https://en.wiktionary.org/`;
+	
+	document.body.innerHTML = '';
+	populateHeader(searchPlaceholder, extLinkTitle, extLinkHref);
+	populateFooter()
 }
 
 function translate(searchText) {
+	
+	console.log('Defining', searchText);
+	
 	// Wiktionary gives <b> and <i> etc tags too.
 	fetch(WIKTIONARYURL(searchText), { // Fetches Wiki dictionary (Wiktionary) meaning for selected word.
 		method: 'GET',
@@ -161,8 +168,10 @@ function translate(searchText) {
 		})
 		.then(() => { // DEFINITION FOUND
 			
+			document.body.innerHTML = '';
+			
 			// Search Button
-			searchPlaceholder = `${humanize(searchText).toTitleCase()}`;
+			searchPlaceholder = `${humanize(searchText)}`;
 			// External Link Button
 			extLinkTitle = `Open '${humanize(searchText)}' in a new tab`;
 			extLinkHref = WORDURL(searchText);
@@ -300,28 +309,11 @@ function populateFooter() { // This function creates the popup footer.
 			document.body.appendChild(footer);
 }
 
-// Search wiktionary and display result on popup. The same thing as using the context menu.
-// Except now we empty the popup first.
+
 function define(word) {
-	document.body.innerHTML = '';
+	console.log("define function called")
 	searchText = `${word}`;
-	console.log('defining', searchText);
-	
-	
-	// Workaround to make sure that autoscroll works when searching for a word.
-	// This solution has an issue where autoscroll only begins to work when the popup is refreshed.
-	let popup
-	let anchor = configs._anchor || ''
-	popup = browser.runtime.getURL('popup/popup.html#' + (anchor.replace(/ /g, '_')))
-	browser.browserAction.setPopup({
-		'popup': popup
-	})
-	
-	if (isUndesirable(searchText)) { // I really don't like this if statement, ideally we would sort out the normalisation function and call it here.
-		noDefinition();
-	} else {
-		translate(searchText);
-	}
+	translate(searchText);
 }
 
 // just another function to make a link.. This time for the header.
