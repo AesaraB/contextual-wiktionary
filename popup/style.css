@@ -58,7 +58,7 @@ h4.auto-scrolled[id] {
  * It totally messes up the display.
  * Remove it with this.
  */
-body *:not(#plus-button):not(a) {
+body *:not(#plus-button):not(a):not(depnotice) {
 	background-color: unset !important;
 }
 
@@ -194,5 +194,38 @@ footer {
 	margin-top: 0.4em;
 	align-items: baseline;
 	/* Looks a tad big when it is not full height (no scrollbar) but whatever. */
-	padding-bottom: 1em;
+	padding-bottom: 30px;
+}
+
+
+depnotice {
+	font-family: "Segoe UI", "San Francisco", "Ubuntu", "Fira Sans", "Roboto";
+	font-size: 13px;
+	font-weight: 400;
+	color: #0c0c0d;
+	
+	display: block;
+	
+	background: #ededf0;
+	padding: 5px 10px;
+	border-radius: 2px;
+}
+
+depnotice a {
+	color: #0060df!important
+}
+depnotice a:hover {
+	background: transparent!important
+}
+depnotice a:active {
+	color: #003eaa!important
+}
+
+depnotice a:link:active {
+	filter:none
+}
+
+depnotice a:active {
+	color: #0060df!important;
+	box-shadow: 0 0 0 2px #0a84ff, 0 0 0 6px rgba(10, 132, 255, 0.3)!important
 }

@@ -122,6 +122,13 @@ function translate(selectionText) {
 			];
 		})
 		.then(() => {
+			
+			const depnotice = document.createElement('depnotice');
+			depnotice.innerHTML += `
+			<div>Right Click Wiktionary is now depreciated. Please update to <a href="https://addons.mozilla.org/en-GB/firefox/addon/right-click-wiktionary/">Right Click Wiktionary Neue</a>.</div>`;
+			document.body.appendChild(depnotice);
+			
+			
 			//Heading3: the selected word Capitalized Like This
 			const heading = document.createElement('h3');
 			heading.id = 'firstHeading' // Same as wiktionary.org.
@@ -168,6 +175,8 @@ function translate(selectionText) {
 			});
 			document.body.appendChild(footer);
 		})
+		
+		
 		.then(() => {
 			populateSlider();
 			// Add onclick handlers for language headings.
