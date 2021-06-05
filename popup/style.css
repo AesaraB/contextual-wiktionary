@@ -206,9 +206,13 @@ depnotice {
 	
 	display: block;
 	
-	background: #ededf0;
+	background: #ededf0 url("../icon/info.svg") no-repeat 10px center /16px;
 	padding: 5px 10px;
 	border-radius: 2px;
+}
+
+depnotice div {
+	margin-left: 20px;
 }
 
 depnotice a {
