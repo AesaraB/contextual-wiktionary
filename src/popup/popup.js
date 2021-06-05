@@ -222,7 +222,7 @@ function populateHeader() { // This function creates the popup header.
 			const header = document.createElement('header');
 			header.innerHTML += `
 			<form id="search">
-				<input id="searchInput" type="search" name="search" title="Search Wiktionary.org">
+				<input id="searchInput" type="search" name="search" title="Search Wiktionary.org"  autocomplete="off">
 			</form>
 			<a id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></a>`; // This area contains the search term/search bar, and external site link.
 			
