@@ -125,7 +125,7 @@ function translate(selectionText) {
 			
 			const depnotice = document.createElement('depnotice');
 			depnotice.innerHTML += `
-			<div>Right Click Wiktionary is now depreciated. Please update to <a href="https://addons.mozilla.org/en-GB/firefox/addon/right-click-wiktionary/">Right Click Wiktionary Neue</a>.</div>`;
+			<div>Right Click Wiktionary is now depreciated. Please update to <a href="https://addons.mozilla.org/en-GB/firefox/addon/context-wiktionary/">Context Wiktionary</a>.</div>`;
 			document.body.appendChild(depnotice);
 			
 			
