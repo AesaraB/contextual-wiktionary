@@ -1,5 +1,5 @@
 {
-	"name": "Right Click Wiktionary Neue",
+	"name": "Contextual Wiktionary",
 	"version": "1.0",
 	"description": "A seamless Wiktionary integration for Firefox.",
 	"main": "src/manifest.json",
