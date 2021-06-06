@@ -1,0 +1,68 @@
+{
+  "name": "Contextual Wiktionary",
+  "description": "A seamless Wiktionary integration for Firefox.",
+  "version": "1.0",
+  "homepage_url": "https://github.com/aesarab/right-click-wiktionary",
+  "manifest_version": 2,
+  
+  "browser_action": {
+    "default_title": "Search Wiktionary",
+    "default_popup": "popup/popup.html",
+    "browser_style": true,
+	"theme_icons": [{
+		"light": "resources/icons/WiktionaryLogoDark.svg",
+		"dark": "resources/icons/WiktionaryLogoLight.svg",
+		"size": 16
+	}, {
+		"light": "resources/icons/WiktionaryLogoDark.svg",
+		"dark": "resources/icons/WiktionaryLogoLight.svg",
+		"size": 32
+	}, {
+		"light": "resources/icons/WiktionaryLogoDark.svg",
+		"dark": "resources/icons/WiktionaryLogoLight.svg",
+		"size": 48
+	}, {
+		"light": "resources/icons/WiktionaryLogoDark.svg",
+		"dark": "resources/icons/WiktionaryLogoLight.svg",
+		"size": 96
+	}]
+  },
+  
+  
+  "icons": {
+	"16": "resources/icons/WiktionaryLogo.svg",
+	"32": "resources/icons/WiktionaryLogo.svg",
+	"48": "resources/icons/WiktionaryLogo.svg",
+	"96": "resources/icons/WiktionaryLogo.svg"
+  },
+  
+  
+  "background": {
+    "scripts": [
+      "/options/webextensions-lib-configs/Configs.js",
+      "/options/defaultConfig.js",
+      "/scripts/defineSelection.js"
+    ]
+  },
+  
+  
+  "permissions": [
+    "contextMenus",
+    "https://en.wiktionary.org/api/rest_v1/page/definition/*",
+    "storage"
+  ],
+  
+  
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true
+  },
+  
+  
+  "applications": {
+    "gecko": {
+      "strict_min_version": "57.0",
+      "id": "{fccc7c8d-5a40-4644-bec3-59cd351cbd86}"
+    }
+  }
+}
