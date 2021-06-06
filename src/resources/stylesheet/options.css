@@ -16,6 +16,9 @@ body {
 }
 
 /* Preview Styling */
+#previewContainer {
+	height: 600px;
+}
 #previewContainer iframe {
 	width: 100%;
 	height: 100%;
