@@ -1,5 +1,5 @@
 // https://gitlab.com/losnappas/Context-menu-Wiktionary
-// https://github.com/aesarab/right-click-wiktionary/
+// https://github.com/aesarab/contextual-wiktionary/
 
 'use strict';
 

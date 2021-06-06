@@ -9,13 +9,13 @@
 	"license": "Unlicense",
 	
 	"bugs": {
-		"url": "https://github.com/aesarab/right-click-wiktionary/issues"
+		"url": "https://github.com/aesarab/contextual-wiktionary/issues"
 	},	
-	"homepage": "https://github.com/aesarab/right-click-wiktionary#readme",
+	"homepage": "https://github.com/aesarab/contextual-wiktionary#readme",
 	
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/aesarab/right-click-wiktionary"
+		"url": "git://github.com/aesarab/contextual-wiktionary"
 	},
 	
 	"devDependencies": {},
