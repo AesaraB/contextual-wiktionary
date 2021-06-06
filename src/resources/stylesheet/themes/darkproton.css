@@ -164,3 +164,21 @@ html {
 
     scrollbar-color: rgba(249,249,250,.4) rgba(20,20,25,.3);
   }
+
+
+html {
+	--primaryColorButtonBackground: var(--blue-60);
+	--primaryColorButtonBackgroundBusy: var(--blue-70);
+	--primaryColorButtonColor: var(--white-100);
+	--primaryColorButtonColorHover: var(--white-100);
+  --backgroundColour: var(--grey-70);
+  --bodyTextColour: var(--white-100);
+  --linkColour: var(--blue-40);
+  --linkColourActive: var(--blue-50);
+  --inputColour: var(--grey-90-a20);
+  --inputBorderFocus: var(--blue-50);
+  --searchInputColour: var(--white-100);
+  --searchInputColourPlaceholder: var(--white-100);
+  --searchInputBorder: var(--grey-10);
+  --footerColour: var(--grey-40);
+}

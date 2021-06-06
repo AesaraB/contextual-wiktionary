@@ -26,3 +26,11 @@ body {
 #previewContainer iframe:hover {
 	border-color: var(--grey-40);
 }
+
+html {
+	--inputBorderFocus: var(--blue-50);
+	--primaryColorButtonBackground: var(--blue-60);
+	--primaryColorButtonBackgroundBusy: var(-blue-70);
+	--primaryColorButtonColor: var(--white-100);
+	--primaryColorButtonColorHover: var(--white-100);
+}
