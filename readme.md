@@ -1,4 +1,4 @@
-# Contextual Wiktionary
+# [Contextual Wiktionary](https://addons.mozilla.org/en-US/firefox/addon/right-click-wiktionary/)
 Contextual Wiktionary is a Firefox web-extension that enables the user to search Wiktionary with the context menu or a pop-up. The Contextual Wiktionary extension uses the Unlicense license.
 
 ## Features
@@ -14,7 +14,7 @@ Contextual Wiktionary is a Firefox web-extension that enables the user to search
 \*\*due to API limitations, only the English Wiktionary is themed.*
 
 # Requirements
-This extension requires Firefox 57. [https://addons.mozilla.org/en-US/firefox/addon/right-click-wiktionary/](https://addons.mozilla.org/en-US/firefox/addon/right-click-wiktionary/)
+This extension requires Firefox 57.
 
 # Permissions
 * *Context menus*
