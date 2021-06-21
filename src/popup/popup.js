@@ -82,7 +82,11 @@ function noDefinition() { // This script runs when searchText is blank.
 	
 	document.body.innerHTML = '';
 	populateHeader(searchPlaceholder, extLinkTitle, extLinkHref);
-	populateFooter()
+	populateFooter();
+	
+	if(isUndesirable(searchText)) {
+		document.getElementById('searchInput').focus();
+	}
 }
 
 function translate(searchText) {
