@@ -136,7 +136,27 @@ function translate(searchText) {
     
     
     // PART FOUR, POPUP BUILDER.
-    .then(definitionBuilder, sliderStuff)
+    .then(definitionBuilder)
+	.then(() => {
+		populateSlider();
+		// Add onclick handlers for language headings.
+		csrunner();
+		const hash = window.location.hash.slice(1);
+		const e = document.getElementById(hash);
+		if ( hash && e ) {
+			// Anchor is in use.
+			expand();
+			e.classList.add('auto-scrolled')
+			setTimeout(() => {
+			e.scrollIntoView({
+				behavior: 'smooth'
+			})}, 300)
+		} else if (translations.en[0].definitions == null) {
+			// Finally, open the "other languages" box if English had no definitions.
+			// This case only happens if English had no translations thus "translations.en" was touched on in the third ".then" clause.
+			expand();
+		}
+	})
     .catch((e) =>
         console.error(`error in fetch chain wiktionary: ${e}, ${e.lineNumber}`)
     );
@@ -189,23 +209,6 @@ function definitionBuilder() {
 }
 
 function sliderStuff() {
-    populateSlider();
-    // Add onclick handlers for language headings.
-    csrunner();
-    const hash = window.location.hash.slice(1);
-    const e = document.getElementById(hash);
-    if ( hash && e ) {
-        // Anchor is in use.
-        expand();
-        e.classList.add('auto-scrolled')
-        setTimeout(() => {
-        e.scrollIntoView({
-            behavior: 'smooth'
-        })}, 300)
-    } else if (translations.en[0].definitions == null) {
-        // Finally, open the "other languages" box if English had no definitions.
-        // This case only happens if English had no translations thus "translations.en" was touched on in the third ".then" clause.
-        expand();
-    }
+    
 
 }
