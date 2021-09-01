@@ -3,7 +3,7 @@
 var selectionText
 var alternateapi
 var wiktionaryapi
-const normalize = word => word.trim().toUpperCase()===word.trim() ? word.trim() : word.trim().replace(/ /g, '_').toLowerCase()
+const normalize = word => word.trim().toUpperCase()===word.trim() ? word.normalize().trim() : word.normalize().trim().replace(/ /g, '_').toLowerCase()
 
 
 configs.$loaded.then(res => { // Load Wiktionary API
