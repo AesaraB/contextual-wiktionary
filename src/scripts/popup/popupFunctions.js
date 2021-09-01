@@ -1,6 +1,6 @@
 'use strict';
 // searchText string modification 
-const normalize = (word) => word.trim().replace(/ /g, '_');		// Convert string to become compatible with the Wiktionary API. Don't conflate this with "humanize".
+const normalize = (word) => word.normalize().trim().replace(/ /g, '_');		// Convert string to become compatible with the Wiktionary API. Don't conflate this with "humanize".
 const humanize = (word) => word.trim().replace(/_/g, ' ');		// This converts a Wiktionary API URL to format better suited for reading.
 // Wiktionary search strings
 const WIKTIONARYURL = (word) => `https://en.wiktionary.org/api/rest_v1/page/definition/${word}`;
