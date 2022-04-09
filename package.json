@@ -1,31 +1,16 @@
 {
-	"name": "Contextual Wiktionary",
-	"version": "1.0",
-	"description": "A seamless Wiktionary integration for Firefox.",
-	"main": "src/manifest.json",
-	},
-	
+	"name": "contextual-wiktionary",
+	"version": "1.4",
 	"author": "Aesara",
 	"license": "Unlicense",
-	
-	"bugs": {
-		"url": "https://github.com/aesarab/contextual-wiktionary/issues"
-	},	
-	"homepage": "https://github.com/aesarab/contextual-wiktionary#readme",
-	
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/aesarab/contextual-wiktionary"
 	},
-	
-	"devDependencies": {},
-	"dependencies": {},
-	
-	"keywords": [
-		"wiktionary",
-		"web",
-		"extension",
-		"firefox",
-		"dictionary"
-	]
+	"main": "src/manifest.json",
+	"devDependencies": {
+		"eslint": "^8.12.0",
+		"web-ext": ">=6.8.0"
+	},
+	"dependencies": {}
 }
