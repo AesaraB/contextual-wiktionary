@@ -67,7 +67,7 @@ function translate(searchText) {
 	
 
     // PART TWO NO DEFINITIONS FOUND
-	.then((res) => { // This section is for words with defintions, but not in English.	
+	.then((res) => { // This section is for words with definitions, but not in English.	
 		translations = res;
 		if (!translations.en) {
 			translations.en = [
