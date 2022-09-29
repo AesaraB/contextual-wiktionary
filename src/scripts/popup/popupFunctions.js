@@ -104,7 +104,7 @@ function populateFooter() { // This function creates the popup footer.
     // This area contains the text license.
     const footer = document.createElement('footer');
     footer.innerHTML += `
-    <small><i>Wiktionary defintions are available under the <a rel="noopener noreferrer" target="_blank" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.</i></small>`;
+    <small><i>Wiktionary definitions are available under the <a rel="noopener noreferrer" target="_blank" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.</i></small>`;
     
     document.body.appendChild(footer);
 }
