@@ -1,6 +1,0 @@
-[submodule "options/webextensions-lib-configs"]
-	path = options/webextensions-lib-configs
-	url = https://github.com/piroor/webextensions-lib-configs.git
-[submodule "options/webextensions-lib-options"]
-	path = options/webextensions-lib-options
-	url = https://github.com/piroor/webextensions-lib-options.git
