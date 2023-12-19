@@ -20,12 +20,7 @@ var translations, searchText, dontNormalise, searchPlaceholder, extLinkTitle, ex
 
 // SCRIPTS START HERE
 function populateHeader() { // This function creates the popup header.
-    const header = document.createElement('header');
-    header.innerHTML += `
-    <form id="search">
-        <input id="searchInput" type="search" name="search" title="Search Wiktionary.org"  autocomplete="off">
-    </form>
-    <a id="externalLink" class="default-color-button default-button" rel="noopener noreferrer" target="_blank"></a>`; // This area contains the search term/search bar, and external site link.
+    const header = document.getElementById("header");
     
     // ---- Search Button
     const search = header.querySelector('#search');
@@ -40,9 +35,6 @@ function populateHeader() { // This function creates the popup header.
     link.title = `${extLinkTitle}`;
     link.href = `${extLinkHref}`;
     link.addEventListener('click', (e) => open_page(e, searchText));
-    
-    document.body.appendChild(header);
-
 }
 
 function add(translation, popup, addingExtra) { // This function is responsible for populating the popup body. // popup means context
@@ -97,16 +89,6 @@ for (const definition of definitions) {
 }
 popup.appendChild(ol);
 }
-}
-
-function populateFooter() { // This function creates the popup footer.
-    // Footer Template
-    // This area contains the text license.
-    const footer = document.createElement('footer');
-    footer.innerHTML += `
-    <small><i>Wiktionary defintions are available under the <a rel="noopener noreferrer" target="_blank" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.</i></small>`;
-    
-    document.body.appendChild(footer);
 }
 
 // just another function to make a link.. This time for the header.

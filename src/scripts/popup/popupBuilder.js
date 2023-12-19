@@ -1,5 +1,4 @@
 // https://github.com/aesarab/contextual-wiktionary/
-
 'use strict';
 
 // Prevents undesirable inputs from being translated.
@@ -13,7 +12,6 @@ window.onload = () => { // First, tell defineSelection.js (background script) th
 
 browser.runtime.onMessage.addListener((selectionText) => { //defineSelection.js replies with the selectionText.
 	searchText = selectionText || '';
-	undefinedBuilder(); // Call undefinedBuilder while definition is loading to prevent blank popup.
 	searchValidation()
 });
 
@@ -173,9 +171,8 @@ function undefinedBuilder() { // This script runs when searchText is blank.
 	extLinkTitle = `Open Wiktionary.org in a new tab`;
 	extLinkHref = `https://en.wiktionary.org/`;
 	
-	document.body.innerHTML = '';
+	document.getElementById("main").innerHTML = '';
 	populateHeader(searchPlaceholder, extLinkTitle, extLinkHref);
-	populateFooter();
 	
 	if(isUndesirable(searchText)) {
 		document.getElementById('searchInput').focus();
@@ -205,7 +202,6 @@ function definitionBuilder() {
     if (Object.keys(translations).length > 1) {
         document.body.appendChild(createSlider());
     }
-    populateFooter()
 }
 
 function sliderStuff() {
