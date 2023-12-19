@@ -5,7 +5,10 @@ import { define } from "./builder.js";
 const SCROLLDOWNWAIT = 10; // Opening the slider autoscrolls. -- In ms: the timeout before scrolling lower again.
 const ALLOWED_TAGS = '<b><i><u><strong><a><span><div><small>'; // Used to whitelist certain tags we want in our definitions.
 
-function populateHeader(searchPlaceholder, extLinkTitle, extLinkHref) {
+function populateHeader(searchPlaceholder, extLinkTitle, extLinkHref, extendedParams) {
+	if (extendedParams !== "noValue") {
+		searchInput.value = `${searchPlaceholder}`;
+	}
 	searchInput.placeholder = `${searchPlaceholder}`;
 	link.title = `${extLinkTitle}`;
 	link.href = `${extLinkHref}`;

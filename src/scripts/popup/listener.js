@@ -2,13 +2,13 @@
 import { normalize, humanize, search, searchInput, link } from "./definitions.js";
 import { define } from "./builder.js";
 
-window.onload = () => { // First, tell defineSelection.js (background script) that the popup is initialised.
+// These two code blocks operate when the popup is opened.
+window.onload = () => { // Tell defineSelection.js that the popup is initialised.
 	browser.runtime.sendMessage({ok: true});
 };
-
-browser.runtime.onMessage.addListener((selectionText) => { //defineSelection.js replies with the selectionText.
+browser.runtime.onMessage.addListener((selectionText) => { // defineSelection.js replies with the selectionText.
 	let selection = selectionText || '';
-	if (selection.toUpperCase() == selection) {  // Don't normalise strings that are written in allcaps (for acronyms).
+	if (selection.toUpperCase() == selection) {  // Allcaps strings are not want to be lowercase/title case
 		define(normalize(selection));
 	} else {
 		define(normalize(selection.toLowerCase()));
