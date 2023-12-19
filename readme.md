@@ -20,6 +20,8 @@ This extension requires Firefox 57.
 * *Context menus*
 * *Wiktionary API [https://en.wiktionary.org/api/rest_v1/page/definition/\*](https://en.wiktionary.org/api/)*
 * *Storage (for setting configuration)*
+* *Scripting (only if using keyboard shortcuts)*
+* *Active Tab (only if using keyboard shortcuts)*
 
 # Debugging the Extension
 To debug Right Click Wiktionary:
