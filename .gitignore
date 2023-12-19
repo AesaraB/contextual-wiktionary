@@ -5,4 +5,4 @@ Session.vim
 content_scripts
 node_modules
 .idea
-
+src/options/webextensions-*

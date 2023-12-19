@@ -1,4 +1,5 @@
 // This script modifies the config to accomodate any other languages the user may want to see first.
+export { csrunner };
 
 function csrunner() {
     const els = document.querySelectorAll('#content h2[id]');
