@@ -24,7 +24,7 @@ async function getDefinitions(query) {
 	if (definitions && !definitions.en) { // This section is for words with defintions, but not in English.	
 			definitions.en = [{ partOfSpeech: 'No English definition found.' }];
 	}
-	console.log(definitions)
+	//console.log(definitions)
 	return definitions;
 }
 

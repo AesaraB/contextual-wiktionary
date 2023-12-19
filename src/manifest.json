@@ -4,7 +4,7 @@
   "version": "1.4",
   "homepage_url": "https://github.com/aesarab/contextual-wiktionary",
   "manifest_version": 2,
-  
+
   "browser_action": {
     "default_title": "Search Wiktionary",
     "default_popup": "popup/popup.html",
@@ -39,28 +39,38 @@
   
   "background": {
     "scripts": [
-      "/options/webextensions-lib-configs/Configs.js",
-      "/options/defaultConfig.js",
-      "/scripts/defineSelection.js"
-    ]
+      "options/webextensions-lib-configs/Configs.js",
+	  "options/defaultConfig.js",
+	  "scripts/contextMenu.js"
+	]
   },
-  
-  
+
+  "commands": {
+	  "define-shortcut": {
+		  "description": "Define selection or open popup. Disabled by default, recommended binding is Ctrl+Alt+D"
+	  }
+  },
+
+
   "permissions": [
-    "contextMenus",
-    "https://en.wiktionary.org/api/rest_v1/page/definition/*",
-    "storage"
+	  "contextMenus",
+	  "https://en.wiktionary.org/api/rest_v1/page/definition/*",
+	  "storage"
   ],
-  
-  
+  "optional_permissions": [
+	  "activeTab",
+	  "scripting"
+  ],
+
+
   "options_ui": {
-    "page": "options/options.html",
-    "browser_style": true
+	  "page": "options/options.html",
+	  "browser_style": true
   },
   "applications": {
-		"gecko": {
-		"strict_min_version": "57.0",
-		"id": "{d180b436-a655-4280-b44e-1fa6b8ae8cb9}"
-		}
-	}
+	  "gecko": {
+		  "strict_min_version": "57.0",
+		  "id": "{d180b436-a655-4280-b44e-1fa6b8ae8cb9}"
+	  }
+  }
 }
