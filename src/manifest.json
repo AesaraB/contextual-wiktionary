@@ -67,10 +67,9 @@
 	  "page": "options/options.html",
 	  "browser_style": true
   },
-  "applications": {
+  "browser_specific_settings": {
 	  "gecko": {
-		  "strict_min_version": "57.0",
-		  "id": "{d180b436-a655-4280-b44e-1fa6b8ae8cb9}"
+		  "strict_min_version": "102"
 	  }
   }
 }
