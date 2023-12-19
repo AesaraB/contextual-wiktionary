@@ -1,7 +1,7 @@
 {
   "name": "Contextual Wiktionary",
   "description": "A seamless Wiktionary integration for Firefox.",
-  "version": "1.4",
+  "version": "1.4.1",
   "homepage_url": "https://github.com/aesarab/contextual-wiktionary",
   "manifest_version": 2,
 

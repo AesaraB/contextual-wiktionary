@@ -11,7 +11,11 @@ body {
 	font-size: 15px;
 	font-weight: 400;
 	max-width: 45em;
-	-moz-user-select: text
+	-moz-user-select: text;
+}
+
+header, footer {
+	-moz-user-select: none;
 }
 
 *,
@@ -20,189 +24,189 @@ body {
 		box-sizing: border-box!important;
 	}
 
-	/* ---- Headers */
-	h1 {
-		font-size: 36px;
-		font-weight: 200;
-	}
+/* Headers */
+h1 {
+	font-size: 36px;
+	font-weight: 200;
+}
 
-	h2 {
-		font-size: 22px;
-		font-weight: 300;
-	}
+h2 {
+	font-size: 22px;
+	font-weight: 300;
+}
 
-	h3 {
-		font-size: 17px;
-		font-weight: 600;
-	}
+h3 {
+	font-size: 17px;
+	font-weight: 600;
+}
 
-	h4 {
-		font-size: 15px;
-		font-weight: 400;
-	}
+h4 {
+	font-size: 15px;
+	font-weight: 400;
+}
 
-	small,
-	h5 {
-		font-size: 13px;
-		font-weight: 400;
-	}
+small,
+h5 {
+	font-size: 13px;
+	font-weight: 400;
+}
 
-	h6 {
-		font-size: 11px;
-		font-weight: 400;
-	}
+h6 {
+	font-size: 11px;
+	font-weight: 400;
+}
 
-	/* Components */
+/* Components */
 
-	/* ---- Lists */
-	ol > li {
-		margin: 0 0 1rem;
-	}
+/* ---- Lists */
+ol > li {
+	margin: 0 0 1rem;
+}
 
-	/* ---- Buttons */
+/* ---- Buttons */
 
-	/* -------- Micro Button */
-	.micro-button {
-		border-radius: 2px;
-		border: none;
-		height: 24px;
-		width: auto;
-		padding: 0 8px;
-		font-size: 11px;
-		font-weight: 400;
-		text-align:center;
-	}
+/* -------- Micro Button */
+.micro-button {
+	border-radius: 2px;
+	border: none;
+	height: 24px;
+	width: auto;
+	padding: 0 8px;
+	font-size: 11px;
+	font-weight: 400;
+	text-align:center;
+}
 
-	/* -------- Large Button */
-	.default-button {
-		border-radius: 2px;
-		border: none;
-		height:32px;
-		width: auto;
-		min-width: 132px;
-		padding: 0 8px;
-		font-weight: 400;
-		font-size: 13px;
-		text-align:center;
-	}
-	/* -------- Button Colours */
+/* -------- Large Button */
+.default-button {
+	border-radius: 2px;
+	border: none;
+	height:32px;
+	width: auto;
+	min-width: 132px;
+	padding: 0 8px;
+	font-weight: 400;
+	font-size: 13px;
+	text-align:center;
+}
+/* -------- Button Colours */
 
-	/* ------------ Primary */
-	.primary-color-button {
-		background:var(--primaryColorButtonBackground);
-		color:var(--primaryColorButtonColor);
-	}
-	.primary-color-button:hover {
-		background-color:var(--primaryColorButtonBackgroundBusy)
-	}
-	.primary-color-button:active {
-		background-color:var(--primaryColorButtonBackgroundBusy)
-	}
-	.primary-color-button:focus {
-		box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
-	}
-	.primary-color-button:disabled {
-		opacity: 40%;
-	}
+/* ------------ Primary */
+.primary-color-button {
+	background:var(--primaryColorButtonBackground);
+	color:var(--primaryColorButtonColor);
+}
+.primary-color-button:hover {
+	background-color:var(--primaryColorButtonBackgroundBusy)
+}
+.primary-color-button:active {
+	background-color:var(--primaryColorButtonBackgroundBusy)
+}
+.primary-color-button:focus {
+	box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+}
+.primary-color-button:disabled {
+	opacity: 40%;
+}
 
-	/* ------------ Default */
-	.default-color-button {
-		background-color:var(--grey-90-a10);
-		color: var(--grey-90);
-	}
-	.default-color-button:hover {
-		background-color: var(--grey-90-a20);
-	}
-	.default-color-button:active {
-		background-color: var(--grey-90-a30);
-	}
-	.default-color-button:focus {
-		box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
-	}
-	.default-color-button:disabled {
-		opacity: 40%;
-	}
+/* ------------ Default */
+.default-color-button {
+	background-color:var(--grey-90-a10);
+	color: var(--grey-90);
+}
+.default-color-button:hover {
+	background-color: var(--grey-90-a20);
+}
+.default-color-button:active {
+	background-color: var(--grey-90-a30);
+}
+.default-color-button:focus {
+	box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+}
+.default-color-button:disabled {
+	opacity: 40%;
+}
 
-	/* ---- Alphabetical and Numerical Input Fields */
-	input[type="text"],
-	input[type="number"],
-	input[type="search"],
-	input[type="url"] {
-		border-radius: 2px;
-		padding: 0 8px;
-		width: auto;
-		height: 32px;
-		margin: 4px 8px 4px 4px;
-		border: 1px solid var(--white-100);
-		cursor: auto;
-	}
-	input[type="text"]:hover,
-	input[type="number"]:hover,
-	input[type="search"]:hover,
-	input[type="url"]:hover {
-		border-color:var(--grey-90-a30)
-	}
-	input[type="text"]:focus,
-	input[type="number"]:focus,
-	input[type="search"]:focus,
-	input[type="url"]:focus {
-		border-color:var(--inputBorderFocus)!important;
-		outline: 0;
-	}
+/* ---- Alphabetical and Numerical Input Fields */
+input[type="text"],
+input[type="number"],
+input[type="search"],
+input[type="url"] {
+	border-radius: 2px;
+	padding: 0 8px;
+	width: auto;
+	height: 32px;
+	margin: 4px 8px 4px 4px;
+	border: 1px solid var(--white-100);
+	cursor: auto;
+}
+input[type="text"]:hover,
+input[type="number"]:hover,
+input[type="search"]:hover,
+input[type="url"]:hover {
+	border-color:var(--grey-90-a30)
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus {
+	border-color:var(--inputBorderFocus)!important;
+	outline: 0;
+}
 
-	/* ---- Checkboxes */
-	input[type="checkbox"] {
-		display: none;
-	}
-	input[type="checkbox"] + label {
-		display: inline-block;
-		margin: 4px 0;
-	}
-	input[type="checkbox"] + label:before {
-		display: inline-block;
-		content: "";
+/* ---- Checkboxes */
+input[type="checkbox"] {
+	display: none;
+}
+input[type="checkbox"] + label {
+	display: inline-block;
+	margin: 4px 0;
+}
+input[type="checkbox"] + label:before {
+	display: inline-block;
+	content: "";
 
-		height: 16px;
-		width: 16px;
-		border: 1px solid var(--grey-90-a30);
-		border-radius: 2px;
-		margin: 0 4px -3px;
-		background: var(--grey-90-a10);
-	}
-	input[type="checkbox"]:checked + label:before {
-		background: var(--blue-60) url(../icons/checkboxCheck.svg) no-repeat center/16px;
-		border: none;
-	}
+	height: 16px;
+	width: 16px;
+	border: 1px solid var(--grey-90-a30);
+	border-radius: 2px;
+	margin: 0 4px -3px;
+	background: var(--grey-90-a10);
+}
+input[type="checkbox"]:checked + label:before {
+	background: var(--blue-60) url(../icons/checkboxCheck.svg) no-repeat center/16px;
+	border: none;
+}
 
-	/* Radio Buttons */
-	input[type="radio"] {
-		position: absolute;
-		opacity: 0;
-	}
-	input[type="radio"] + .labelRadio {
-		display: inline-block;
-		margin: 4px 0;
-	}
-	input[type="radio"] + .labelRadio:before {
-		display: inline-block;
-		content: "";
-		height: 16px;
-		width: 16px;
-		padding: 0 4px;
-		margin: 0px 0 -2px;
-		border-radius: 100%;
-		background: var(--grey-90-a10);
-		border: 1px solid var(--grey-90-a30);
-	}
+/* Radio Buttons */
+input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+}
+input[type="radio"] + .labelRadio {
+	display: inline-block;
+	margin: 4px 0;
+}
+input[type="radio"] + .labelRadio:before {
+	display: inline-block;
+	content: "";
+	height: 16px;
+	width: 16px;
+	padding: 0 4px;
+	margin: 0px 0 -2px;
+	border-radius: 100%;
+	background: var(--grey-90-a10);
+	border: 1px solid var(--grey-90-a30);
+}
 
-	input[type="radio"]:checked + .labelRadio:before {
-		background: var(--white-100);
-		border: 4px solid var(--blue-60);
-	}
+input[type="radio"]:checked + .labelRadio:before {
+	background: var(--white-100);
+	border: 4px solid var(--blue-60);
+}
 
-	/* This Source Code Form is subject to the terms of the Mozilla Public
-	 * License, v. 2.0. If a copy of the MPL was not distributed with this
-	 * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* Photon Colors CSS Variables v3.2.0 */
 html {
