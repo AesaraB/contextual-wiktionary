@@ -1,10 +1,7 @@
 // This script loads the theme chosen in the config.
-
-
 configs.$loaded.then(({style, fsize, spacing, margin, popupWidth, popupHeight, ...customs}) => {
-
-	const globalStyle = document.createElement('style')
-	globalStyle.innerHTML = `
+	const globalStyle = new CSSStyleSheet();
+	globalStyle.replaceSync(`
 	body {
 		font-size: ${fsize}em;
 		max-width: ${popupWidth}px;
@@ -15,9 +12,8 @@ configs.$loaded.then(({style, fsize, spacing, margin, popupWidth, popupHeight, .
 	}
 	ol > li {
 		margin-top: ${margin}em;
-	}
-	`
-	document.head.appendChild(globalStyle);
+	`);
+	document.adoptedStyleSheets.push(globalStyle);
 
 	if (style !== 'custom') {
 		const link = document.createElement('link')
@@ -25,9 +21,9 @@ configs.$loaded.then(({style, fsize, spacing, margin, popupWidth, popupHeight, .
 		link.type = 'text/css'
 		link.href = '/resources/stylesheet/themes/' + style + '.css'
 		document.head.appendChild(link)
-	} else {
-		const styleEl = document.createElement('style')
-		styleEl.innerHTML = `
+	} /* else {
+		const styleEl = new CSSStyleSheet();
+		styleEl.replaceSync(`
 			body { 
 				color: #${customs.text};
 				background-color: #${customs.background};
@@ -35,8 +31,8 @@ configs.$loaded.then(({style, fsize, spacing, margin, popupWidth, popupHeight, .
 			a:any-link {
 				color: #${customs.link};
 			}
-			`
-		document.head.appendChild(styleEl)
-	}
+			`);
+		document.adoptedStyleSheets.push(styleEl);
+	} */
 })
 
