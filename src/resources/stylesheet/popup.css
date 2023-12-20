@@ -19,20 +19,20 @@ h2.auto-scrolled[id]::before {
 
 h2[id]:hover::after {
 	overflow: hidden;
-	
+
 	display: inline-flex;
 	position: absolute;
 	right: 0;
 	margin: 6px 0;
-	
+
 	animation: appear 0.5s ease-in;
 	--hover-opacity: 0.4;
-	
+
 	word-break: break-word;
 	white-space: break-spaces;
 	text-overflow: clip;
-	
-	
+
+
 	font-size: 15px;
 	font-weight: 400;
 }
@@ -50,20 +50,20 @@ h2.auto-scrolled[id] {
 	animation-iteration-count: 1;
 }
 @keyframes flash {
-	0%, 50%, 100% {
-		opacity: 1;
-	}
-	25%, 75% {
-		opacity: var(--hover-opacity);
-	}
+0%, 50%, 100% {
+	opacity: 1;
+}
+25%, 75% {
+	opacity: var(--hover-opacity);
+}
 }
 @keyframes appear {
-	0%, 50% {
-		opacity: 0;
-	}
-	100% {
-		opacity: var(--hover-opacity);
-	}
+0%, 50% {
+	opacity: 0;
+}
+100% {
+	opacity: var(--hover-opacity);
+}
 }
 
 ol > li:first-child {
@@ -105,32 +105,43 @@ h3 {
 }
 
 /* ---- Definition Title & Search Bar */
+#search {
+	display: flex;
+	align-items: center;
+	margin: 0 0 8px 0;
+}
 #searchInput {
-  font-size: 36px;
-  font-weight: 200;
-  margin: 0 0 8px 0;
-  border-radius: 0px;
-  padding: 0 32px 4px 0;
-  height: auto;
-  width: 100%;
-  border: none;
-  
-	background-repeat: no-repeat;
+	font-size: 36px;
+	font-weight: 200;
+	margin: 0;
+	border-radius: 0px;
+	padding: 0 0 4px;
+	height: auto;
+	width: 100%;
+	border: none;
+
 	background-position: calc(100% - 4px) center;
-	background-size: 20px;
 	border-bottom: 2px solid var(--searchInputColour);
 	color: var(--searchInputColour);
 }
 
-#searchInput {
-	
-}
 #searchInput:hover {
-  border-color:var(--searchInputBorder)
+	border-color:var(--searchInputBorder)
 }
 #searchInput::placeholder {
-  color:var(--searchInputColourPlaceholder);
+	color:var(--searchInputColourPlaceholder);
 	opacity: 1;
+}
+
+/* Submit button */
+#submitButton {
+	height: 32px;
+	min-width: 32px;
+	background-size: 20px;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+	border: none;
 }
 
 /* ---- External Link to Wiktionary.org */
@@ -180,12 +191,12 @@ h3 {
 
 /* Link Colours */
 a:any-link {
-  color: var(--linkColour);
-  text-decoration: none;
+	color: var(--linkColour);
+	text-decoration: none;
 }
 a:any-link:hover {
-  color: var(--linkColour);
-  text-decoration: underline;
+	color: var(--linkColour);
+	text-decoration: underline;
 }
 a:any-link:active {
 	color: var(--linkColourActive);
