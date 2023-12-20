@@ -1,7 +1,7 @@
 'use strict';
 export { EDITURL, SEARCHURL, WIKTIONARYURL, WORDURL, HOMEPAGE, MYEMAIL };
 export { normalize, humanize };
-export { main, search, searchInput, link };
+export { link, main, search, searchInput };
 
 // Wiktionary URLs
 const EDITURL = (word) => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`;

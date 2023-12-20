@@ -11,7 +11,8 @@ browser.contextMenus.create({
 })
 browser.contextMenus.onClicked.addListener((clickData) => {
 	selectionText = clickData.selectionText;
-	browser.browserAction.openPopup()
+	console.log("bgScript: context menu item clicked");
+	browser.browserAction.openPopup();
 })
 
 // Shortcut
@@ -26,6 +27,7 @@ browser.commands.onCommand.addListener(() => {
 			.then(injectScript)
 			.catch((error) => console.error(`Error: ${error}`));
 	}
+	console.log("bgScript: shortcut pressed")
 	browser.browserAction.openPopup();
 });
 

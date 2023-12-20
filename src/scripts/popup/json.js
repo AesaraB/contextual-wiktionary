@@ -3,6 +3,7 @@ export { getDefinitions };
 import { HOMEPAGE, MYEMAIL, SEARCHURL, WIKTIONARYURL, normalize, humanize } from "./definitions.js";
 
 async function getDefinitions(query) {
+	let json;
 	// Download the trtanslations
 	try {
 		const response = await fetch(WIKTIONARYURL(query), { // Fetches Wiki dictionary (Wiktionary) meaning for selected word.
@@ -14,18 +15,35 @@ async function getDefinitions(query) {
 		})
 		if (!response.ok) {
 			throw new Error('' + response.status + ': ' + response.statusText); }
-		var definitions = await response.json();
+		json = await response.json();
 	} catch(error) { // No definitions found
 		if (error.message.indexOf('404') !== -1) {
-			definitions = {};
-			definitions = await searchRelated(definitions, query);
+			json = {};
+			json = await searchRelated(json, query);
 		}
 	}
-	if (definitions && !definitions.en) { // This section is for words with defintions, but not in English.	
-			definitions.en = [{ partOfSpeech: 'No English definition found.' }];
+	let { en, ...translations } = json;
+	let definitions = json.en;
+	let meta = metaObjects(definitions, translations);
+
+	return {definitions: definitions, translations: translations, meta: meta};
+}
+
+function metaObjects(definitions, translations) {
+	let meta = {}
+	// Definitions in English
+	if (!definitions) {
+		meta = Object.assign(meta, {engDefs: false})
+	} else {
+		meta = Object.assign(meta, {engDefs: true})
 	}
-	//console.log(definitions)
-	return definitions;
+	// Definitions in other languages
+	if (Object.keys(translations).length >= 1) {
+		meta = Object.assign(meta, {otherLang: true})
+	} else {
+		meta = Object.assign(meta, {otherLang: false})
+	}
+	return meta;
 }
 
 async function searchRelated(definitions, query) {
