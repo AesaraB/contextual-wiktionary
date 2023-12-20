@@ -1,17 +1,22 @@
 'use strict';
-export { EDITURL, SEARCHURL, WIKTIONARYURL, WORDURL, HOMEPAGE, MYEMAIL };
-export { normalize, humanize, langName, stripTags };
+export { EDITURL, SEARCHURL, DEFINITIONURL, WORDURL, HEADERS };
+export { normalize, humanize, langName, stripTags, titleCase };
 export { link, main, search, searchInput };
 
 // Wiktionary URLs
 const EDITURL = (word) => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`;
 const SEARCHURL = (word) => `https://en.wiktionary.org/w/api.php?action=opensearch&search=${word}&profile=engine_autoselect`; // This is used to find alternative searchText spellings
-const WIKTIONARYURL = (word) => `https://en.wiktionary.org/api/rest_v1/page/definition/${word}`;
+const DEFINITIONURL = (word) => `https://en.wiktionary.org/api/rest_v1/page/definition/${word}`;
 const WORDURL = (word) => `https://en.wiktionary.org/wiki/${word}`;
 
 // User-agent information
-const HOMEPAGE = `https://github.com/AesaraB/Contextual-Wiktionary`;
-const MYEMAIL = `aesara@mailbox.org`;
+const HEADERS = {
+	method: 'GET',
+	headers: new Headers({
+		'Api-User-Agent': `Context_Menu_Dictionary_Firefox_extension/1.4; ("https://github.com/AesaraB/Contextual-Wiktionary"; "aesara@mailbox.org")`,
+		redirect: true,
+	}),
+}
 
 // Quick functions
 const langName = new Intl.DisplayNames(["en"], { type: "language" });
@@ -49,4 +54,47 @@ function stripTags (input) { // eslint-disable-line camelcase
 			return after
 		}
 	}
+}
+
+/* To Title Case © 2018 David Gouch | https://github.com/gouch/to-title-case */
+// eslint-disable-next-line no-extend-native
+const titleCase = (string) => {
+	let smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|v.?|vs.?|via)$/i
+	let alphanumericPattern = /([A-Za-z0-9\u00C0-\u00FF])/
+	let wordSeparators = /([ :–—-])/
+
+	return string.split(wordSeparators)
+		.map(function (current, index, array) {
+			if (
+				/* Check for small words */
+				current.search(smallWords) > -1 &&
+					/* Skip first and last word */
+					index !== 0 &&
+					index !== array.length - 1 &&
+					/* Ignore title end and subtitle start */
+					array[index - 3] !== ':' &&
+					array[index + 1] !== ':' &&
+					/* Ignore small words that start a hyphenated phrase */
+					(array[index + 1] !== '-' ||
+						(array[index - 1] === '-' && array[index + 1] === '-'))
+			) {
+				return current.toLowerCase()
+			}
+
+			/* Ignore intentional capitalization */
+			if (current.substr(1).search(/[A-Z]|\../) > -1) {
+				return current
+			}
+
+			/* Ignore URLs */
+			if (array[index + 1] === ':' && array[index + 2] !== '') {
+				return current
+			}
+
+			/* Capitalize the first letter */
+			return current.replace(alphanumericPattern, function (match) {
+				return match.toUpperCase()
+			})
+		})
+		.join('')
 }

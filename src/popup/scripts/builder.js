@@ -25,22 +25,29 @@ async function define(query) {
 	const {definitions, translations, meta} = await getDefinitions(query);
 
 	// Build the popup
-	if (!meta.otherLang) {
-		definitionsBuilder(definitions, main);
-		return;
-	} else {
-		let parent = main
-		if (meta.engDefs) {
+	if (meta.query !== query) {
+		populateHeader(`${humanize(meta.query)}`, `Open "${humanize(meta.query)}" in a new tab`, `${WORDURL(meta.query)}`);
+	}
+	let parent = main;
+	switch(true) {
+		case !meta.definitions:
+			console.log("!meta.definitions");
 			definitionsBuilder(definitions, main);
+		break;
+		case meta.engDefs:
+			console.log("meta.engDefs");
+			definitionsBuilder(definitions, main);
+		case (meta.engDefs && meta.otherLang):
+			console.log("meta.engDefs && meta.otherLang");
 			main.appendChild(createSlider());
 			parent = document.getElementById('slider');
-		} else {
+		case meta.otherLang: // Fall-through to build other languages
+			console.log("meta.otherLang", meta.otherLang);
 			populateLine("No English definitions found", "h3", main);
-		}
-		otherLangBuilder(translations, parent);
-		csrunner(); // Add onclick handlers for language headings.
-		scrollToAutoScroll(definitions, meta);
-		return;
+			otherLangBuilder(translations, parent);
+			csrunner(); // Add onclick handlers for language headings.
+			scrollToAutoScroll(definitions, meta);
+		break;
 	}
 }
 
@@ -70,7 +77,7 @@ function scrollToAutoScroll(definitions, meta) {
 		setTimeout(() => { // TODO Remove this delay if you can.
 			e.scrollIntoView({
 				behavior: 'smooth'
-		})}, 300)
+			})}, 300)
 	} else if (meta.defsButNotEnglish) {
 		// Finally, open the "other languages" box if English had no definitions.
 		expand();

@@ -1,38 +1,89 @@
 'use strict';
 export { getDefinitions };
-import { HOMEPAGE, MYEMAIL, SEARCHURL, WIKTIONARYURL, normalize, humanize } from "./definitions.js";
+import { HEADERS, SEARCHURL, DEFINITIONURL, normalize, humanize, titleCase } from "./definitions.js";
 
 async function getDefinitions(query) {
-	let json;
-	// Download the trtanslations
-	try {
-		const response = await fetch(WIKTIONARYURL(query), { // Fetches Wiki dictionary (Wiktionary) meaning for selected word.
-			method: 'GET',
-			headers: new Headers({
-				'Api-User-Agent': `Context_Menu_Dictionary_Firefox_extension/1.4; (${HOMEPAGE}; ${MYEMAIL})`,
-				redirect: true,
-			}),
-		})
-		if (!response.ok) {
-			throw new Error('' + response.status + ': ' + response.statusText); }
-		json = await response.json();
-	} catch(error) { // No definitions found
-		if (error.message.indexOf('404') !== -1) {
-			json = {};
-			json = await searchRelated(json, query);
-		}
-	}
+	let { json, meta } = await searchQuery(query);
 	let { en, ...translations } = json;
 	let definitions = json.en;
-	let meta = metaObjects(definitions, translations);
-
+	meta = metaObjects(meta, definitions, translations);
+	console.log("meta: ", meta);
 	return {definitions: definitions, translations: translations, meta: meta};
 }
 
-function metaObjects(definitions, translations) {
-	let meta = {}
+async function searchQuery(query) {
+	let json;
+	let meta = {query: query};
+	try {
+		const response = await fetch(DEFINITIONURL(query), HEADERS); // Fetches query results from Wiktionary API
+		if (!response.ok) { throw new Error('' + response.status + ': ' + response.statusText) }; // Error on response not OK
+		meta = Object.assign(meta, {definitions: true});
+		json = await response.json();
+	} catch(error) {
+		if (error.message.indexOf('404') !== -1) { // No definitions found
+			meta = Object.assign(meta, {definitions: false});
+			let results = await searchRelated(meta, query);
+			json = results.json;
+			meta = results.meta;
+		}
+	}
+	return { json: json, meta: meta };
+}
+
+async function searchRelated(meta, query) {
+	let json;
+	try {
+		const response = await fetch(SEARCHURL(query), HEADERS); // If similar queries have results
+		if (!response.ok) { throw new Error('' + response.status + ': ' + response.statusText) }; // Error on response not OK
+		json = await response.json();
+	} catch(error) {};
+
+	const searchResults = json[1]; // If the query has a match in title case.
+	let similarResults;
+
+	const titleCaseQuery = titleCase(query)
+	if (searchResults.find((element) => element === titleCaseQuery)) {
+		meta = Object.assign(meta, {query: titleCaseQuery});
+		const results = await searchQuery(titleCaseQuery);
+		return results;
+	}
+		
+	if (!searchResults.length == 0) {
+		similarResults = {
+			definition: 'Similar and related words',
+			examples: searchResults.map( (word) =>
+				`<a href="javascript:;" title="${normalize(word)}">${humanize(word)}</a>`
+			),
+		};
+	} else {
+		similarResults = {
+			definition: 'No similar or related words found',
+			examples: searchResults.map( (word) =>
+				`<a href="javascript:;" title="${normalize(word)}">${humanize(word)}</a>`
+			),
+		};
+	}
+
+	json = {};
+	json.en = [{ // Let's use the string builder instead pls
+		partOfSpeech: "Definition not found",
+		definitions: [
+			{
+				definition: `The word <b>${humanize(query)}</b> was not found.`,
+				examples: [
+					'<i>Know what it means?</i>',
+					`<a title="${humanize(query)}" class="link-actual" target="_blank" id="addWord">Submit it to the Wiktionary.</a>`,
+				],
+			},
+			similarResults,
+		]
+	}];
+	return {json: json, meta: meta};
+}
+
+function metaObjects(meta, definitions, translations) {
 	// Definitions in English
-	if (!definitions) {
+	if (!definitions) { // This one is busted
 		meta = Object.assign(meta, {engDefs: false})
 	} else {
 		meta = Object.assign(meta, {engDefs: true})
@@ -44,42 +95,4 @@ function metaObjects(definitions, translations) {
 		meta = Object.assign(meta, {otherLang: false})
 	}
 	return meta;
-}
-
-async function searchRelated(definitions, query) {
-	let alternate404Spellings
-	const searchResults = await fetch(SEARCHURL(query))
-		.then((res) => (res.ok && res.json()) || {})
-		.catch(() => ({}));
-	const found = searchResults[1] || []; // If similar queries have results
-
-	if (!found.length == 0) {
-		alternate404Spellings = {
-			definition: 'Similar and related words',
-			examples: found.map( (word) =>
-				`<a href="javascript:;" title="${normalize(word)}">${humanize(word)}</a>`
-			),
-		};
-	} else {
-		alternate404Spellings = {
-			definition: 'No similar or related words found',
-			examples: found.map( (word) =>
-				`<a href="javascript:;" title="${normalize(word)}">${humanize(word)}</a>`
-			),
-		};
-	}
-	definitions.en = [{
-		partOfSpeech: "Definition not found",
-		definitions: [
-			{
-				definition: `The word <b>${humanize(query)}</b> was not found.`,
-				examples: [
-					'<i>Know what it means?</i>',
-					`<a title="${humanize(query)}" class="link-actual" target="_blank" id="addWord">Submit it to the Wiktionary.</a>`,
-				],
-			},
-			alternate404Spellings,
-		]
-	}];
-	return definitions;
 }
