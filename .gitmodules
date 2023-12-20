@@ -1,6 +1,6 @@
-[submodule "webext-options"]
-	path = src/options/webextensions-lib-options
+[submodule "src/scripts/webextensions-lib-options"]
+	path = src/scripts/webextensions-lib-options
 	url = https://github.com/piroor/webextensions-lib-options
-[submodule "webext-config"]
-	path = src/options/webextensions-lib-configs
+[submodule "src/scripts/webextensions-lib-configs"]
+	path = src/scripts/webextensions-lib-configs
 	url = https://github.com/piroor/webextensions-lib-configs
