@@ -41,8 +41,17 @@ async function injectScript(tab) { // I should add error handling for this, but 
 			tabId: tab[0].id
 		},
 		func: () => {
+			let selection;
+			let activeEl = document.activeElement, start, end;
+			if ( activeEl &&
+				/^(textarea|input)$/i.test(activeEl.nodeName) &&
+				(start = activeEl.selectionStart) != (end = activeEl.selectionEnd)) {
+				selection = activeEl.value.slice(start, end);
+			} else {
+				selection = window.getSelection().toString();
+			}
 			browser.runtime.sendMessage({
-				selection: window.getSelection().toString(),
+				selection: selection,
 			});
 		}
 	})
@@ -58,18 +67,18 @@ browser.runtime.onMessage.addListener(message => {
 	switch(true) {
 		case(message.selection != null): // Listen for messages sent by content_scripts
 			selectionText = message.selection;
-			break;
+		break;
 		case(message.type === 'Configs:getLockedKeys'):
 			wiktionaryapi = configs.wiktionaryapi;
 			alternateapi = configs.alternateapi;
-			break;
+		break;
 		case(message.ok): // If the popup opens without any errors, send the selectionText.
-				browser.runtime.sendMessage(selectionText);
+			browser.runtime.sendMessage(selectionText);
 			selectionText = " "; // Clears memory of the selectionText for subsequent popup opening.
-				break;
+		break;
 		case(message.ok != null && message.ok === false):
 			console.error('An error occurred when opening the popup.');
 			browser.runtime.sendMessage('A bug happened. Try again.');
-			break;
+		break;
 	}
 })
