@@ -35,20 +35,21 @@ async function define(query) {
 			break;
 		}
 		case meta.hasOtherDefs: {
-			let parent;
+			let otherDefsParent, otherLangParent;
 			if (meta.hasEngDefs) { // (meta.engDefs && meta.otherLang)
 				console.log("popup: query has defifnitions in English and other languages");
 				definitionsBuilder(engDefs, main);
 				createSlider(main);
-				parent = document.getElementById('otherDefsContainer');
+				otherDefsParent = document.getElementById('otherDefsContainer');
+				otherLangParent = document.getElementById('otherLangContainer');
 			} else { // (!meta.engDefes && meta.otherLang)
 				console.log("popup: query has defifnitions in non-English languages");
 				populateLine({ tag: "h3", content: "No English definitions found", parent: main });
-				parent = main;
+				otherDefsParent = main;
 			}
-			translationsBuilder(otherDefs, parent);
+			translationsBuilder(otherDefs, otherDefsParent);
 			csrunner(); // Add onclick handlers for language headings.
-			scrollToAutoScroll(document.getElementById("otherLangContainer"));
+			scrollToAutoScroll(otherLangParent);
 			break;
 		}
 		case meta.hasEngDefs: {
@@ -78,7 +79,7 @@ function scrollToAutoScroll(parent) {
 	const hash = window.location.hash.slice(1);
 	const e = document.getElementById(hash);
 	if ( hash && e ) { // Anchor is in use.
-		parent.setAttribute("open", "");
+		if (parent) { parent.setAttribute("open", "") };
 		// I really don't like this delay
 		setTimeout(() => { e.scrollIntoView({ behavior: 'smooth' })}, 100)
 	}

@@ -30,7 +30,10 @@ function csrunner() {
 
 function setAutoscroll() {
 	let anchor = configs._anchor || '';
+	const scrollY = window.scrollY
+	const scrollX = window.scrollX
+	location.hash = ("#" + anchor);
+	window.scrollTo(scrollX, scrollY)
 	let popup = browser.runtime.getURL('popup/popup.html#' + (anchor));
-	console.log(popup);
 	browser.browserAction.setPopup({'popup': popup});
 }
