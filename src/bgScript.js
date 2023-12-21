@@ -42,7 +42,7 @@ async function injectScript(tab) { // I should add error handling for this, but 
 		},
 		func: () => {
 			let selection;
-			let activeEl = document.activeElement, start, end;
+			let activeEl = document.activeElement, start, end; // This part is for inputs
 			if ( activeEl &&
 				/^(textarea|input)$/i.test(activeEl.nodeName) &&
 				(start = activeEl.selectionStart) != (end = activeEl.selectionEnd)) {

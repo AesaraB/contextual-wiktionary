@@ -10,5 +10,6 @@ var configs = new Configs({
 	link: 'FFFFFF',
 	wiktionaryapi: 'en.wiktionary.org',
 	alternateapi: true,
+	preserveCase: false,
 	_anchor: '',
 })

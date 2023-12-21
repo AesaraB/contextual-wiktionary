@@ -9,11 +9,16 @@ window.onload = () => { // Tell defineSelection.js that the popup is initialised
 };
 browser.runtime.onMessage.addListener((selectionText) => { // defineSelection.js replies with the selectionText.
 	let selection = selectionText || '';
+	if (configs.preserveCase) {
+		define(selection);
+		return;
+	}
 	if (selection.toUpperCase() == selection) {  // Allcaps strings are not want to be lowercase/title case
 		define(normalize(selection));
 	} else {
 		define(normalize(selection.toLowerCase()));
 	}
+	return;
 });
 
 search.addEventListener('submit', (e) => { // This is our search input stuff
