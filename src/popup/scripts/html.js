@@ -13,21 +13,25 @@ function populateHeader(text, extLinkTitle, extLinkHref, extendedParams) {
 	extButton.href = `${extLinkHref}`;
 }
 
-function populateLine(text, tag, parent) {
-	const outer = document.createElement(tag);
-	const inner = document.createTextNode(text);
-	outer.appendChild(inner);
-	if (parent) {
-	parent.appendChild(outer);
-	} else {
-		return outer
+function populateLine(object) {
+	const outer = document.createElement(object.tag);
+	if (object.content) {
+		const inner = document.createTextNode(object.content);
+		outer.appendChild(inner);
+	} if (object.classes) {
+		for (const className of object.classes) {
+			outer.classList.add(className);
+		}
+	} if (object.id) {
+		outer.id = object.id;
+	} if (object.attributes) {
+		for (const attribute in object.attributes) {
+			outer.setAttribute(attribute, object.attributes[attribute]);
+		}
+	} if (object.parent) {
+	object.parent.appendChild(outer);
 	}
-}
-
-function createLangHeader(language, parent) {
-	const langHeading = populateLine(langName.of(language), "h2");
-	langHeading.id = '' + language;
-	parent.appendChild(langHeading);
+	return outer
 }
 
 function populateDefinition(translation, parent) { // This function is responsible for populating the parent body.
@@ -35,44 +39,26 @@ function populateDefinition(translation, parent) { // This function is responsib
 	const partOfSpeech = translation.partOfSpeech;
 	// This is mainly used as a heading to categorise definitions (as a noun, verb, adjective, etc). Also used when spitting out errors.
 	if (partOfSpeech) {
-		populateLine(partOfSpeech, "h3", parent);
+		populateLine({tag: "h3", content: partOfSpeech, parent: parent});
 	}
 	// Definitions
 	if (definitions) {
-		const ol = document.createElement('ol');
+		const ol = populateLine({tag: "ol", parent: parent });
 		for (const definition of definitions) {
-			const li = document.createElement('li');
-
+			const li = populateLine({tag: "li", parent: ol });
 			let frag = createFragment(definition.definition);
 			li.appendChild(frag.content);
 
 			if (definition.examples) { // definition used in a sentence
-				const ul = document.createElement('ul');
+				const ul = populateLine({tag: "ul", parent: li });
 				for (const example of definition.examples) {
-					const li = document.createElement('li');
+					const li = populateLine({ tag: "li", parent: ul });
 					frag = createFragment(example);
 					li.appendChild(frag.content);
-					ul.appendChild(li);
 				}
-				li.appendChild(ul);
 			}
-			ol.appendChild(li);
 		}
-		parent.appendChild(ol);
 	}
-}
-
-// Add a button that opens up the rest of the translations
-function createSlider(parent) {
-	const details = document.createElement('details');
-	const summary = populateLine("Other languages", "summary");
-	const otherDefsContainer = document.createElement('div');
-	summary.id = "langButton";
-	details.id = "otherLangContainer";
-	otherDefsContainer.id = "otherDefsContainer";
-	details.appendChild(summary);
-	details.appendChild(otherDefsContainer);
-	parent.appendChild(details);
 }
 
 // Create a chunk of useful html from string
@@ -81,6 +67,27 @@ function createFragment(content) {
 	frag.innerHTML = stripTags(content);
 	transform_links(frag);
 	return frag;
+}
+
+// Add a button that opens up the rest of the translations
+function createSlider(parent) {
+	const details = populateLine({ tag: "details", id: "otherLangContainer", parent: parent });
+	populateLine({ tag: "summary", content: "Other Languages", id: "langButton", parent: details })
+	populateLine({ tag: "div", id: "otherDefsContainer", parent: details });
+}
+
+// Create the headers for other languages
+function createLangHeader(language, parent) {
+	const langContainer = populateLine({
+		tag: "a",
+		classes: ["langHeadingContainer"],
+		id: '' + language,
+		parent: parent,
+		attributes: { href: "#", onClick: "return false" }
+	});
+	populateLine({ tag: "h2", content: "#", parent: langContainer, classes: ["before"] });
+	populateLine({ tag: "h2", content: langName.of(language), parent: langContainer, classes: ["lang"] });
+	populateLine({tag: "h2", parent: langContainer, classes: ["after"] });
 }
 
 // transform <a> elements of given document fragment

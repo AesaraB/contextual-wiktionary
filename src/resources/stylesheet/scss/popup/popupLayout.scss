@@ -25,25 +25,42 @@ header,
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	column-gap: 1em;
+	column-gap: 2ex;
+
+	margin: 0 0 0.5ex;
 }
 #searchInput {
 	width: 100%;
 }
 
-#otherDefsContainer h2[id] { //move to layout
+.langHeadingContainer {
 	display: flex;
 	justify-content: space-between;
-	&:hover {
-		cursor: pointer
+	column-gap: 1ex;
+	color: var(--text-colour);
+	.lang {
+		flex-grow: 1;
 	}
-	&::before {
-		content: "#";
+	.before, .after {
+		color: var(--text-colour-secondary);
+		font-weight: normal;
 	}
-	&:hover::after {
+	&:hover > .after::after {
 		content: 'Set auto-scroll';
 	}
-	&.auto-scrolled[id]:hover::after{
+	&.auto-scrolled[id]:hover > .after::after{
 		content: 'Unset auto-scroll';
 	}
+}
+
+// Text
+h1 {
+	font-weight: var(--font-heading-weight);
+	font-size: var(--font-heading-size);
+}
+h3 {
+	margin: 1.5ex 0 1.5ex 1ex;
+}
+ol {
+	margin: 1ex 0 2ex 0ex;
 }

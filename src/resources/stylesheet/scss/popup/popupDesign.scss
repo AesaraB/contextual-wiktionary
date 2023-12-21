@@ -31,6 +31,9 @@ body *:not(button):not(a):not(summary) {
 #searchButton {
 	background-color: transparent;
 	background-image: var(--search-button-image);
+	&:hover {
+		cursor: pointer;
+	}
 }
 #extButton {
 	background-image: var(--ext-button-image);
@@ -40,6 +43,7 @@ body *:not(button):not(a):not(summary) {
 	display: block;
 	padding: 10px;
 	background-color: var(--button-secondary);
+	color: var(--text-colour);
 	&:hover {
 		background-color: var(--button-secondary-hover);
 	}

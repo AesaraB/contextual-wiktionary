@@ -30,7 +30,7 @@ async function define(query) {
 	switch(true) {
 		case !meta.hasDefs: {
 			console.log("popup: query has no definitions");
-			populateLine("No definitions found", "h3", main);
+			populateLine({ tag: "h3", content: "No definitions found", parent: main });
 			definitionsBuilder(error, main);
 			break;
 		}
@@ -43,7 +43,7 @@ async function define(query) {
 				parent = document.getElementById('otherDefsContainer');
 			} else { // (!meta.engDefes && meta.otherLang)
 				console.log("popup: query has defifnitions in non-English languages");
-				populateLine("No English definitions found", "h3", main);
+				populateLine({ tag: "h3", content: "No English definitions found", parent: main });
 				parent = main;
 			}
 			translationsBuilder(otherDefs, parent);
