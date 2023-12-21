@@ -4,7 +4,7 @@ export { define };
 import { WORDURL, main, humanize } from "./definitions.js";
 import { populateDefinition, populateHeader, populateLine, createLangHeader, createSlider } from "./html.js";
 import { getDefinitions } from "./json.js";
-import { csrunner, expand } from "./languageAutoscroll.js";
+import { csrunner } from "./languageAutoscroll.js";
 
 async function define(query) {
 	// Don't search if the query is empty
@@ -39,8 +39,8 @@ async function define(query) {
 			if (meta.hasEngDefs) { // (meta.engDefs && meta.otherLang)
 				console.log("popup: query has defifnitions in English and other languages");
 				definitionsBuilder(engDefs, main);
-				main.appendChild(createSlider());
-				parent = document.getElementById('slider');
+				createSlider(main);
+				parent = document.getElementById('otherDefsContainer');
 			} else { // (!meta.engDefes && meta.otherLang)
 				console.log("popup: query has defifnitions in non-English languages");
 				populateLine("No English definitions found", "h3", main);
@@ -48,7 +48,7 @@ async function define(query) {
 			}
 			translationsBuilder(otherDefs, parent);
 			csrunner(); // Add onclick handlers for language headings.
-			scrollToAutoScroll(engDefs, meta);
+			scrollToAutoScroll(document.getElementById("otherLangContainer"));
 			break;
 		}
 		case meta.hasEngDefs: {
@@ -65,29 +65,21 @@ function definitionsBuilder(data, element) {
 	}
 }
 
-function translationsBuilder(definitions, parent) {
-	const { en, ...translations } = definitions; // Weird syntax ik, it removes en from object translations
-	for (const language in translations) {
+function translationsBuilder(otherDefs, parent) {
+	for (const language in otherDefs) {
 		createLangHeader(language, parent);
-		for (const translation of translations[language]) {
+		for (const translation of otherDefs[language]) {
 			populateDefinition(translation, parent);
 		}
 	}
 }
 
-function scrollToAutoScroll(definitions, meta) {
+function scrollToAutoScroll(parent) {
 	const hash = window.location.hash.slice(1);
 	const e = document.getElementById(hash);
-	if ( hash && e ) {
-		// Anchor is in use.
-		expand();
-		e.classList.add('auto-scrolled')
-		setTimeout(() => { // TODO Remove this delay if you can.
-			e.scrollIntoView({
-				behavior: 'smooth'
-		})}, 300)
-	} else if (meta.defsButNotEnglish) {
-		// Finally, open the "other languages" box if English had no definitions.
-		expand();
+	if ( hash && e ) { // Anchor is in use.
+		parent.setAttribute("open", "");
+		// I really don't like this delay
+		setTimeout(() => { e.scrollIntoView({ behavior: 'smooth' })}, 100)
 	}
 }

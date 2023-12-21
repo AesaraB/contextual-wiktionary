@@ -1,16 +1,16 @@
 'use strict';
 export { populateDefinition, populateHeader, populateLine, createLangHeader, createSlider };
-import { EDITURL, langName, stripTags, link, searchInput } from "./definitions.js";
+import { EDITURL, langName, stripTags, titleCase } from "./definitions.js";
+import { extButton, searchInput } from "./definitions.js";
 import { define } from "./builder.js";
-import { expand } from "./languageAutoscroll.js";
 
-function populateHeader(searchPlaceholder, extLinkTitle, extLinkHref, extendedParams) {
+function populateHeader(text, extLinkTitle, extLinkHref, extendedParams) {
 	if (extendedParams !== "noValue") {
-		searchInput.value = `${searchPlaceholder}`;
+		searchInput.value = `${text}`;
 	}
-	searchInput.placeholder = `${searchPlaceholder}`;
-	link.title = `${extLinkTitle}`;
-	link.href = `${extLinkHref}`;
+	searchInput.placeholder = `${text}`;
+	extButton.title = `${extLinkTitle}`;
+	extButton.href = `${extLinkHref}`;
 }
 
 function populateLine(text, tag, parent) {
@@ -63,22 +63,16 @@ function populateDefinition(translation, parent) { // This function is responsib
 }
 
 // Add a button that opens up the rest of the translations
-function createSlider() {
-	const plusButton = document.createElement('button');
-	const wrapper = document.createElement('div');
-	const slider = document.createElement('div');
-	slider.id = 'slider';
-	slider.className = 'slider';
-	slider.classList.toggle('closed');
-	wrapper.className = 'slider-wrapper closed';
-	plusButton.className = 'primary-color-button default-button';
-	plusButton.id = 'languages-button';
-	const plus = document.createTextNode('Other languages');
-	plusButton.appendChild(plus);
-	plusButton.onclick = expand;
-	wrapper.appendChild(plusButton);
-	wrapper.appendChild(slider);
-	return wrapper;
+function createSlider(parent) {
+	const details = document.createElement('details');
+	const summary = populateLine("Other languages", "summary");
+	const otherDefsContainer = document.createElement('div');
+	summary.id = "langButton";
+	details.id = "otherLangContainer";
+	otherDefsContainer.id = "otherDefsContainer";
+	details.appendChild(summary);
+	details.appendChild(otherDefsContainer);
+	parent.appendChild(details);
 }
 
 // Create a chunk of useful html from string

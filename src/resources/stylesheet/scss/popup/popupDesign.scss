@@ -1,0 +1,59 @@
+// Strip characters of any defined background-color
+// useful for some Chinese characters.
+body *:not(button):not(a):not(summary) {
+	background-color: unset !important;
+}
+
+#search {
+	border-bottom: 2px solid var(--text-colour);
+	&:focus-within {
+		border-color: var(--primary-colour);
+	}
+}
+#searchInput {
+	font-size: xx-large;
+	font-weight: semibold;
+	color: var(--text-colour);
+
+	border: none;
+	border-radius: 0px;
+	&::placeholder {
+		color: var(--text-color);
+		opacity: 1;
+	}
+	&:focus {
+		outline: 0;
+	}
+	&:hover {
+		border: none
+	}
+}
+#searchButton {
+	background-color: transparent;
+	background-image: var(--search-button-image);
+}
+#extButton {
+	background-image: var(--ext-button-image);
+}
+// Other languages
+#langButton {
+	display: block;
+	padding: 10px;
+	background-color: var(--button-secondary);
+	&:hover {
+		background-color: var(--button-secondary-hover);
+	}
+	&:active {
+		background-color: var(--button-secondary-active);
+	}
+	details[open] & {
+		background-color: var(--button-primary);
+		color: var(--button-primary-text);
+		&:hover {
+			background-color: var(--button-primary-hover);
+		}
+		&:active {
+			background-color: var(--button-primary-active);
+		}
+	}
+}

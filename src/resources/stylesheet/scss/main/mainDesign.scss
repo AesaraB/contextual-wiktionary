@@ -1,0 +1,58 @@
+// Colour
+body {
+	background-color: var(--background-colour);
+	color: var(--text-colour);
+
+	font-family: var(--font-family);
+	font-weight: var(--font-body-weight);
+	font-size: var(--font-body-size);
+}
+a {
+	color: var(--link-colour);
+	text-decoration: var(--font-link-decoration);
+	&:hover {
+		color: var(--link-colour-hover);
+	}
+	&:active {
+		color: var(--link-colour-active);
+	}
+}
+h1 {
+	font-weight: var(--font-heading-weight);
+	font-size: var(--font-heading-size);
+}
+h3 {
+	margin: 1.5ex 0 1.5ex 1ex;
+}
+ol {
+	margin: 1ex 0 2ex 0ex;
+}
+
+// Design & colour
+.square {
+	height: 32px;
+	border: none;
+	min-width: 32px;
+}
+.image {
+	background-size: 20px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+@mixin colourButton($colour) {
+	background-color: var(--button-#{$colour});
+	&:hover {
+		background-color: var(--button-#{$colour}-hover);
+	}
+	&:active {
+		background-color: var(--button-#{$colour}-active);
+	}
+}
+.primary {
+	@include colourButton($colour: primary);
+}
+.secondary {
+	@include colourButton($colour: secondary);
+	color: var(--button-primary-text);
+}

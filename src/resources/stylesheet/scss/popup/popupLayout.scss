@@ -1,0 +1,49 @@
+// Layout refers to the spacing and relative positioning of elements.
+//	I'll also consider it to mean whether elements are displayed.
+html {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	::-webkit-scrollbar {
+		display: none;
+	}
+}
+// Allow selection
+body:not(header):not(footer) {
+	user-select: text;
+	-moz-user-select: text;
+}
+#langButton {
+	user-select: none;
+	-moz-user-select: none;
+}
+
+body {
+	padding: 8px 12px;
+}
+header,
+#search {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	column-gap: 1em;
+}
+#searchInput {
+	width: 100%;
+}
+
+#otherDefsContainer h2[id] { //move to layout
+	display: flex;
+	justify-content: space-between;
+	&:hover {
+		cursor: pointer
+	}
+	&::before {
+		content: "#";
+	}
+	&:hover::after {
+		content: 'Set auto-scroll';
+	}
+	&.auto-scrolled[id]:hover::after{
+		content: 'Unset auto-scroll';
+	}
+}

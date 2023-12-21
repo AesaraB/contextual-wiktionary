@@ -1,15 +1,6 @@
 // This script modifies the config to accomodate any other languages the user may want to see first.
-export { csrunner, expand };
+export { csrunner };
 const SCROLLDOWNWAIT = 10; // Opening the slider autoscrolls. -- In ms: the timeout before scrolling lower again.
-
-// Expander for the button
-function expand() {
-	const slider = document.getElementById('slider');
-	if (slider && !slider.classList.toggle('closed')) {
-		// Scroll down with the expanding div
-		scrollDown(0, 0);
-	}
-}
 
 // TODO: improve this.. looks terrible sometimes.... but ehh---
 // Compare current height to next height. If they don't match, then re-scroll to bottom and go again. If they do, goto step 1 10 times to make this thing less glitchy.

@@ -1,5 +1,5 @@
 'use strict';
-import { normalize, humanize, search, searchInput, link } from "./definitions.js";
+import { normalize, humanize, search, searchInput, extButton } from "./definitions.js";
 import { define } from "./builder.js";
 
 // These two code blocks operate when the popup is opened.
@@ -17,16 +17,19 @@ browser.runtime.onMessage.addListener((selectionText) => { // defineSelection.js
 });
 
 search.addEventListener('submit', (e) => { // This is our search input stuff
-	searchInput.disabled=true;
+	let query = e.target['0'].value;
 	e.preventDefault();
-	define(e.target['0'].value);
-	setTimeout(() => {
-	 	searchInput.disabled=false;
-		searchInput.focus();
-	}, 200);
+	if (query.length > 0) {
+		searchInput.disabled=true;
+		define(query);
+		setTimeout(() => {
+			searchInput.disabled=false;
+			searchInput.focus();
+		}, 200);
+	}
 });
 
-link.addEventListener('click', (e) => {
+extButton.addEventListener('click', (e) => {
 	e.preventDefault();
-	browser.tabs.create({ url: link.href });
+	browser.tabs.create({ url: extButton.href });
 });

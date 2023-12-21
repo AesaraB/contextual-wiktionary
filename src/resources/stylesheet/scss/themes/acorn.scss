@@ -1,0 +1,110 @@
+// For the most part, blues apply to elements that use the Firefox brand primary
+//	accent colour (e.g. primary button, links, focus outline) and element states
+//	the primary accent colour can adapt to (e.g. hover, active, disabled). Blue
+//	is also used to colour elements that indicate an informative message or update
+//	on desktop and Android and to colour-code tab collections on mobile.
+$blue-05:		#aaf2ff;
+$blue-10:		#80ebff;
+$blue-20:		#00ddff; // Dark: Accent Desktop
+$blue-30:		#00b3f4; //  Dark: Accent iOS
+$blue-40:		#0090ed;
+$blue-50:		#0060df; //  Light: Accent Desktop
+$blue-60:		#0250bb;
+$blue-70:		#054096;
+// Grays are used for the background colour of pages and overlays (e.g. modals and
+//	panels), the background colour of buttons, text colors, border colors, and icon colors.
+$light-gray-05:	#fbfbfe; //  Dark: Text   Primary
+$light-gray-10:	#f9f9fb; // Light: BG     Layer 1
+$light-gray-20:	#f0f0f4; // Light: BG     Layer 3
+$light-gray-30:	#e0e0e6; //  Both: Border
+$light-gray-40:	#cfcfd8; //  Dark: Text   Secondary
+$light-gray-50:	#bfbfc9;
+$dark-gray-05:	#5b5b66; // Light: Text   Secondary
+$dark-gray-10:	#52525e;
+$dark-gray-30:	#42414d; //  Dark: BG     Layer 2
+$dark-gray-40:	#3a3944;
+$dark-gray-60:	#2b2a33; //  Dark: BG     Layer 1
+$dark-gray-80:	#1c1b22; //  Dark: BG     Layer 3
+$dark-gray-90:	#15141a; // Light: Text   Primary
+// Green
+// Desktop: greens are used to indicate a new app update and to colour elements
+//	that represent the concept of "success" and "new update".
+// Mobile: greens are used for colour-coding tab collections.
+$green-20:		#b3ffe3;
+$green-40:		#54ffbd;
+$green-60:		#2ac3a2;
+$orange-05:		#fff4de; // Light: Sepia
+// Pinks are used on mobile for colour-coding tab collections. 
+$pink-20:		#ff8ac5;
+$pink-60:		#e21587;
+// Purples are used as the private browsing mode accent colours. 
+$purple-60:		#952bb9;
+$purple-70:		#722291;
+// Reds are reserved for elements that are used to represent critical feedback,
+//	errors, or destructive actions.
+$red-05:		#ffdfe7;
+$red-10:		#ffbdc5;
+$red-20:		#ff9aa2; //  Dark: Text  Error
+$red-60:		#e22850;
+$red-70:		#c50042; // Light: Text  Error
+$red-80:		#810220;
+// Violet is for mobile
+$violet-20:		#cb9eff;
+$violet-40:		#ab71ff;
+$violet-50:		#9059ff;
+$violet-60:		#7542e4; // Dark: Accent Android
+$violet-70:		#592acb;
+// Yellow is for warnings
+$yellow-20:		#ffea80;
+$yellow-40:		#ffbd4f;
+$yellow-50:		#ffa436;
+$yellow-60:		#e27f2e;
+
+:root {
+	--font-family: "Segoe UI", "SF Pro Text", sans-serif;
+	--font-heading-weight: semibold;
+	--font-heading-size: 150%;
+	--font-body-weight: regular;
+	--font-body-size: 150%;
+	--font-link-decoration: none;
+	--font-small-size: 150%;
+}
+
+@media (prefers-colour-scheme: light) {
+	:root {
+		--background-colour: #{$light-gray-20};
+		--text-colour: #{$dark-gray-90};
+		--primary-colour: #{$blue-50};
+		--button-primary: #{$blue-20};
+		// Links
+		--link-colour: #{$blue-50};
+		--link-colour-hover: #{$blue-60};
+		--link-colour-active: #{$blue-70};
+		--button-primary: #{$blue-50};
+		// Images
+		--search-button-image: url(../icons/searchLight.svg);
+		--ext-button-image: url(../icons/externalLinkLight.svg);
+	}
+}
+:root {
+	--background-colour: #{$dark-gray-80};
+	--text-colour: #{$light-gray-05};
+	--primary-colour: #{$blue-20};
+	--secondary-colour: #{$dark-gray-60};
+	// Links
+	--link-colour: var(--primary-colour);
+	--link-colour-hover: #{$blue-10};
+	--link-colour-active: #{$blue-05};
+	// Buttons
+	--button-secondary: var(--secondary-colour);
+	--button-secondary-hover: #{$dark-gray-40};
+	--button-secondary-active: #{$dark-gray-30};
+	--button-primary: var(--primary-colour);
+	--button-primary-hover: #{$blue-10};
+	--button-primary-active: #{$blue-05};
+	--button-primary-text: #{$dark-gray-90};
+	// Images
+	--search-button-image: url(../icons/searchDark.svg);
+	--ext-button-image: url(../icons/externalLinkDark.svg);
+}
+
