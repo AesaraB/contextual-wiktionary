@@ -41,7 +41,7 @@
     "scripts": [
       "options/webextensions-lib-configs/Configs.js",
 	  "options/defaultConfig.js",
-	  "scripts/bgScript.js"
+	  "bgScript.js"
 	]
   },
 

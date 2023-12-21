@@ -7,8 +7,6 @@ import { getDefinitions } from "./json.js";
 import { csrunner, expand } from "./languageAutoscroll.js";
 
 async function define(query) {
-	// translation is an array like [{partofspeect{},definitions:[definition:{},definition:{}]}]
-
 	// Don't search if the query is empty
 	if (query === null || query.match(/^ *$/)) { 
 		console.log("popup: no definition");
@@ -22,32 +20,42 @@ async function define(query) {
 	main.innerHTML = '';
 	populateHeader(`${humanize(query)}`, `Open "${humanize(query)}" in a new tab`, `${WORDURL(query)}`);
 
-	const {definitions, translations, meta} = await getDefinitions(query);
-
-	// Build the popup
-	if (meta.query !== query) {
+	const {engDefs, otherDefs, error, meta} = await getDefinitions(query);
+	if (meta.query !== query) { // Check if the query has changed
+		console.log("popup: query has changed from \""+query+"\" to \""+meta.query+"\"");
 		populateHeader(`${humanize(meta.query)}`, `Open "${humanize(meta.query)}" in a new tab`, `${WORDURL(meta.query)}`);
 	}
-	let parent = main;
+
+	// Build the popup
 	switch(true) {
-		case !meta.definitions:
-			console.log("!meta.definitions");
-			definitionsBuilder(definitions, main);
-		break;
-		case meta.engDefs:
-			console.log("meta.engDefs");
-			definitionsBuilder(definitions, main);
-		case (meta.engDefs && meta.otherLang):
-			console.log("meta.engDefs && meta.otherLang");
-			main.appendChild(createSlider());
-			parent = document.getElementById('slider');
-		case meta.otherLang: // Fall-through to build other languages
-			console.log("meta.otherLang", meta.otherLang);
-			populateLine("No English definitions found", "h3", main);
-			otherLangBuilder(translations, parent);
+		case !meta.hasDefs: {
+			console.log("popup: query has no definitions");
+			populateLine("No definitions found", "h3", main);
+			definitionsBuilder(error, main);
+			break;
+		}
+		case meta.hasOtherDefs: {
+			let parent;
+			if (meta.hasEngDefs) { // (meta.engDefs && meta.otherLang)
+				console.log("popup: query has defifnitions in English and other languages");
+				definitionsBuilder(engDefs, main);
+				main.appendChild(createSlider());
+				parent = document.getElementById('slider');
+			} else { // (!meta.engDefes && meta.otherLang)
+				console.log("popup: query has defifnitions in non-English languages");
+				populateLine("No English definitions found", "h3", main);
+				parent = main;
+			}
+			translationsBuilder(otherDefs, parent);
 			csrunner(); // Add onclick handlers for language headings.
-			scrollToAutoScroll(definitions, meta);
-		break;
+			scrollToAutoScroll(engDefs, meta);
+			break;
+		}
+		case meta.hasEngDefs: {
+			console.log("popup: query has English definitions");
+			definitionsBuilder(engDefs, main);
+			break;
+		}
 	}
 }
 
@@ -57,7 +65,7 @@ function definitionsBuilder(data, element) {
 	}
 }
 
-function otherLangBuilder(definitions, parent) {
+function translationsBuilder(definitions, parent) {
 	const { en, ...translations } = definitions; // Weird syntax ik, it removes en from object translations
 	for (const language in translations) {
 		createLangHeader(language, parent);
@@ -77,7 +85,7 @@ function scrollToAutoScroll(definitions, meta) {
 		setTimeout(() => { // TODO Remove this delay if you can.
 			e.scrollIntoView({
 				behavior: 'smooth'
-			})}, 300)
+		})}, 300)
 	} else if (meta.defsButNotEnglish) {
 		// Finally, open the "other languages" box if English had no definitions.
 		expand();

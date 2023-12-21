@@ -2,27 +2,27 @@
 export { getDefinitions };
 import { HEADERS, SEARCHURL, DEFINITIONURL, normalize, humanize, titleCase } from "./definitions.js";
 
+// Build the response
 async function getDefinitions(query) {
-	let { json, meta } = await searchQuery(query);
-	let { en, ...translations } = json;
-	let definitions = json.en;
-	meta = metaObjects(meta, definitions, translations);
-	console.log("meta: ", meta);
-	return {definitions: definitions, translations: translations, meta: meta};
+	let { json, meta } = await searchQuery(query); // Want to know what's happening? console.log(json)
+	let { en, error, ...otherDefs } = json;
+	meta = metaObjects(meta, en, otherDefs);
+	return {engDefs: en, otherDefs: otherDefs, error: error, meta: meta};
 }
 
+// Search Wiktionary for query definitions
 async function searchQuery(query) {
-	let json;
-	let meta = {query: query};
+	let json; 
+	let meta = {query: query, hasDefs: false};
 	try {
 		const response = await fetch(DEFINITIONURL(query), HEADERS); // Fetches query results from Wiktionary API
 		if (!response.ok) { throw new Error('' + response.status + ': ' + response.statusText) }; // Error on response not OK
-		meta = Object.assign(meta, {definitions: true});
+		meta = Object.assign(meta, {hasDefs: true});
 		json = await response.json();
 	} catch(error) {
+		//meta = Object.assign(meta, {error: error}); // Better error handling in future
 		if (error.message.indexOf('404') !== -1) { // No definitions found
-			meta = Object.assign(meta, {definitions: false});
-			let results = await searchRelated(meta, query);
+			let results = await searchRelated(query, meta);
 			json = results.json;
 			meta = results.meta;
 		}
@@ -30,69 +30,74 @@ async function searchQuery(query) {
 	return { json: json, meta: meta };
 }
 
-async function searchRelated(meta, query) {
+// Search Wiktionary for related queries
+async function searchRelated(query, meta) {
 	let json;
 	try {
 		const response = await fetch(SEARCHURL(query), HEADERS); // If similar queries have results
 		if (!response.ok) { throw new Error('' + response.status + ': ' + response.statusText) }; // Error on response not OK
 		json = await response.json();
 	} catch(error) {};
+	const searchResults = json[1];
 
-	const searchResults = json[1]; // If the query has a match in title case.
-	let similarResults;
-
-	const titleCaseQuery = titleCase(query)
-	if (searchResults.find((element) => element === titleCaseQuery)) {
-		meta = Object.assign(meta, {query: titleCaseQuery});
-		const results = await searchQuery(titleCaseQuery);
-		return results;
+	// Match alternate case of query
+	let alternateCases = await alternateCaseQuery(searchResults, query, meta);
+	if (alternateCases) {
+		return alternateCases;
 	}
-		
-	if (!searchResults.length == 0) {
-		similarResults = {
+
+	// Build the error message
+	json = {error: [{definitions: []}]};
+	let errorDefs = json.error[0].definitions;
+	errorDefs.push({ // Query not found
+		definition: `The query <b>${humanize(query)}</b> has no definitions.`,
+		examples: [
+			'<i>Know what it means?</i>',
+			`<a title="${humanize(query)}" class="link-actual" target="_blank" id="addWord">Submit it to the Wiktionary.</a>`,
+		],
+	});
+	if (searchResults.length > 0) { // Find similar words
+		errorDefs.push({
 			definition: 'Similar and related words',
 			examples: searchResults.map( (word) =>
 				`<a href="javascript:;" title="${normalize(word)}">${humanize(word)}</a>`
 			),
-		};
-	} else {
-		similarResults = {
-			definition: 'No similar or related words found',
-			examples: searchResults.map( (word) =>
-				`<a href="javascript:;" title="${normalize(word)}">${humanize(word)}</a>`
-			),
-		};
+		});
 	}
-
-	json = {};
-	json.en = [{ // Let's use the string builder instead pls
-		partOfSpeech: "Definition not found",
-		definitions: [
-			{
-				definition: `The word <b>${humanize(query)}</b> was not found.`,
-				examples: [
-					'<i>Know what it means?</i>',
-					`<a title="${humanize(query)}" class="link-actual" target="_blank" id="addWord">Submit it to the Wiktionary.</a>`,
-				],
-			},
-			similarResults,
-		]
-	}];
 	return {json: json, meta: meta};
+}
+
+async function alternateCaseQuery(searchResults, query, meta) {
+	let newQuery;
+	const titleCaseQuery = titleCase(query);
+	const lowerCaseQuery = query.toLowerCase();
+	switch(searchResults.find((element) => element)) {
+		case titleCaseQuery:
+			newQuery = titleCaseQuery;
+		break;
+		case lowerCaseQuery:
+			newQuery = lowerCaseQuery;
+		break;
+	}
+	if (newQuery) {
+		meta = Object.assign(meta, {query: newQuery});
+		const results = await searchQuery(newQuery);
+		return results;
+	}
 }
 
 function metaObjects(meta, definitions, translations) {
 	// Definitions in English
-	if (!definitions) { // This one is busted
-		meta = Object.assign(meta, {engDefs: false})
+	if (!definitions) {
+		meta = Object.assign(meta, {hasEngDefs: false})
 	} else {
-		meta = Object.assign(meta, {engDefs: true})
+		meta = Object.assign(meta, {hasEngDefs: true})
 	}
 	// Definitions in other languages
 	if (Object.keys(translations).length >= 1) {
-		meta = Object.assign(meta, {otherLang: true})
+		meta = Object.assign(meta, {hasOtherDefs: true})
 	} else {
-		meta = Object.assign(meta, {otherLang: false})
+		meta = Object.assign(meta, {hasOtherDefs: false})
 	}
 	return meta;
 }
