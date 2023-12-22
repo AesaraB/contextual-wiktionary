@@ -2,7 +2,28 @@
 
 var selectionText, alternateapi, wiktionaryapi
 const desiredPermissions = {permissions: ["activeTab", "scripting"]};
+const normalize = word => word.trim().toUpperCase()===word.trim() ? word.normalize().trim() : word.normalize().trim().replace(/ /g, '_').toLowerCase()
 
+configs.$loaded.then(res => { // Load Wiktionary API
+	wiktionaryapi = res.wiktionaryapi
+	alternateapi = res.alternateapi
+})
+
+function setWiktionary() {
+	let popup
+	let anchor = configs._anchor || ''
+	switch(true) { // Checks whether an alternative API is being used.
+		case((wiktionaryapi !== 'en.wiktionary.org' || '') && alternateapi):
+			popup = `https://${wiktionaryapi}/api/rest_v1/page/html/${normalize(selectionText)}`;
+			break;
+		case(!alternateapi):
+			popup = `https://${wiktionaryapi}/wiki/${normalize(selectionText)}`;
+			break;
+		default:
+			popup = browser.runtime.getURL('popup/popup.html#' + (anchor.replace(/ /g, '_')))
+	}
+	browser.browserAction.setPopup({'popup': popup})
+}
 // Define something from the right click context menu
 browser.contextMenus.create({
 	id: 'wiktDefine',
@@ -12,6 +33,7 @@ browser.contextMenus.create({
 browser.contextMenus.onClicked.addListener((clickData) => {
 	selectionText = clickData.selectionText;
 	console.log("bgScript: context menu item clicked");
+	setWiktionary()
 	browser.browserAction.openPopup();
 })
 
@@ -20,7 +42,7 @@ browser.commands.onCommand.addListener(() => {
 	browser.permissions.request(desiredPermissions);
 	if (getPermissions) {
 		browser.tabs
-			.query({
+		.query({
 				currentWindow: true,
 				active: true,
 			})
@@ -28,6 +50,7 @@ browser.commands.onCommand.addListener(() => {
 			.catch((error) => console.error(`Error: ${error}`));
 	}
 	console.log("bgScript: shortcut pressed")
+	setWiktionary()
 	browser.browserAction.openPopup();
 });
 
