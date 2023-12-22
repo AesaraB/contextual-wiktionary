@@ -4,6 +4,16 @@ main *:not(button):not(a):not(summary) {
 	background-color: unset !important;
 }
 
+// I want to have a do-over of this
+.form-of-definition.use-with-mention {
+	a {
+		color: var(--text-colour);
+	}
+	.form-of-definition-link a {
+		color: var(--link-colour);
+	}
+}
+
 #search {
 	border-bottom: 2px solid var(--text-colour);
 	&:focus-within {

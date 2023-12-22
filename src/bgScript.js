@@ -4,6 +4,15 @@ var selectionText, alternateapi, wiktionaryapi
 const desiredPermissions = {permissions: ["activeTab", "scripting"]};
 const normalize = word => word.trim().toUpperCase()===word.trim() ? word.normalize().trim() : word.normalize().trim().replace(/ /g, '_').toLowerCase()
 
+
+const versionSetup = browser.storage.local.get("currentVersion");
+versionSetup.then((currentVersion) => {
+	if (currentVersion == null || currentVersion != "v1.5") {
+		browser.storage.local.set({ currentVersion: "v1.5", patchNotesTimes: 0 });
+	}
+});
+
+
 configs.$loaded.then(res => { // Load Wiktionary API
 	wiktionaryapi = res.wiktionaryapi
 	alternateapi = res.alternateapi
@@ -15,10 +24,10 @@ function setWiktionary() {
 	switch(true) { // Checks whether an alternative API is being used.
 		case((wiktionaryapi !== 'en.wiktionary.org' || '') && alternateapi):
 			popup = `https://${wiktionaryapi}/api/rest_v1/page/html/${normalize(selectionText)}`;
-			break;
+		break;
 		case(!alternateapi):
 			popup = `https://${wiktionaryapi}/wiki/${normalize(selectionText)}`;
-			break;
+		break;
 		default:
 			popup = browser.runtime.getURL('popup/popup.html#' + (anchor.replace(/ /g, '_')))
 	}

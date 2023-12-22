@@ -4,8 +4,9 @@ import { EDITURL, WORDURL, humanize, langName, stripTags, titleCase } from "./de
 import { extButton, header, historyContents, searchInput } from "./definitions.js";
 import { define } from "./builder.js";
 
-function populateHeader(object) {
+async function populateHeader(object) {
 	header.classList.remove("definitionPage")
+	historyContents.innerHTML = "";
 	searchInput.placeholder = `${humanize(object.content)}`;
 	searchInput.value = `${humanize(object.content)}`;
 	extButton.title = `Open "${humanize(object.content)}" in a new tab`;
@@ -18,8 +19,7 @@ function populateHeader(object) {
 			searchInput.value = "";
 		} if (object.params.definitionPage) {
 			header.classList.add("definitionPage")
-		} if (object.params.history) {
-			historyContents.innerHTML = "";
+		} if (object.params.history && object.params.history.length != 0) {
 			for (const oldQuery of object.params.history) {
 				header.classList.add("hasHistory")
 				if (object.params.history.length >= 2 && object.params.history[0] !== oldQuery) {
@@ -27,6 +27,20 @@ function populateHeader(object) {
 				}
 				const oldQueryElement = populateLine({ tag: "a", content: humanize(oldQuery), attributes: { href: "#" }, parent: historyContents });
 				oldQueryElement.onclick = () => define(oldQuery);
+			}
+		} else {
+			const { patchNotesTimes } = await browser.storage.local.get("patchNotesTimes");
+			let newTimes = patchNotesTimes;
+			if (newTimes <= 5) {
+				newTimes++
+				browser.storage.local.set({ patchNotesTimes: newTimes });
+				const { currentVersion } = await browser.storage.local.get("currentVersion");
+				header.classList.add("hasHistory")
+				populateLine({ tag: "span", content: `updated to ${currentVersion} `, parent: historyContents });
+				const patchNotes = populateLine({ tag: "a", content: "(patch notes)", attributes: { href: `https://github.com/AesaraB/contextual-wiktionary/wiki/patch_notes#${currentVersion.replace(/\./g, '')}` }, parent: historyContents });
+				patchNotes.onclick = () => {
+					browser.storage.local.set({ patchNotesTimes: 6 });
+				}
 			}
 		}
 	}

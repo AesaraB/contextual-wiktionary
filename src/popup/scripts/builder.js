@@ -10,7 +10,7 @@ async function define(query) {
 	// Don't search if the query is empty
 	if (query === null || query.match(/^ *$/)) { 
 		console.log("popup: no definition");
-		populateHeader({ content: "Wiktionary", params: { extLink: { title: "Open Wiktionary.org in a new tab", href: "https://en.wiktionary.org/" }, mainPage: true }});
+		await populateHeader({ content: "Wiktionary", params: { extLink: { title: "Open Wiktionary.org in a new tab", href: "https://en.wiktionary.org/" }, mainPage: true }});
 		document.getElementById("searchInput").focus();
 		return
 	}
@@ -24,7 +24,7 @@ async function define(query) {
 	// Getting the definitions
 	const {engDefs, otherDefs, error, meta} = await getDefinitions(query);
 
-	populateHeader({ content: meta.query, params: { history: history, definitionPage: true }})
+	await populateHeader({ content: meta.query, params: { history: history, definitionPage: true }})
 	const currHistory = await updateHistory(history, meta);
 	if (meta.query !== query) { // Check if the query has changed
 		console.log("popup: query has changed from \""+query+"\" to \""+meta.query+"\"");
