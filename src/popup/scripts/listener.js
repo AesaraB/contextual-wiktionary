@@ -6,6 +6,7 @@ import { define } from "./builder.js";
 window.onload = () => { // Tell defineSelection.js that the popup is initialised.
 	browser.runtime.sendMessage({ok: true});
 	console.log("popup: opened");
+	browser.storage.local.set({ history: [] });
 };
 browser.runtime.onMessage.addListener((selectionText) => { // defineSelection.js replies with the selectionText.
 	let selection = selectionText || '';

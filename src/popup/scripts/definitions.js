@@ -1,7 +1,7 @@
 'use strict';
 export { EDITURL, SEARCHURL, DEFINITIONURL, WORDURL, HEADERS };
 export { normalize, humanize, langName, stripTags, titleCase };
-export { extButton, main, search, searchInput };
+export { historyBar, extButton, main, search, searchInput };
 
 // Wiktionary URLs
 const EDITURL = (word) => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`;
@@ -28,6 +28,7 @@ const main = document.getElementById("main");
 const search = document.getElementById('search');
 const searchInput = document.getElementById('searchInput');
 const extButton = document.getElementById('extButton');
+const historyBar = document.getElementById('historyBar');
 
 // https://locutus.io/php/strings/strip_tags/
 const ALLOWED_TAGS = '<b><i><u><strong><a><span><div><small>'; // Used to whitelist certain tags we want in our definitions.

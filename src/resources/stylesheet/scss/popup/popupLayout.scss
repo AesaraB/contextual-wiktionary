@@ -20,7 +20,14 @@ body:not(header):not(footer) {
 body {
 	padding: 8px 12px;
 }
-header,
+header {
+	display: grid;
+	grid-template-columns: 1fr 32px;
+
+	#historyBar {
+		grid-columns: 1 / -1;
+	}
+}
 #search {
 	display: flex;
 	justify-content: space-between;
@@ -31,6 +38,9 @@ header,
 }
 #searchInput {
 	width: 100%;
+}
+#historyBar {
+	flex: 100%;
 }
 
 .langHeadingContainer {

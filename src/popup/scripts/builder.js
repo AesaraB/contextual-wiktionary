@@ -1,8 +1,8 @@
 // https://github.com/aesarab/contextual-wiktionary/
 'use strict';
 export { define };
-import { WORDURL, main, humanize } from "./definitions.js";
-import { populateDefinition, populateHeader, populateLine, createLangHeader, createSlider } from "./html.js";
+import { WORDURL, main } from "./definitions.js";
+import { populateDefinition, populateHeader, populateLine, createLangHeader, createSlider, transformLink } from "./html.js";
 import { getDefinitions } from "./json.js";
 import { csrunner } from "./languageAutoscroll.js";
 
@@ -10,21 +10,26 @@ async function define(query) {
 	// Don't search if the query is empty
 	if (query === null || query.match(/^ *$/)) { 
 		console.log("popup: no definition");
-		populateHeader("Wiktionary", "Open Wiktionary.org in a new tab", "https://en.wiktionary.org/", "noValue");
+		populateHeader({ content: "Wiktionary", params: { extLink: { title: "Open Wiktionary.org in a new tab", href: "https://en.wiktionary.org/" }, noValue: true }});
 		document.getElementById("searchInput").focus();
 		return
 	}
 
 	// Quick things to do before getting the definitions
+	const { history } = await browser.storage.local.get("history");
 	console.log("popup: definining", query);
 	main.innerHTML = '';
-	populateHeader(`${humanize(query)}`, `Open "${humanize(query)}" in a new tab`, `${WORDURL(query)}`);
+	populateHeader({ content: query })
 
+	// Getting the definitions
 	const {engDefs, otherDefs, error, meta} = await getDefinitions(query);
+
+	const currHistory = await updateHistory(history, meta);
+	populateHeader({ content: query, params: { history: history }})
 	if (meta.query !== query) { // Check if the query has changed
 		console.log("popup: query has changed from \""+query+"\" to \""+meta.query+"\"");
-		populateHeader(`${humanize(meta.query)}`, `Open "${humanize(meta.query)}" in a new tab`, `${WORDURL(meta.query)}`);
 	}
+
 
 	// Build the popup
 	switch(true) {
@@ -44,11 +49,11 @@ async function define(query) {
 				otherLangParent = document.getElementById('otherLangContainer');
 			} else { // (!meta.engDefes && meta.otherLang)
 				console.log("popup: query has defifnitions in non-English languages");
-				populateLine({ tag: "h3", content: "No English definitions found", parent: main });
+			populateLine({ tag: "h3", content: "No English definitions found", parent: main });
 				otherDefsParent = main;
 			}
 			translationsBuilder(otherDefs, otherDefsParent);
-			csrunner(); // Add onclick handlers for language headings.
+		csrunner(); // Add onclick handlers for language headings.
 			scrollToAutoScroll(otherLangParent);
 			break;
 		}
@@ -58,6 +63,7 @@ async function define(query) {
 			break;
 		}
 	}
+
 }
 
 function definitionsBuilder(data, element) {
@@ -72,6 +78,19 @@ function translationsBuilder(otherDefs, parent) {
 		for (const translation of otherDefs[language]) {
 			populateDefinition(translation, parent);
 		}
+	}
+}
+
+async function updateHistory(history, meta) {
+	if (meta.hasDefs) {
+		if (history.includes(meta.query)) {
+			history.splice(history.indexOf(meta.query), 1);
+		} if (await history.length === 4) {
+			history.splice(0,1);
+		} 
+		history.push(meta.query);
+		browser.storage.local.set({ history: history });
+		return history
 	}
 }
 

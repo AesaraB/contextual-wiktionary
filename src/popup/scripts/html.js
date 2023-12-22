@@ -1,16 +1,32 @@
 'use strict';
-export { populateDefinition, populateHeader, populateLine, createLangHeader, createSlider };
-import { EDITURL, langName, stripTags, titleCase } from "./definitions.js";
-import { extButton, searchInput } from "./definitions.js";
+export { populateDefinition, populateHeader, populateLine, createLangHeader, createSlider, transformLink };
+import { EDITURL, WORDURL, humanize, langName, stripTags, titleCase } from "./definitions.js";
+import { extButton, historyBar, searchInput } from "./definitions.js";
 import { define } from "./builder.js";
 
-function populateHeader(text, extLinkTitle, extLinkHref, extendedParams) {
-	if (extendedParams !== "noValue") {
-		searchInput.value = `${text}`;
+function populateHeader(object) {
+	searchInput.placeholder = `${humanize(object.content)}`;
+	if (object.params) {
+		if (object.params.extLink) {
+			extButton.title = (object.params.extLink.title);
+			extButton.href = (object.params.extLink.href);
+		} if (object.params.noValue) {
+			searchInput.value = "";
+		} if (object.params.history) {
+			historyBar.innerHTML = "";
+			for (const oldQuery of object.params.history) {
+				if (object.params.history.length >= 2 && object.params.history[0] !== oldQuery) {
+					populateLine({ tag: "span", content: ", ", parent: historyBar });
+				}
+				const oldQueryElement = populateLine({ tag: "a", content: oldQuery, attributes: { href: "#", onclick: "return false;" }, parent: historyBar });
+				oldQueryElement.onclick = () => define(oldQuery);
+			}
+		}
+	} else {
+		extButton.title = `Open "${humanize(object.content)}" in a new tab`;
+		extButton.href = `${WORDURL(object.content)}`;
+		searchInput.value = `${humanize(object.content)}`;
 	}
-	searchInput.placeholder = `${text}`;
-	extButton.title = `${extLinkTitle}`;
-	extButton.href = `${extLinkHref}`;
 }
 
 function populateLine(object) {
@@ -29,7 +45,7 @@ function populateLine(object) {
 			outer.setAttribute(attribute, object.attributes[attribute]);
 		}
 	} if (object.parent) {
-	object.parent.appendChild(outer);
+		object.parent.appendChild(outer);
 	}
 	return outer
 }
@@ -92,11 +108,11 @@ function createLangHeader(language, parent) {
 
 // transform <a> elements of given document fragment
 function transform_links(documentFragment) {
-	documentFragment.content.querySelectorAll('a').forEach(transform_link);
+	documentFragment.content.querySelectorAll('a').forEach(transformLink);
 }
 
 // Chose to edit the href to "javascript:;" because... I had a good plan once. It's like that.
-function transform_link(link) {
+function transformLink(link) {
 	// str = "/wiki/salutation heyo#English"  ---->  Array [ "/wiki/salutation heyo#", "salutation heyo" ]
 	// let word = link.href.match(/\/wiki\/([\w\s]+)#?/)[1]
 
