@@ -1,6 +1,6 @@
 // Strip characters of any defined background-color
 // useful for some Chinese characters.
-body *:not(button):not(a):not(summary) {
+main *:not(button):not(a):not(summary) {
 	background-color: unset !important;
 }
 
@@ -13,6 +13,7 @@ body *:not(button):not(a):not(summary) {
 #searchInput {
 	font-size: xx-large;
 	font-weight: semibold;
+	background-color: transparent;
 	color: var(--text-colour);
 
 	border: none;

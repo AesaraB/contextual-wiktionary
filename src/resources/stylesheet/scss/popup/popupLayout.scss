@@ -18,11 +18,20 @@ body:not(header):not(footer) {
 }
 
 body {
-	padding: 8px 12px;
+	margin: 0 12px 10px;
 }
 header {
+	position: sticky;
+	top: 0;
+	padding: 10px 0;
+
+	background-color: var(--background-colour);
+
 	display: grid;
 	grid-template-columns: 1fr 32px;
+	&.definitionPage {
+		box-shadow: 0px 5px 15px 0px var(--background-colour);
+	}
 
 	#historyBar {
 		grid-columns: 1 / -1;

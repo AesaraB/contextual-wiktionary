@@ -1,7 +1,7 @@
 'use strict';
 export { EDITURL, SEARCHURL, DEFINITIONURL, WORDURL, HEADERS };
 export { normalize, humanize, langName, stripTags, titleCase };
-export { historyBar, extButton, main, search, searchInput };
+export { extButton, header, historyBar, main, search, searchInput };
 
 // Wiktionary URLs
 const EDITURL = (word) => `https://en.wiktionary.org/w/index.php?title=${word}&action=edit`;
@@ -24,6 +24,7 @@ const normalize = (word) => word.normalize().trim().replace(/ /g, '_'); // Conve
 const humanize = (word) => word.trim().replace(/_/g, ' '); // This converts a Wiktionary API URL to format better suited for reading.
 
 // elements
+const header = document.getElementById("header");
 const main = document.getElementById("main");
 const search = document.getElementById('search');
 const searchInput = document.getElementById('searchInput');

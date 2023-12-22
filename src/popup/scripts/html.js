@@ -1,32 +1,35 @@
 'use strict';
 export { populateDefinition, populateHeader, populateLine, createLangHeader, createSlider, transformLink };
 import { EDITURL, WORDURL, humanize, langName, stripTags, titleCase } from "./definitions.js";
-import { extButton, historyBar, searchInput } from "./definitions.js";
+import { extButton, header, historyBar, searchInput } from "./definitions.js";
 import { define } from "./builder.js";
 
 function populateHeader(object) {
 	searchInput.placeholder = `${humanize(object.content)}`;
+	searchInput.value = `${humanize(object.content)}`;
+	extButton.title = `Open "${humanize(object.content)}" in a new tab`;
+	extButton.href = `${WORDURL(object.content)}`;
 	if (object.params) {
 		if (object.params.extLink) {
 			extButton.title = (object.params.extLink.title);
 			extButton.href = (object.params.extLink.href);
-		} if (object.params.noValue) {
+		} if (object.params.mainPage) {
 			searchInput.value = "";
+		} if (object.params.definitionPage) {
+			header.classList.add("definitionPage")
 		} if (object.params.history) {
 			historyBar.innerHTML = "";
 			for (const oldQuery of object.params.history) {
 				if (object.params.history.length >= 2 && object.params.history[0] !== oldQuery) {
-					populateLine({ tag: "span", content: ", ", parent: historyBar });
+				populateLine({ tag: "span", content: ", ", parent: historyBar });
 				}
-				const oldQueryElement = populateLine({ tag: "a", content: oldQuery, attributes: { href: "#", onclick: "return false;" }, parent: historyBar });
+				const oldQueryElement = populateLine({ tag: "a", content: humanize(oldQuery), attributes: { href: "#" }, parent: historyBar });
 				oldQueryElement.onclick = () => define(oldQuery);
 			}
 		}
-	} else {
-		extButton.title = `Open "${humanize(object.content)}" in a new tab`;
-		extButton.href = `${WORDURL(object.content)}`;
-		searchInput.value = `${humanize(object.content)}`;
 	}
+	const headerSize = header.getBoundingClientRect();
+	document.documentElement.setAttribute("style", `scroll-padding-top: ${Math.round(headerSize.height)}px;`);
 }
 
 function populateLine(object) {
@@ -99,7 +102,7 @@ function createLangHeader(language, parent) {
 		classes: ["langHeadingContainer"],
 		id: '' + language,
 		parent: parent,
-		attributes: { href: "#", onClick: "return false" }
+		attributes: { href: "#" }
 	});
 	populateLine({ tag: "h2", content: "#", parent: langContainer, classes: ["before"] });
 	populateLine({ tag: "h2", content: langName.of(language), parent: langContainer, classes: ["lang"] });
@@ -121,7 +124,7 @@ function transformLink(link) {
 	// Replace spaces with underscores here. For Wiktionary.
 	word = word.replace(/ /g, '_');
 	// Bottom left indicator for link target. "javascript:;" is nicer than "MOZ-EXTENSION1231431___...."
-	link.href = 'javascript:;';
+	link.href = '#';
 
 	// Original was not found -> this is the "open edit page" link
 	if (link.id === 'addWord') {
