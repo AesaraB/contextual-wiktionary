@@ -1,9 +1,6 @@
-web-ext-artifacts
-Session.vim
-*.swp
-*.swo
-content_scripts
-node_modules
-.idea
+# CSS & Sass
 *.css
+.sass-cache/
 *.css.map
+*.sass.map
+*.scss.map

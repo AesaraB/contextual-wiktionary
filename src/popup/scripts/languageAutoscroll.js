@@ -13,12 +13,12 @@ function csrunner() {
 		switch(true){
 			case(target.id === configs._anchor):
 				configs._anchor = '';
-				target.classList.remove('auto-scrolled');
+				target.classList.remove('autoScrolled');
 				console.log('configs: Removed anchor', target.id);
 			break;
 			default:
 				configs._anchor = target.id;
-				target.classList.add('auto-scrolled');
+				target.classList.add('autoScrolled');
 				console.log('configs: Set anchor', target.id);
 		}
 		setAutoscroll()

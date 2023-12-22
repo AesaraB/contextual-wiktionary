@@ -98,6 +98,7 @@ function scrollToAutoScroll(parent) {
 	const hash = window.location.hash.slice(1);
 	const e = document.getElementById(hash);
 	if ( hash && e ) { // Anchor is in use.
+		e.classList.add("autoScrolled")
 		if (parent) { parent.setAttribute("open", "") };
 		// I really don't like this delay
 		setTimeout(() => { e.scrollIntoView({ behavior: 'smooth' })}, 100)

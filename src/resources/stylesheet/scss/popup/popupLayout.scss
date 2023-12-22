@@ -27,29 +27,51 @@ header {
 
 	background-color: var(--background-colour);
 
-	display: grid;
-	grid-template-columns: 1fr 32px;
+	grid-column-gap: 1ex;
+	grid-column-gap: 1ex;
+
 	&.definitionPage {
-		box-shadow: 0px 5px 15px 0px var(--background-colour);
+		box-shadow: 0px 0px 5px 5px var(--background-colour);
+	}
+
+	&,
+	& #search {
+		display: grid;
+		align-items: center;
+		grid-template-columns: 1fr 32px;
+	}
+
+	#searchInput {
+		width: 100%;
 	}
 
 	#historyBar {
+		display: none;
 		grid-columns: 1 / -1;
-	}
-}
-#search {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	column-gap: 2ex;
 
-	margin: 0 0 0.5ex;
-}
-#searchInput {
-	width: 100%;
-}
-#historyBar {
-	flex: 100%;
+		&,
+		& a {
+			color: var(--text-colour-secondary);
+		}
+		a {
+			text-decoration: underline;
+			/*display: inline-block;
+max-width: 25%;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;*/
+		}
+		#historyIcon {
+			height: 1em;
+			width: 1em;
+			vertical-align: middle;
+			margin-right: 0.5em;
+			content: var(--history-image);
+		}
+	}
+	&.hasHistory #historyBar {
+		display: inline;
+	}
 }
 
 .langHeadingContainer {
@@ -60,14 +82,13 @@ header {
 	.lang {
 		flex-grow: 1;
 	}
-	.before, .after {
-		color: var(--text-colour-secondary);
-		font-weight: normal;
-	}
-	&:hover > .after::after {
+	& > .after::after {
 		content: 'Set auto-scroll';
 	}
-	&.auto-scrolled[id]:hover > .after::after{
+	&.autoScrolled[id] > .after::after {
+		content: "Autoscrolled";
+	}
+	&:hover.autoScrolled[id] > .after::after{
 		content: 'Unset auto-scroll';
 	}
 }
@@ -76,6 +97,15 @@ header {
 h1 {
 	font-weight: var(--font-heading-weight);
 	font-size: var(--font-heading-size);
+}
+.langHeadingContainer {
+	margin: 2.5ex 0 0.5ex;
+	& > h2 {
+		margin: 0;
+	}
+}
+.langHeadingContainer + h3 {
+	margin-top: 0.5ex;
 }
 h3 {
 	margin: 1.5ex 0 1.5ex 1ex;

@@ -1,4 +1,9 @@
 // Colour
+body * {
+	transition-property: color, background-color, border-color;
+	transition-duration: 150ms;
+	transition-timing-function: ease-in-out;
+}
 body {
 	background-color: var(--background-colour);
 	color: var(--text-colour);
@@ -19,17 +24,6 @@ a {
 }
 
 // Design & colour
-.square {
-	height: 32px;
-	border: none;
-	min-width: 32px;
-}
-.image {
-	background-size: 20px;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-
 @mixin colourButton($colour) {
 	background-color: var(--button-#{$colour});
 	&:hover {
@@ -39,10 +33,35 @@ a {
 		background-color: var(--button-#{$colour}-active);
 	}
 }
-.primary {
-	@include colourButton($colour: primary);
-}
-.secondary {
-	@include colourButton($colour: secondary);
-	color: var(--button-primary-text);
+.button {
+	display: inline-block;
+	border-radius: 4px;
+
+	transition-duration: 200ms;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&.square {
+		height: 32px;
+		border: none;
+		min-width: 32px;
+	}
+	&.rectangle {
+		padding: 10px;
+	}
+
+	&.image {
+		background-size: 20px;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	&.primary {
+		@include colourButton($colour: primary);
+	}
+	&.secondary {
+		@include colourButton($colour: secondary);
+		color: var(--button-primary-text);
+	}
 }

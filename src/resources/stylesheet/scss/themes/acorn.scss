@@ -84,6 +84,7 @@ $yellow-60:		#e27f2e;
 		// Images
 		--search-button-image: url(../icons/searchLight.svg);
 		--ext-button-image: url(../icons/externalLinkLight.svg);
+		--history-image: url(../icons/historyLight.svg);
 	}
 }
 :root {
@@ -107,5 +108,6 @@ $yellow-60:		#e27f2e;
 	// Images
 	--search-button-image: url(../icons/searchDark.svg);
 	--ext-button-image: url(../icons/externalLinkDark.svg);
+	--history-image: url(../icons/historyDark.svg);
 }
 

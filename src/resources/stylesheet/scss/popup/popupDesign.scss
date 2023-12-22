@@ -32,17 +32,13 @@ main *:not(button):not(a):not(summary) {
 #searchButton {
 	background-color: transparent;
 	background-image: var(--search-button-image);
-	&:hover {
-		cursor: pointer;
-	}
 }
 #extButton {
 	background-image: var(--ext-button-image);
 }
 // Other languages
 #langButton {
-	display: block;
-	padding: 10px;
+	width: 100%;
 	background-color: var(--button-secondary);
 	color: var(--text-colour);
 	&:hover {
@@ -60,5 +56,19 @@ main *:not(button):not(a):not(summary) {
 		&:active {
 			background-color: var(--button-primary-active);
 		}
+	}
+}
+.langHeadingContainer {
+	.before {
+		color: var(--text-colour-secondary);
+		font-weight: normal;
+	}
+	.after {
+		color: transparent;
+		font-weight: normal;
+	}
+	&.autoScrolled[id] > .after,
+	&:hover > .after {
+		color: var(--text-colour-secondary);
 	}
 }

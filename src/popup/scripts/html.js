@@ -1,10 +1,11 @@
 'use strict';
 export { populateDefinition, populateHeader, populateLine, createLangHeader, createSlider, transformLink };
 import { EDITURL, WORDURL, humanize, langName, stripTags, titleCase } from "./definitions.js";
-import { extButton, header, historyBar, searchInput } from "./definitions.js";
+import { extButton, header, historyContents, searchInput } from "./definitions.js";
 import { define } from "./builder.js";
 
 function populateHeader(object) {
+	header.classList.remove("definitionPage")
 	searchInput.placeholder = `${humanize(object.content)}`;
 	searchInput.value = `${humanize(object.content)}`;
 	extButton.title = `Open "${humanize(object.content)}" in a new tab`;
@@ -18,12 +19,13 @@ function populateHeader(object) {
 		} if (object.params.definitionPage) {
 			header.classList.add("definitionPage")
 		} if (object.params.history) {
-			historyBar.innerHTML = "";
+			historyContents.innerHTML = "";
 			for (const oldQuery of object.params.history) {
+				header.classList.add("hasHistory")
 				if (object.params.history.length >= 2 && object.params.history[0] !== oldQuery) {
-				populateLine({ tag: "span", content: ", ", parent: historyBar });
+				populateLine({ tag: "span", content: ", ", parent: historyContents });
 				}
-				const oldQueryElement = populateLine({ tag: "a", content: humanize(oldQuery), attributes: { href: "#" }, parent: historyBar });
+				const oldQueryElement = populateLine({ tag: "a", content: humanize(oldQuery), attributes: { href: "#" }, parent: historyContents });
 				oldQueryElement.onclick = () => define(oldQuery);
 			}
 		}
@@ -91,7 +93,7 @@ function createFragment(content) {
 // Add a button that opens up the rest of the translations
 function createSlider(parent) {
 	const details = populateLine({ tag: "details", id: "otherLangContainer", parent: parent });
-	populateLine({ tag: "summary", content: "Other Languages", id: "langButton", parent: details })
+	populateLine({ tag: "summary", content: "Other Languages", id: "langButton", classes: ["button", "rectangle"], parent: details })
 	populateLine({ tag: "div", id: "otherDefsContainer", parent: details });
 }
 
