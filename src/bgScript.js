@@ -5,10 +5,11 @@ const desiredPermissions = {permissions: ["activeTab", "scripting"]};
 const normalize = word => word.trim().toUpperCase()===word.trim() ? word.normalize().trim() : word.normalize().trim().replace(/ /g, '_').toLowerCase()
 
 
+const versionNum = browser.runtime.getManifest().version
 const versionSetup = browser.storage.local.get("currentVersion");
 versionSetup.then((currentVersion) => {
-	if (currentVersion == null || currentVersion != "v1.5") {
-		browser.storage.local.set({ currentVersion: "v1.5", patchNotesTimes: 0 });
+	if (currentVersion == null || currentVersion != versionNum) {
+		browser.storage.local.set({ currentVersion: versionNum, patchNotesTimes: 0 });
 	}
 });
 
