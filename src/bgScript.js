@@ -10,6 +10,7 @@ const versionSetup = browser.storage.local.get("currentVersion");
 versionSetup.then(({ currentVersion }) => {
 	if (currentVersion == null || currentVersion != versionNum) {
 		browser.storage.local.set({ currentVersion: versionNum, patchNotesTimes: 0 });
+		browser.storage.local.remove("style")
 	}
 });
 
