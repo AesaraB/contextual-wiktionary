@@ -1,254 +1,38 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Contextual Wiktionary</title>
-	<link rel="stylesheet" href="/resources/stylesheet/main.css">
-	<link rel="stylesheet" href="/resources/stylesheet/popup.css">
-	<script src="/options/webextensions-lib-configs/Configs.js"></script>
-	<script src="/options/defaultConfig.js"></script>
-	<script src="/popup/styler.js"></script>
-</head>
-<body id="content" class="contextual-wiktionary">
-	<header>
-		<form id="search">
-			<input id="searchInput" type="search" name="search" title="Search Wiktionary.org" placeholder="The">
-		</form>
-		<a id="externalLink" class="default-color-button default-button" title="Open 'the' in a new tab" href="#"></a>
-	</header>
-	<p>Article</p>
-	<ol>
-		<li><span class="use-with-mention" about="#mwt64"><a href="#" title="definite">Definite</a> grammatical <a href="#" title="article">article</a> that implies necessarily that an entity it articulates is <a href="#" title="presuppose">presupposed</a>; something already <a href="#" title="mention">mentioned</a>, or completely <a href="#" title="specify">specified</a> later in that same sentence, or <a href="#" title="assume">assumed</a> already completely specified.</span>
-			<ul>
-				<li><i>I’m reading <b>the</b> book.</i> (Compare <i>I’m reading <b>a</b> book.</i>)</li>
-				<li><i><b>The</b> street in front of your house.</i> (Compare <i><b>A</b> street in Paris.</i>)</li>
-				<li><i><b>The</b> men and women watched <b>the</b> man give <b>the</b> birdseed to <b>the</b> bird.</i>
-				</li>
-			</ul>
-		</li>
-		<li><span class="use-with-mention" about="#mwt66">Used before a noun modified by a <a href="#" title="restrictive">restrictive</a> <a href="#" title="relative clause">relative clause</a>, indicating that the noun refers to a single referent defined by the relative clause.</span>
-			<ul>
-				<li><i><b>The</b> street that runs through my hometown.</i>
-				</li>
-			</ul>
-		</li>
-		<li><span class="use-with-mention" about="#mwt67">Used before an object considered to be <a href="#" title="unique">unique</a>, or of which there is only one at a time.</span>
-			<ul>
-				<li><i>No one knows how many galaxies there are in <b>the</b> universe.</i>
-				</li>
-				<li><i>God save <b>the</b> Queen!</i>
-				</li>
-			</ul>
-		</li>
-		<li><span class="use-with-mention" about="#mwt70">Used before a <a href="#" title="superlative">superlative</a> or an <a href="#" title="ordinal number">ordinal number</a> modifying a noun, to indicate that the noun refers to a single item.</span>
-			<ul>
-				<li><i>That was <b>the</b> best apple pie ever.</i>
-				</li>
-			</ul>
-		</li>
-		<li><span class="use-with-mention" about="#mwt71">Added to a superlative or an ordinal number to make it into a substantive.</span>
-			<ul>
-				<li><i>That apple pie was <b>the</b> best.</i>
-				</li>
-			</ul>
-		</li>
-		<li><span class="use-with-mention" about="#mwt73">Introducing a singular term to be taken <a href="#" title="generically">generically</a>: preceding a name of something standing for a whole class.</span>
-		</li>
-		<li><span class="use-with-mention" about="#mwt75">Used before an adjective, indicating all things (especially persons) described by that adjective.</span>
-			<ul>
-				<li><i>Feed <b>the</b> hungry, clothe <b>the</b> naked, comfort <b>the</b> afflicted, and afflict <b>the</b> comfortable.</i>
-				</li>
-			</ul>
-		</li>
-		<li><span class="use-with-mention" about="#mwt77">Used to indicate a certain example of (a noun) which is usually of most concern or most common or familiar.</span>
-			<ul>
-				<li><i>No one in <b>the</b> whole country had seen it before.</i>
-				</li>
-				<li><i>I don't think I'll get to it until <b>the</b> morning.</i>
-				</li>
-			</ul>
-		</li>
-		<li><span class="use-with-mention" about="#mwt79">Used before a body part (especially of someone previously mentioned), as an alternative to a <a href="#" title="possessive pronoun">possessive pronoun</a>.</span>
-			<ul>
-				<li><i>A stone hit him on <b>the</b> head.</i> (= “A stone hit him on his head.”)</li>
-			</ul>
-		</li>
-		<li><span class="use-with-mention" about="#mwt81">When stressed, indicates that it describes an object which is considered to be best or exclusively worthy of attention.</span>
-			<ul>
-				<li><i>That is</i>  <b>the</b>  <i>hospital to go to for heart surgery.</i>
-				</li>
-			</ul>
-		</li>
-	</ol>
-	<p>Adverb</p>
-	<ol>
-		<li><span class="use-with-mention" about="#mwt520">With a <a href="#" title="comparative">comparative</a> or with <i class="Latn mention" lang="en"><a href="#" title="more">more</a></i> and a verb phrase, establishes a correlation with one or more other such comparatives.</span>
-			<ul>
-				<li><i><b>The</b> hotter(,) <b>the</b> better.</i>  <span class="gloss-brac" about="#mwt521">(</span><span class="gloss-content" about="#mwt521">comma usually omitted in such very short expressions</span><span class="gloss-brac" about="#mwt521">)</span>
-				</li>
-				<li><i><b>The</b> more I think about it, <b>the</b> weaker it looks.</i>
-				</li>
-				<li><i><b>The</b> more money donated, <b>the</b> more books purchased, and <b>the</b> more happy children.</i>
-				</li>
-				<li><i>It looks weaker and weaker, <b>the</b> more I think about it.</i>
-				</li>
-			</ul>
-		</li>
-		<li>{{non-gloss definition|1=With a <a href="#" title="comparative">comparative</a>, and often with <i class="Latn mention" about="#mwt522" lang="en"><a href="#" title="for it">for it</a></i>, indicates a result more like said comparative. This can be negated with <i class="Latn mention" about="#mwt523" lang="en"><a href="#" title="none">none</a></i>.
-			<ul>
-				<li><i>It was a difficult time, but I’m <b>the</b> wiser for it.</i>
-				</li>
-				<li><i>It was a difficult time, and I’m {none - not any} <b>the</b> wiser for it.</i>
-				</li>
-				<li><i>I'm much <b>the</b> wiser for having had a difficult time like that.</i>
-				</li>
-			</ul>
-		</li>
-	</ol>
-	<p>Preposition</p>
-	<ol>
-		<li>For each; <a href="#" title="per">per</a>.
-			<ul>
-				<li>valued at half a pound <b>the</b> bushel; paying seven dollars <b>the</b> year interest</li>
-			</ul>
-		</li>
-	</ol>
-	<div class="slider-wrapper closed">
-		<button class="primary-color-button default-button" id="languages-button">Other languages</button>
-		<div id="slider" class="slider">
-			<h4 id="Crimean_Gothic">Crimean Gothic</h4>
-			<p>Article</p>
-			<ol>
-				<li><a href="#">the</a>
-				</li>
-			</ol>
-			<h4 id="Eastern_Arrernte">Eastern Arrernte</h4>
-			<p>Pronoun</p>
-			<ol>
-				<li><a href="#" title="I">I</a>  <span class="gloss-brac" about="#mwt596">(</span><span class="gloss-content" about="#mwt596">first person singular pronoun</span><span class="gloss-brac" about="#mwt596">)</span>
-				</li>
-			</ol>
-			<h4 id="Hadza">Hadza</h4>
-			<p>Pronoun</p>
-			<ol>
-				<li>you (thou)</li>
-			</ol>
-			<h4 id="Middle_English">Middle English</h4>
-			<p>Article</p>
-			<ol>
-				<li><span class="form-of-definition use-with-mention" about="#mwt606">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a href="#" title="þe">þe</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">the</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span>
-					</span>
-				</li>
-			</ol>
-			<p>Pronoun</p>
-			<ol>
-				<li><span class="form-of-definition use-with-mention" about="#mwt610">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a href="#" title="þe">þe</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">thee</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span>
-					</span>
-				</li>
-			</ol>
-			<p>Pronoun</p>
-			<ol>
-				<li><span class="form-of-definition use-with-mention" about="#mwt612">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a href="#" title="þei">þei</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">they</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span>
-					</span>
-				</li>
-			</ol>
-			<p>Verb</p>
-			<ol>
-				<li><span class="form-of-definition use-with-mention" about="#mwt614">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a href="#" title="theen">theen</a></i></span></span>
-				</li>
-			</ol>
-			<h4 id="Murrinh-Patha">Murrinh-Patha</h4>
-			<p>Noun</p>
-			<ol>
-				<li><a href="#" title="ear">ear</a>
-				</li>
-			</ol>
-			<h4 id="Old_High_German">Old High German</h4>
-			<p>Particle</p>
-			<ol>
-				<li><a href="#" title="that">that</a>, <a href="#" title="who">who</a>, <a href="#" title="which">which</a>
-				</li>
-			</ol>
-			<h4 id="Old_Saxon">Old Saxon</h4>
-			<p>Determiner</p>
-			<ol>
-				<li><a href="#" title="that">that</a>, <a href="#" title="that one">that one</a>
-					<ul>
-						<li><i><b>them</b> uuīha uuīsa lēstean</i>: To obey <b>that</b> holy wise.</li>
-					</ul>
-				</li>
-			</ol>
-			<p>Particle</p>
-			<ol>
-				<li><a href="#" title="that">that</a>, <a href="#" title="who">who</a>, <a href="#" title="which">which</a>
-				</li>
-			</ol>
-			<h4 id="South_Slavey">South Slavey</h4>
-			<p>Noun</p>
-			<ol>
-				<li><a href="#" title="belt">belt</a>
-				</li>
-			</ol>
-			<h4 id="Danish">Danish</h4>
-			<p>Noun</p>
-			<ol>
-				<li><span class="form-of-definition use-with-mention" about="#mwt591">Alternative spelling of <span class="form-of-definition-link"><i class="Latn mention" lang="da"><a href="#" title="te">te</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">tea</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span>
-					</span>
-				</li>
-			</ol>
-			<h4 id="Interlingua">Interlingua</h4>
-			<p>Noun</p>
-			<ol>
-				<li><a href="#" title="tea">tea</a>
-				</li>
-			</ol>
-			<h4 id="Irish">Irish</h4>
-			<p>Adjective</p>
-			<ol>
-				<li><span class="form-of-definition use-with-mention" about="#mwt604">Lenited form of <span class="form-of-definition-link"><i class="Latn mention" lang="ga"><a href="#" title="te">te</a></i></span></span><span about="#mwt604">.</span>
-				</li>
-			</ol>
-			<h4 id="Scots">Scots</h4>
-			<p>Determiner</p>
-			<ol>
-				<li><span class="Latn" about="#mwt640" lang="en"><a href="#" title="the">the</a></span>
-				</li>
-			</ol>
-			<h4 id="Serbo-Croatian">Serbo-Croatian</h4>
-			<p>Conjunction</p>
-			<ol>
-				<li><span class="form-of-definition use-with-mention" about="#mwt645">Alternative spelling of <span class="form-of-definition-link"><i class="Latn mention" lang="sh"><a href="#" title="da">da</a></i></span></span>
-					<ul>
-						<li><i>neki kreten <b>the</b> ih <a href="#" title="drkati">drka</a> emotivno</i>
-						</li>
-						<li><i><b>the</b> ovo okačim na <a href="#" title="fb">fb</a> wall, garant ne bih opstala od borKINJa za ženska prava</i>
-						</li>
-					</ul>
-				</li>
-			</ol>
-			<h4 id="Swedish">Swedish</h4>
-			<p>Noun</p>
-			<ol>
-				<li><span class="form-of-definition use-with-mention" about="#mwt650">Alternative spelling of <span class="form-of-definition-link"><i class="Latn mention" lang="sv"><a href="#" title="te">te</a></i></span></span>(<a href="#" title="tea">tea</a>)</li>
-			</ol>
-			<h4 id="Vietnamese">Vietnamese</h4>
-			<p>Noun</p>
-			<ol>
-				<li>a kind of <a href="#" title="silk">silk</a>  <a href="#" title="gauze">gauze</a>
-				</li>
-			</ol>
-			<p>Adjective</p>
-			<ol>
-				<li>having a <a href="#" title="strong">strong</a> and <a href="#" title="fragrant">fragrant</a> smell</li>
-			</ol>
-			<h4 id="Welsh">Welsh</h4>
-			<p>Noun</p>
-			<ol>
-				<li><span class="form-of-definition use-with-mention" about="#mwt659">Aspirate mutation of <span class="form-of-definition-link"><i class="Latn mention" lang="cy"><a href="#" title="te">te</a></i></span></span><span about="#mwt659">.</span>
-				</li>
-			</ol>
-		</div>
-	</div>
-</body>
+<html style="scroll-padding-top: 68px;">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Contextual Wiktionary</title>
+		<link rel="stylesheet" href="/resources/stylesheet/main.css">
+		<link rel="stylesheet" href="/resources/stylesheet/popup.css">
+		<script src="/options/webextensions-lib-configs/Configs.js"></script>
+		<script src="/options/defaultConfig.js"></script>
+		<script src="/popup/scripts/styler.js"></script>
 
-</html>
+	<body id="content" class="contextual-wiktionary">
+		<div id="containerForHeaderPosition">
+			<header id="header" class="definitionPage">
+				<form id="search">
+					<input id="searchInput" type="search" name="search" title="Search Wiktionary.org" autocomplete="off" placeholder="the" value="the">
+					<button id="searchButton" class="button square image"></button>
+				</form>
+				<button id="extButton" class="button square secondary image" rel="noopener noreferrer" target="_blank" title="Open &quot;the&quot; in a new tab"></button>
+				<div id="historyBar"><img id="historyIcon" alt="Search history"><span id="historyContents"></span></div>
+			</header>
+			<main id="main"><h3>Article</h3><ol><li><span class="use-with-mention" about="#mwt74" typeof="mw:Transclusion"><span class="Latn" lang="en">Used before a noun phrase, including a simple noun</span></span>
+						<span class="use-with-mention" about="#mwt75" typeof="mw:Transclusion"><span class="Latn" lang="en">The <a rel="mw:WikiLink" href="javascript:void(0)" title="definite">definite</a> grammatical <a rel="mw:WikiLink" href="javascript:void(0)" title="article">article</a> that implies necessarily that the noun phrase it immediately precedes is definitely identifiable</span></span>
+						<span class="use-with-mention" about="#mwt76" typeof="mw:Transclusion"><span class="Latn" lang="en">because it has already been <a rel="mw:WikiLink" href="javascript:void(0)" title="mention">mentioned</a>, is to be completely <a rel="mw:WikiLink" href="javascript:void(0)" title="specify">specified</a> in the same sentence, or very shortly thereafter.</span></span><ul><li><i>I’m reading <b>the</b> book Mary reviewed.</i> (Compare <i>I’m reading <b>a</b> book Mary reviewed.</i>)</li><li><i>You live on Main Street, don't you? You know, you should tell the mayor <b>the</b> street needs cleaning.</i></li><li><i><b>The</b> men and women watched <b>the</b> man give <b>the</b> birdseed to <b>the</b> bird.</i></li><li><i><b>The</b> street that runs all the way through my hometown.</i></li><li><i>No one knows how many galaxies there are in <b>the</b> universe.</i></li><li><i>God save <b>the</b> Queen!</i></li><li><i>No one in <b>the</b> whole country had seen it before.</i></li><li><i>I don't think I'll get to it until <b>the</b> morning.</i></li><li><i>Take me to <b>the</b> airport/station/hospital/office/park/match/meeting.</i></li><li><i>A stone hit him on <b>the</b> head.</i> (= “A stone hit him on his head.”)</li><li><i>How's <b>the</b> wife?</i> (= "How is your wife?")</li><li><i>square <b>the</b> circle; feel <b>the</b> pinch; beat around <b>the</b> bush; throw <b>the</b> baby out with <b>the</b> bathwater</i></li><li><i>That is</i> <b>the</b> <i>hospital to go to for heart surgery.</i></li><li><i>That was <b>the</b> juiciest apple pie ever.</i></li><li><i>May <b>the</b> better man win.</i></li><li><i><b>The</b> downy woodpecker can be found in the same environments as <b>the</b> hairy woodpecker.</i></li><li><i><b>The</b> Bushes have held political office for several decades and <b>the</b> Kennedys longer.</i></li></ul></li><li><span class="use-with-mention" about="#mwt75" typeof="mw:Transclusion"><span class="Latn" lang="en">The <a rel="mw:WikiLink" href="javascript:void(0)" title="definite">definite</a> grammatical <a rel="mw:WikiLink" href="javascript:void(0)" title="article">article</a> that implies necessarily that the noun phrase it immediately precedes is definitely identifiable</span></span>
+						<span class="use-with-mention" about="#mwt76" typeof="mw:Transclusion"><span class="Latn" lang="en">because it has already been <a rel="mw:WikiLink" href="javascript:void(0)" title="mention">mentioned</a>, is to be completely <a rel="mw:WikiLink" href="javascript:void(0)" title="specify">specified</a> in the same sentence, or very shortly thereafter.</span></span><ul><li><i>I’m reading <b>the</b> book Mary reviewed.</i> (Compare <i>I’m reading <b>a</b> book Mary reviewed.</i>)</li><li><i>You live on Main Street, don't you? You know, you should tell the mayor <b>the</b> street needs cleaning.</i></li><li><i><b>The</b> men and women watched <b>the</b> man give <b>the</b> birdseed to <b>the</b> bird.</i></li><li><i><b>The</b> street that runs all the way through my hometown.</i></li><li><i>No one knows how many galaxies there are in <b>the</b> universe.</i></li><li><i>God save <b>the</b> Queen!</i></li><li><i>No one in <b>the</b> whole country had seen it before.</i></li><li><i>I don't think I'll get to it until <b>the</b> morning.</i></li><li><i>Take me to <b>the</b> airport/station/hospital/office/park/match/meeting.</i></li><li><i>A stone hit him on <b>the</b> head.</i> (= “A stone hit him on his head.”)</li><li><i>How's <b>the</b> wife?</i> (= "How is your wife?")</li><li><i>square <b>the</b> circle; feel <b>the</b> pinch; beat around <b>the</b> bush; throw <b>the</b> baby out with <b>the</b> bathwater</i></li></ul></li><li><span class="use-with-mention" about="#mwt76" typeof="mw:Transclusion"><span class="Latn" lang="en">because it has already been <a rel="mw:WikiLink" href="javascript:void(0)" title="mention">mentioned</a>, is to be completely <a rel="mw:WikiLink" href="javascript:void(0)" title="specify">specified</a> in the same sentence, or very shortly thereafter.</span></span><ul><li><i>I’m reading <b>the</b> book Mary reviewed.</i> (Compare <i>I’m reading <b>a</b> book Mary reviewed.</i>)</li><li><i>You live on Main Street, don't you? You know, you should tell the mayor <b>the</b> street needs cleaning.</i></li><li><i><b>The</b> men and women watched <b>the</b> man give <b>the</b> birdseed to <b>the</b> bird.</i></li><li><i><b>The</b> street that runs all the way through my hometown.</i></li></ul></li><li><span class="use-with-mention" about="#mwt81" typeof="mw:Transclusion"><span class="Latn" lang="en">because it is presumed to be definitely known in context or from shared knowledge</span></span>
+						<span class="use-with-mention" about="#mwt82" typeof="mw:Transclusion"><span class="Latn" lang="en">Used before a noun designating something considered to be <a rel="mw:WikiLink" href="javascript:void(0)" title="unique">unique</a>, or of which there is only one at a time.</span></span><ul><li><i>No one knows how many galaxies there are in <b>the</b> universe.</i></li><li><i>God save <b>the</b> Queen!</i></li><li><i>No one in <b>the</b> whole country had seen it before.</i></li><li><i>I don't think I'll get to it until <b>the</b> morning.</i></li><li><i>Take me to <b>the</b> airport/station/hospital/office/park/match/meeting.</i></li><li><i>A stone hit him on <b>the</b> head.</i> (= “A stone hit him on his head.”)</li><li><i>How's <b>the</b> wife?</i> (= "How is your wife?")</li><li><i>square <b>the</b> circle; feel <b>the</b> pinch; beat around <b>the</b> bush; throw <b>the</b> baby out with <b>the</b> bathwater</i></li></ul></li><li><span class="use-with-mention" about="#mwt82" typeof="mw:Transclusion"><span class="Latn" lang="en">Used before a noun designating something considered to be <a rel="mw:WikiLink" href="javascript:void(0)" title="unique">unique</a>, or of which there is only one at a time.</span></span><ul><li><i>No one knows how many galaxies there are in <b>the</b> universe.</i></li><li><i>God save <b>the</b> Queen!</i></li></ul></li><li><span class="use-with-mention" about="#mwt87" typeof="mw:Transclusion"><span class="Latn" lang="en">Used to indicate a certain example of (a noun) which is usually of most concern or most common or familiar.</span></span><ul><li><i>No one in <b>the</b> whole country had seen it before.</i></li><li><i>I don't think I'll get to it until <b>the</b> morning.</i></li><li><i>Take me to <b>the</b> airport/station/hospital/office/park/match/meeting.</i></li></ul></li><li><span class="use-with-mention" about="#mwt91" typeof="mw:Transclusion"><span class="Latn" lang="en">Used before a body part, a family member, a pet (especially of someone previously mentioned), as an alternative to a <a rel="mw:WikiLink" href="javascript:void(0)" title="possessive pronoun">possessive pronoun</a>.</span></span><ul><li><i>A stone hit him on <b>the</b> head.</i> (= “A stone hit him on his head.”)</li><li><i>How's <b>the</b> wife?</i> (= "How is your wife?")</li></ul></li><li><span class="use-with-mention" about="#mwt95" typeof="mw:Transclusion"><span class="Latn" lang="en">Used
+								in many idiomatic expressions and proverbs to refer to common objects, 
+								roles, or situations connected with something definite, as by analogy</span></span><ul><li><i>square <b>the</b> circle; feel <b>the</b> pinch; beat around <b>the</b> bush; throw <b>the</b> baby out with <b>the</b> bathwater</i></li></ul></li><li><span class="use-with-mention" about="#mwt96" typeof="mw:Transclusion"><span class="Latn" lang="en">When stressed, indicates that it describes something which is considered to be best or exclusively worthy of attention.</span></span><ul><li><i>That is</i> <b>the</b> <i>hospital to go to for heart surgery.</i></li></ul></li><li><span class="use-with-mention" about="#mwt102" typeof="mw:Transclusion"><span class="Latn" lang="en">Used before a noun phrase beginning with <a rel="mw:WikiLink" href="javascript:void(0)" title="superlative">superlative</a> or comparative adjective or an <a rel="mw:WikiLink" href="javascript:void(0)" title="ordinal number">ordinal number</a>,  indicating that the noun refers to a single item.</span></span><ul><li><i>That was <b>the</b> juiciest apple pie ever.</i></li><li><i>May <b>the</b> better man win.</i></li></ul></li><li><span class="use-with-mention" about="#mwt103" typeof="mw:Transclusion"><span class="Latn" lang="en">Introducing a singular term to be taken <a rel="mw:WikiLink" href="javascript:void(0)" title="generically">generically</a><span typeof="mw:Entity">:</span> preceding a name of something standing for a whole class.</span></span><ul><li><i><b>The</b> downy woodpecker can be found in the same environments as <b>the</b> hairy woodpecker.</i></li></ul></li><li><span class="use-with-mention" about="#mwt108" typeof="mw:Transclusion"><span class="Latn" lang="en">Used with the plural of a surname to indicate the entire family.</span></span><ul><li><i><b>The</b> Bushes have held political office for several decades and <b>the</b> Kennedys longer.</i></li></ul></li><li><span class="use-with-mention" about="#mwt109" typeof="mw:Transclusion"><span class="Latn" lang="en">Used with an adjective</span></span>
+						<span class="use-with-mention" about="#mwt110" typeof="mw:Transclusion"><span class="Latn" lang="en">Added to a superlative or an ordinal number to make it into a substantive.</span></span><ul><li><i>That apple pie was <b>the</b> best.</i></li><li><i>Feed <b>the</b> hungry, clothe <b>the</b> naked, comfort <b>the</b> afflicted, and afflict <b>the</b> comfortable.</i></li><li><i>One doesn't choose the color of one's chess pieces, <b>the</b> white are assigned to the player who moves first.</i></li></ul></li><li><span class="use-with-mention" about="#mwt110" typeof="mw:Transclusion"><span class="Latn" lang="en">Added to a superlative or an ordinal number to make it into a substantive.</span></span><ul><li><i>That apple pie was <b>the</b> best.</i></li></ul></li><li><span class="use-with-mention" about="#mwt114" typeof="mw:Transclusion"><span class="Latn" lang="en">Used before an adjective, indicating all things (especially persons) described by that adjective.</span></span><ul><li><i>Feed <b>the</b> hungry, clothe <b>the</b> naked, comfort <b>the</b> afflicted, and afflict <b>the</b> comfortable.</i></li><li><i>One doesn't choose the color of one's chess pieces, <b>the</b> white are assigned to the player who moves first.</i></li></ul></li><li><a href="javascript:void(0)" rel="mw:referencedBy"><span class="mw-linkback-text">↑ </span></a> <span id="mw-reference-text-cite_note-1" class="mw-reference-text"><span about="#mwt70" typeof="mw:Transclusion">Dunkel, George E.</span><span typeof="mw:Entity" about="#mwt70"> </span><span about="#mwt70">(2014)</span><span typeof="mw:Entity" about="#mwt70"> </span>Lexikon der indogermanischen Partikeln und Pronominalstämme<span typeof="mw:Entity" about="#mwt70"> </span><span typeof="mw:Entity" about="#mwt70">[</span>Lexicon of Indo-European Particles and Pronominal Stems<span typeof="mw:Entity" about="#mwt70">]</span><span typeof="mw:Entity" about="#mwt70"> </span><span about="#mwt70">(Indogermanische Bibliothek. 2. Reihe: Wörterbücher)</span><span typeof="mw:Entity" about="#mwt70"> </span><span about="#mwt70">(in German), Heidelberg</span><span typeof="mw:Entity" about="#mwt70">:</span><span about="#mwt70"> Universitätsverlag Winter GmbH Heidelberg, </span><small about="#mwt70"><a rel="mw:WikiLink">→ISBN</a></small><span about="#mwt70">, pages 732-733</span></span></li></ol><h3>Adverb</h3><ol><li><span class="use-with-mention" about="#mwt589" typeof="mw:Transclusion"><span class="Latn" lang="en">With a <a rel="mw:WikiLink" href="javascript:void(0)" title="comparative">comparative</a> or with <i class="Latn mention" lang="en"><a rel="mw:WikiLink" href="javascript:void(0)" title="more">more</a></i> and a verb phrase, establishes a correlation with one or more other such comparatives.</span></span><ul><li><i><b>The</b> hotter(,) <b>the</b> better.</i> <span class="gloss-brac" about="#mwt590" typeof="mw:Transclusion">(</span><span class="gloss-content" about="#mwt590"><span class="Latn" lang="en">comma usually omitted in such very short expressions</span></span><span class="gloss-brac" about="#mwt590">)</span></li><li><i><b>The</b> more I think about it, <b>the</b> weaker it looks.</i></li><li><i><b>The</b> more money donated, <b>the</b> more books purchased, and <b>the</b> more happy children.</i></li><li><i>It looks weaker and weaker, <b>the</b> more I think about it.</i></li></ul></li><li><span class="use-with-mention" about="#mwt591" typeof="mw:Transclusion"><span class="Latn" lang="en">With a <a rel="mw:WikiLink" href="javascript:void(0)" title="comparative">comparative</a>, and often with <i class="Latn mention" lang="en"><a rel="mw:WikiLink" href="javascript:void(0)" title="for it">for it</a></i>, indicates a result more like said comparative. This can be negated with <i class="Latn mention" lang="en"><a rel="mw:WikiLink" href="javascript:void(0)" title="none">none</a></i>.</span></span><ul><li><i>It was a difficult time, but I’m <b>the</b> wiser for it.</i></li><li><i>It was a difficult time, and I’m {none - not any} <b>the</b> wiser for it.</i></li><li><i>I'm much <b>the</b> wiser for having had a difficult time like that.</i></li></ul></li><li><span class="usage-label-sense" about="#mwt592" typeof="mw:Transclusion"></span> Beyond all others.<ul><li><i>We went <b>the</b> furthest under her leadership.</i>; <i>The they trusted him <b>the</b> most.</i></li></ul></li></ol><h3>Preposition</h3><ol><li>For each; <a rel="mw:WikiLink" href="javascript:void(0)" title="per">per</a>.<ul><li>valued at half a pound <b>the</b> bushel<span typeof="mw:Entity">;</span> paying seven dollars <b>the</b> year interest</li></ul></li></ol><details id="otherLangContainer"><summary class="button rectangle" id="langButton">Other Languages</summary><div id="otherDefsContainer"><a class="langHeadingContainer" id="other" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">other</h2><h2 class="after"></h2></a><h3>Article</h3><ol><li><a rel="mw:WikiLink" href="javascript:void(0)">the</a></li></ol><h3>Pronoun</h3><ol><li><a rel="mw:WikiLink" href="javascript:void(0)" title="I">I</a> <span class="gloss-brac" about="#mwt674" typeof="mw:Transclusion">(</span><span class="gloss-content" about="#mwt674"><span class="Latn" lang="en">first person singular pronoun</span></span><span class="gloss-brac" about="#mwt674">)</span></li></ol><h3>Pronoun</h3><ol><li>you (thou)</li></ol><h3>Article</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt686" typeof="mw:Transclusion">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a rel="mw:WikiLink" href="javascript:void(0)" title="þe">þe</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">the</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span></span></li></ol><h3>Pronoun</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt691" typeof="mw:Transclusion">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a rel="mw:WikiLink" href="javascript:void(0)" title="þe">þe</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">thee</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span></span></li></ol><h3>Pronoun</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt693" typeof="mw:Transclusion">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a rel="mw:WikiLink" href="javascript:void(0)" title="þei">þei</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">they</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span></span></li></ol><h3>Verb</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt695" typeof="mw:Transclusion">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="enm"><a rel="mw:WikiLink" href="javascript:void(0)" title="theen">theen</a></i></span></span></li></ol><h3>Noun</h3><ol><li><a rel="mw:WikiLink" href="javascript:void(0)" title="ear">ear</a></li></ol><h3>Particle</h3><ol><li><a rel="mw:WikiLink" href="javascript:void(0)" title="that">that</a>, <a rel="mw:WikiLink" href="javascript:void(0)" title="who">who</a>, <a rel="mw:WikiLink" href="javascript:void(0)" title="which">which</a></li><li>Braune, Wilhelm. Althochdeutsches Lesebuch, zusammengestellt und mit Glossar versehen</li></ol><h3>Determiner</h3><ol><li><a rel="mw:WikiLink" href="javascript:void(0)" title="that">that</a>, <a rel="mw:WikiLink" href="javascript:void(0)" title="that one">that one</a><ul><li><i><b>them</b> uuīha uuīsa lēstean</i>: To obey <b>that</b> holy wise.</li></ul></li></ol><h3>Particle</h3><ol><li><a rel="mw:WikiLink" href="javascript:void(0)" title="that">that</a>, <a rel="mw:WikiLink" href="javascript:void(0)" title="who">who</a>, <a rel="mw:WikiLink" href="javascript:void(0)" title="which">which</a></li></ol><h3>Noun</h3><ol><li><a rel="mw:WikiLink" href="javascript:void(0)" title="belt">belt</a></li></ol><h3>Article</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt749" typeof="mw:Transclusion">Alternative form of <span class="form-of-definition-link"><i class="Latn mention" lang="yol"><a rel="mw:WikiLink" href="javascript:void(0)" title="a">a</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">the</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span></span></li></ol><a class="langHeadingContainer" id="da" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">Danish</h2><h2 class="after"></h2></a><h3>Noun</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt669" typeof="mw:Transclusion">Alternative spelling of <span class="form-of-definition-link"><i class="Latn mention" lang="da"><a rel="mw:WikiLink" href="javascript:void(0)" title="te">te</a></i> <span class="mention-gloss-paren annotation-paren">(</span><span class="mention-gloss-double-quote">“</span><span class="mention-gloss">tea</span><span class="mention-gloss-double-quote">”</span><span class="mention-gloss-paren annotation-paren">)</span></span></span></li></ol><a class="langHeadingContainer" id="ia" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">Interlingua</h2><h2 class="after"></h2></a><h3>Noun</h3><ol><li><a rel="mw:WikiLink" href="javascript:void(0)" title="tea">tea</a></li></ol><a class="langHeadingContainer" id="ga" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">Irish</h2><h2 class="after"></h2></a><h3>Adjective</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt682" typeof="mw:Transclusion">Lenited form of <span class="form-of-definition-link"><i class="Latn mention" lang="ga"><a rel="mw:WikiLink" href="javascript:void(0)" title="te">te</a></i></span></span><span about="#mwt682">.</span></li></ol><a class="langHeadingContainer" id="it" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">Italian</h2><h2 class="after"></h2></a><h3>Noun</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt684" typeof="mw:Transclusion">Misspelling of <span class="form-of-definition-link"><i class="Latn mention" lang="it"><a rel="mw:WikiLink" href="javascript:void(0)" title="tè">tè</a></i></span></span><span about="#mwt684">.</span></li></ol><a class="langHeadingContainer" id="sco" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">Scots</h2><h2 class="after"></h2></a><h3>Determiner</h3><ol><li><span class="Latn" lang="en" about="#mwt722" typeof="mw:Transclusion"><a rel="mw:WikiLink" href="javascript:void(0)" title="the">the</a></span></li></ol><a class="langHeadingContainer" id="sh" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">Serbian (Latin)</h2><h2 class="after"></h2></a><h3>Conjunction</h3><ol><li><span class="usage-label-sense" about="#mwt726" typeof="mw:Transclusion"></span> <span class="form-of-definition use-with-mention" about="#mwt727" typeof="mw:Transclusion">Alternative spelling of <span class="form-of-definition-link"><i class="Latn mention" lang="sh"><a rel="mw:WikiLink" href="javascript:void(0)" title="da">da</a></i></span></span><ul><li><i>neki kreten <b>the</b> ih <a rel="mw:WikiLink" href="javascript:void(0)" title="drkati">drka</a> emotivno</i></li><li><i><b>the</b> ovo okačim na <a rel="mw:WikiLink" href="javascript:void(0)" title="fb">fb</a> wall, garant ne bih opstala od borKINJa za ženska prava</i></li></ul></li></ol><a class="langHeadingContainer" id="sv" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">Swedish</h2><h2 class="after"></h2></a><h3>Noun</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt735" typeof="mw:Transclusion">Alternative spelling of <span class="form-of-definition-link"><i class="Latn mention" lang="sv"><a rel="mw:WikiLink" href="javascript:void(0)" title="te">te</a></i></span></span> (<a rel="mw:WikiLink" href="javascript:void(0)" title="tea">tea</a>)</li></ol><a class="langHeadingContainer" id="vi" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">Vietnamese</h2><h2 class="after"></h2></a><h3>Noun</h3><ol><li>a kind of <a rel="mw:WikiLink" href="javascript:void(0)" title="silk">silk</a> <a rel="mw:WikiLink" href="javascript:void(0)" title="gauze">gauze</a></li></ol><h3>Adjective</h3><ol><li>having a <a rel="mw:WikiLink" href="javascript:void(0)" title="strong">strong</a> and <a rel="mw:WikiLink" href="javascript:void(0)" title="fragrant">fragrant</a> smell or flavor, usually overlaps with what described as "<a rel="mw:WikiLink" href="javascript:void(0)" title="minty">minty</a>" or "<a rel="mw:WikiLink" href="javascript:void(0)" title="citrusy">citrusy</a>" in English</li></ol><a class="langHeadingContainer" id="cy" href="javascript:void(0)"><h2 class="before">#</h2><h2 class="lang">Welsh</h2><h2 class="after"></h2></a><h3>Noun</h3><ol><li><span class="form-of-definition use-with-mention" about="#mwt746" typeof="mw:Transclusion">Aspirate mutation of <span class="form-of-definition-link"><i class="Latn mention" lang="cy"><a rel="mw:WikiLink" href="javascript:void(0)" title="te">te</a></i></span></span><span about="#mwt746">.</span></li></ol></div></details></main>
+			<footer>
+				<small><i>Wiktionary defintions are available under the <a rel="noopener noreferrer" target="_blank" href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.</i></small>
+			</footer>
+		</div>
+
+
+
+	</body></html>

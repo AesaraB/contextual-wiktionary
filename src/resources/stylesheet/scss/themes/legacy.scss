@@ -1,0 +1,45 @@
+:root {
+	--font-family: "message-box";
+	--background-colour: #093145;
+	--text-colour: #FFF;
+	//--text-colour-secondary: #{$dark-gray-05};
+	--primary-colour: #DFA144;
+	--primary-colour-hover: #FFDAB9;
+	//--primary-colour-active: #{$blue-70};
+	--secondary-colour: #FFF;
+	//--secondary-colour-hover: #{$light-gray-40};
+	//--secondary-colour-active: #{$light-gray-50};
+	// Links
+	--link-colour: var(--primary-colour);
+	--link-colour-hover: var(--primary-colour-hover);
+	--link-colour-active: var(--primary-colour-active);
+	// Buttons
+	--button-secondary: var(--secondary-colour);
+	--button-secondary-hover: var(--secondary-colour-hover);
+	--button-secondary-active: var(--secondary-colour-active);
+	--button-secondary-text: #000;
+	--button-primary: var(--primary-colour);
+	--button-primary-hover: var(--primary-colour-hover);
+	--button-primary-active: var(--primary-colour-active);
+	--button-primary-text: #000;
+	// Images
+	--search-button-image: url(../icons/searchDark.svg);
+	--ext-button-image: url(../icons/externalLinkLight.svg);
+	--history-image: url(../icons/historyDark.svg);
+}
+
+a:hover {
+	background: #FFDAB9;
+	color: black;
+}
+
+html {
+	--primaryColorButtonBackgroundBusy: #000;
+	--primaryColorButtonColor: var(--white-100);
+	--primaryColorButtonColorHover: #000;
+	--linkColourActive: var(--blue-50);
+	--inputColour: var(--grey-90-a20);
+	--searchInputColour: var(--white-100);
+	--searchInputColourPlaceholder: var(--white-100);
+	--searchInputBorder: var(--grey-10);
+}

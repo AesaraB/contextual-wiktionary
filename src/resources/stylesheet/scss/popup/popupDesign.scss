@@ -50,7 +50,7 @@ main *:not(button):not(a):not(summary) {
 #langButton {
 	width: 100%;
 	background-color: var(--button-secondary);
-	color: var(--text-colour);
+	color: var(--button-secondary-text);
 	&:hover {
 		background-color: var(--button-secondary-hover);
 	}

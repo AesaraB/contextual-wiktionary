@@ -9,8 +9,6 @@ body {
 	color: var(--text-colour);
 
 	font-family: var(--font-family);
-	font-weight: var(--font-body-weight);
-	font-size: var(--font-body-size);
 }
 a {
 	color: var(--link-colour);
@@ -24,13 +22,14 @@ a {
 }
 
 // Design & colour
-@mixin colourButton($colour) {
-	background-color: var(--button-#{$colour});
+@mixin colourButton($type) {
+	background-color: var(--button-#{$type});
+	color: var(--button-#{$type}-text);
 	&:hover {
-		background-color: var(--button-#{$colour}-hover);
+		background-color: var(--button-#{$type}-hover);
 	}
 	&:active {
-		background-color: var(--button-#{$colour}-active);
+		background-color: var(--button-#{$type}-active);
 	}
 }
 .button {
@@ -58,10 +57,9 @@ a {
 		background-position: center;
 	}
 	&.primary {
-		@include colourButton($colour: primary);
+		@include colourButton($type: primary);
 	}
 	&.secondary {
-		@include colourButton($colour: secondary);
-		color: var(--button-primary-text);
+		@include colourButton($type: secondary);
 	}
 }
