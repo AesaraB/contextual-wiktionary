@@ -25,7 +25,7 @@ async function populateHeader(object) {
 				if (object.params.history.length >= 2 && object.params.history[0] !== oldQuery) {
 				populateLine({ tag: "span", content: ", ", parent: historyContents });
 				}
-				const oldQueryElement = populateLine({ tag: "a", content: humanize(oldQuery), attributes: { href: "#" }, parent: historyContents });
+				const oldQueryElement = populateLine({ tag: "a", content: humanize(oldQuery), attributes: { href: "javascript:void(0)" }, parent: historyContents });
 				oldQueryElement.onclick = () => define(oldQuery);
 			}
 		} else {
@@ -118,7 +118,7 @@ function createLangHeader(language, parent) {
 		classes: ["langHeadingContainer"],
 		id: '' + language,
 		parent: parent,
-		attributes: { href: "#" }
+		attributes: { href: "javascript:void(0)" }
 	});
 	populateLine({ tag: "h2", content: "#", parent: langContainer, classes: ["before"] });
 	populateLine({ tag: "h2", content: langName.of(language), parent: langContainer, classes: ["lang"] });
@@ -140,7 +140,7 @@ function transformLink(link) {
 	// Replace spaces with underscores here. For Wiktionary.
 	word = word.replace(/ /g, '_');
 	// Bottom left indicator for link target. "javascript:;" is nicer than "MOZ-EXTENSION1231431___...."
-	link.href = '#';
+	link.href = "javascript:void(0)";
 
 	// Original was not found -> this is the "open edit page" link
 	if (link.id === 'addWord') {

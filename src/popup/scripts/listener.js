@@ -7,6 +7,12 @@ window.onload = () => { // Tell defineSelection.js that the popup is initialised
 	browser.runtime.sendMessage({ok: true});
 	console.log("popup: opened");
 	browser.storage.local.set({ history: [] });
+	const anchor = browser.storage.local.get("_anchor"); // Set anchor
+	anchor.then(({ _anchor }) => {
+		let popup
+		popup = browser.runtime.getURL('popup/popup.html#' + _anchor );
+		browser.browserAction.setPopup({'popup': popup})
+	})
 };
 browser.runtime.onMessage.addListener((selectionText) => { // defineSelection.js replies with the selectionText.
 	let selection = selectionText || '';

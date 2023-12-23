@@ -4,7 +4,7 @@ export { define };
 import { WORDURL, main } from "./definitions.js";
 import { populateDefinition, populateHeader, populateLine, createLangHeader, createSlider, transformLink } from "./html.js";
 import { getDefinitions } from "./json.js";
-import { csrunner } from "./languageAutoscroll.js";
+import { setAutoscroll } from "./languageAutoscroll.js";
 
 async function define(query) {
 	// Don't search if the query is empty
@@ -19,7 +19,7 @@ async function define(query) {
 	const { history } = await browser.storage.local.get("history");
 	console.log("popup: definining", query);
 	main.innerHTML = '';
-	populateHeader({ content: query, params: { history: history }})
+	populateHeader({ content: query })
 
 	// Getting the definitions
 	const {engDefs, otherDefs, error, meta} = await getDefinitions(query);
@@ -53,8 +53,8 @@ async function define(query) {
 				otherDefsParent = main;
 			}
 			translationsBuilder(otherDefs, otherDefsParent);
-		await csrunner(); // Add onclick handlers for language headings.
-			scrollToAutoScroll(otherLangParent);
+			setAutoscroll();
+			scrollToAutoscroll(otherLangParent);
 			break;
 		}
 		case meta.hasEngDefs: {
@@ -94,9 +94,10 @@ async function updateHistory(history, meta) {
 	}
 }
 
-function scrollToAutoScroll(parent) {
+function scrollToAutoscroll(parent) {
 	const hash = window.location.hash.slice(1);
 	const e = document.getElementById(hash);
+	console.log(hash)
 	if ( hash && e ) { // Anchor is in use.
 		e.classList.add("autoScrolled")
 		if (parent) { parent.setAttribute("open", "") };

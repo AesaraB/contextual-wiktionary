@@ -1,10 +1,8 @@
 // This script modifies the config to accomodate any other languages the user may want to see first.
-export { csrunner };
+export { setAutoscroll };
 
-async function csrunner() {
-	await setAutoscroll();
-	const listener = async e => {
-		const { _anchor } = await browser.storage.local.get("_anchor");
+function setAutoscroll() {
+	const listener = e => {
 		let target;
 		if (e.target.id) {
 			target = e.target;
@@ -13,29 +11,33 @@ async function csrunner() {
 		}
 		e.preventDefault();
 		switch(true){
-			case(target.id === _anchor):
-				browser.storage.local.set({ _anchor: '' });
+			case(target.id === configs._anchor):
+				configs._anchor = '';
 				target.classList.remove('autoScrolled');
 				console.log('configs: Removed anchor', target.id);
 			break;
 			default:
-				browser.storage.local.set({ _anchor: target.id });
+				const existingAutoScroll = document.getElementsByClassName("autoScrolled")[0];
+				if (existingAutoScroll) {
+					existingAutoScroll.classList.remove("autoScrolled");
+				}
+				configs._anchor = target.id;
 				target.classList.add('autoScrolled');
 				console.log('configs: Set anchor', target.id);
 		}
-		await setAutoscroll();
+		setAnchor()
 	}
 	const elements = document.querySelectorAll("a[id].langHeadingContainer");
 	elements.forEach(element => { element.addEventListener('click', listener) }
 	)
 }
 
-async function setAutoscroll() {
-	const { _anchor } = await browser.storage.local.get("_anchor");
+function setAnchor() {
+	let anchor = configs._anchor || '';
 	const scrollY = window.scrollY
 	const scrollX = window.scrollX
-	location.hash = ("#" + _anchor);
+	location.hash = ("#" + anchor);
 	window.scrollTo(scrollX, scrollY)
-	let popup = browser.runtime.getURL('popup/popup.html#' + (_anchor));
+	let popup = browser.runtime.getURL('popup/popup.html#' + (anchor));
 	browser.browserAction.setPopup({'popup': popup});
 }

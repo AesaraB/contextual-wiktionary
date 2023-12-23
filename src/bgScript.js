@@ -13,27 +13,27 @@ versionSetup.then(({ currentVersion }) => {
 	}
 });
 
-
+// Alternative Wiktionary api/non formatted
 configs.$loaded.then(res => { // Load Wiktionary API
 	wiktionaryapi = res.wiktionaryapi
 	alternateapi = res.alternateapi
 })
-
 function setWiktionary() {
 	let popup
 	let anchor = configs._anchor || ''
+	console.log(anchor);
 	switch(true) { // Checks whether an alternative API is being used.
 		case((wiktionaryapi !== 'en.wiktionary.org' || '') && alternateapi):
 			popup = `https://${wiktionaryapi}/api/rest_v1/page/html/${normalize(selectionText)}`;
+			browser.browserAction.setPopup({'popup': popup})
 		break;
 		case(!alternateapi):
 			popup = `https://${wiktionaryapi}/wiki/${normalize(selectionText)}`;
-		break;
-		default:
-			popup = browser.runtime.getURL('popup/popup.html#' + (anchor.replace(/ /g, '_')))
+			browser.browserAction.setPopup({'popup': popup})
 	}
-	browser.browserAction.setPopup({'popup': popup})
 }
+
+// Open browserAction
 // Define something from the right click context menu
 browser.contextMenus.create({
 	id: 'wiktDefine',
