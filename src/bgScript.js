@@ -7,7 +7,7 @@ const normalize = word => word.trim().toUpperCase()===word.trim() ? word.normali
 
 const versionNum = browser.runtime.getManifest().version
 const versionSetup = browser.storage.local.get("currentVersion");
-versionSetup.then((currentVersion) => {
+versionSetup.then(({ currentVersion }) => {
 	if (currentVersion == null || currentVersion != versionNum) {
 		browser.storage.local.set({ currentVersion: versionNum, patchNotesTimes: 0 });
 	}

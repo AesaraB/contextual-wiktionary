@@ -19,7 +19,7 @@ async function define(query) {
 	const { history } = await browser.storage.local.get("history");
 	console.log("popup: definining", query);
 	main.innerHTML = '';
-	populateHeader({ content: query })
+	populateHeader({ content: query, params: { history: history }})
 
 	// Getting the definitions
 	const {engDefs, otherDefs, error, meta} = await getDefinitions(query);
@@ -53,7 +53,7 @@ async function define(query) {
 				otherDefsParent = main;
 			}
 			translationsBuilder(otherDefs, otherDefsParent);
-		csrunner(); // Add onclick handlers for language headings.
+		await csrunner(); // Add onclick handlers for language headings.
 			scrollToAutoScroll(otherLangParent);
 			break;
 		}
