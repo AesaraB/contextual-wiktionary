@@ -6,7 +6,6 @@ import { define } from "./builder.js";
 
 async function populateHeader(object) {
 	header.classList.remove("definitionPage")
-	historyContents.innerHTML = "";
 	searchInput.placeholder = `${humanize(object.content)}`;
 	searchInput.value = `${humanize(object.content)}`;
 	extButton.title = `Open "${humanize(object.content)}" in a new tab`;
@@ -20,8 +19,9 @@ async function populateHeader(object) {
 		} if (object.params.definitionPage) {
 			header.classList.add("definitionPage")
 		} if (object.params.history && object.params.history.length != 0) {
+			header.classList.add("hasHistory")
+			historyContents.innerHTML = "";
 			for (const oldQuery of object.params.history) {
-				header.classList.add("hasHistory")
 				if (object.params.history.length >= 2 && object.params.history[0] !== oldQuery) {
 				populateLine({ tag: "span", content: ", ", parent: historyContents });
 				}
@@ -29,6 +29,7 @@ async function populateHeader(object) {
 				oldQueryElement.onclick = () => define(oldQuery);
 			}
 		} else {
+			historyContents.innerHTML = "";
 			const { patchNotesTimes } = await browser.storage.local.get("patchNotesTimes");
 			let newTimes = patchNotesTimes;
 			if (newTimes <= 5) {

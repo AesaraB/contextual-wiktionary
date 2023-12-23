@@ -1,5 +1,5 @@
 var configs = new Configs({
-	style: 'default',
+	style: 'acorn',
 	fsize: '1',
 	spacing: '1.2',
 	margin: '1',

@@ -72,15 +72,27 @@ $yellow-60:		#e27f2e;
 
 @media (prefers-color-scheme: light) {
 	:root {
-		--background-colour: #{$light-gray-20};
+		--background-colour: #fff;
 		--text-colour: #{$dark-gray-90};
+		--text-colour-secondary: #{$dark-gray-05};
 		--primary-colour: #{$blue-50};
-		--button-primary: #{$blue-20};
+		--primary-colour-hover: #{$blue-60};
+		--primary-colour-active: #{$blue-70};
+		--secondary-colour: #{$light-gray-20};
+		--secondary-colour-hover: #{$light-gray-40};
+		--secondary-colour-active: #{$light-gray-50};
 		// Links
-		--link-colour: #{$blue-50};
-		--link-colour-hover: #{$blue-60};
-		--link-colour-active: #{$blue-70};
-		--button-primary: #{$blue-50};
+		--link-colour: var(--primary-colour);
+		--link-colour-hover: var(--primary-colour-hover);
+		--link-colour-active: var(--primary-colour-active);
+		// Buttons
+		--button-secondary: var(--secondary-colour);
+		--button-secondary-hover: var(--secondary-colour-hover);
+		--button-secondary-active: var(--secondary-colour-active);
+		--button-primary: var(--primary-colour);
+		--button-primary-hover: var(--primary-colour-hover);
+		--button-primary-active: var(--primary-colour-active);
+		--button-primary-text: #{$light-gray-05};
 		// Images
 		--search-button-image: url(../icons/searchLight.svg);
 		--ext-button-image: url(../icons/externalLinkLight.svg);
@@ -93,18 +105,22 @@ $yellow-60:		#e27f2e;
 		--text-colour: #{$light-gray-05};
 		--text-colour-secondary: #{$light-gray-40};
 		--primary-colour: #{$blue-20};
+		--primary-colour-hover: #{$blue-10};
+		--primary-colour-active: #{$blue-05};
 		--secondary-colour: #{$dark-gray-60};
+		--secondary-colour-hover: #{$dark-gray-40};
+		--secondary-colour-active: #{$dark-gray-30};
 		// Links
 		--link-colour: var(--primary-colour);
-		--link-colour-hover: #{$blue-10};
-		--link-colour-active: #{$blue-05};
+		--link-colour-hover: var(--primary-colour-hover);
+		--link-colour-active: var(--primary-colour-active);
 		// Buttons
 		--button-secondary: var(--secondary-colour);
-		--button-secondary-hover: #{$dark-gray-40};
-		--button-secondary-active: #{$dark-gray-30};
+		--button-secondary-hover: var(--secondary-colour-hover);
+		--button-secondary-active: var(--secondary-colour-active);
 		--button-primary: var(--primary-colour);
-		--button-primary-hover: #{$blue-10};
-		--button-primary-active: #{$blue-05};
+		--button-primary-hover: var(--primary-colour-hover);
+		--button-primary-active: var(--primary-colour-active);
 		--button-primary-text: #{$dark-gray-90};
 		// Images
 		--search-button-image: url(../icons/searchDark.svg);
