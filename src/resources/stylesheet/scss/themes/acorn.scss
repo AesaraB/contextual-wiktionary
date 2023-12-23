@@ -70,7 +70,7 @@ $yellow-60:		#e27f2e;
 	--font-small-size: 150%;
 }
 
-@media (prefers-colour-scheme: light) {
+@media (prefers-color-scheme: light) {
 	:root {
 		--background-colour: #{$light-gray-20};
 		--text-colour: #{$dark-gray-90};
@@ -87,27 +87,28 @@ $yellow-60:		#e27f2e;
 		--history-image: url(../icons/historyLight.svg);
 	}
 }
-:root {
-	--background-colour: #{$dark-gray-80};
-	--text-colour: #{$light-gray-05};
-	--text-colour-secondary: #{$light-gray-40};
-	--primary-colour: #{$blue-20};
-	--secondary-colour: #{$dark-gray-60};
-	// Links
-	--link-colour: var(--primary-colour);
-	--link-colour-hover: #{$blue-10};
-	--link-colour-active: #{$blue-05};
-	// Buttons
-	--button-secondary: var(--secondary-colour);
-	--button-secondary-hover: #{$dark-gray-40};
-	--button-secondary-active: #{$dark-gray-30};
-	--button-primary: var(--primary-colour);
-	--button-primary-hover: #{$blue-10};
-	--button-primary-active: #{$blue-05};
-	--button-primary-text: #{$dark-gray-90};
-	// Images
-	--search-button-image: url(../icons/searchDark.svg);
-	--ext-button-image: url(../icons/externalLinkDark.svg);
-	--history-image: url(../icons/historyDark.svg);
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-colour: #{$dark-gray-80};
+		--text-colour: #{$light-gray-05};
+		--text-colour-secondary: #{$light-gray-40};
+		--primary-colour: #{$blue-20};
+		--secondary-colour: #{$dark-gray-60};
+		// Links
+		--link-colour: var(--primary-colour);
+		--link-colour-hover: #{$blue-10};
+		--link-colour-active: #{$blue-05};
+		// Buttons
+		--button-secondary: var(--secondary-colour);
+		--button-secondary-hover: #{$dark-gray-40};
+		--button-secondary-active: #{$dark-gray-30};
+		--button-primary: var(--primary-colour);
+		--button-primary-hover: #{$blue-10};
+		--button-primary-active: #{$blue-05};
+		--button-primary-text: #{$dark-gray-90};
+		// Images
+		--search-button-image: url(../icons/searchDark.svg);
+		--ext-button-image: url(../icons/externalLinkDark.svg);
+		--history-image: url(../icons/historyDark.svg);
+	}
 }
-
