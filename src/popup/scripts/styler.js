@@ -19,7 +19,7 @@ configs.$loaded.then(({style, fsize, spacing, margin, popupWidth, popupHeight, .
 		const link = document.createElement('link')
 		link.rel = 'stylesheet'
 		link.type = 'text/css'
-		link.href = '/resources/stylesheet/themes/' + style + '.css'
+		link.href = `/resources/stylesheet/themes/${style}.css`
 		document.head.appendChild(link)
 	} /* else {
 		const styleEl = new CSSStyleSheet();

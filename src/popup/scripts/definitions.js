@@ -1,4 +1,3 @@
-'use strict';
 export { EDITURL, SEARCHURL, DEFINITIONURL, WORDURL, HEADERS };
 export { normalize, humanize, langName, stripTags, titleCase };
 export { extButton, header, historyContents, main, search, searchInput };
@@ -61,9 +60,9 @@ function stripTags (input) { // eslint-disable-line camelcase
 /* To Title Case © 2018 David Gouch | https://github.com/gouch/to-title-case */
 // eslint-disable-next-line no-extend-native
 const titleCase = (string) => {
-	let smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|v.?|vs.?|via)$/i
-	let alphanumericPattern = /([A-Za-z0-9\u00C0-\u00FF])/
-	let wordSeparators = /([ :–—-])/
+	const smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|v.?|vs.?|via)$/i
+	const alphanumericPattern = /([A-Za-z0-9\u00C0-\u00FF])/
+	const wordSeparators = /([ :–—-])/
 
 	return string.split(wordSeparators)
 		.map(function (current, index, array) {
