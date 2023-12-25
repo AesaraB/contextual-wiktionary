@@ -27,8 +27,9 @@ This extension requires Firefox 57.
 To debug Right Click Wiktionary:
 1. Clone this repository
 2. Init submodules with `git submodule update --init`
-3. Head to `about:debugging`
-4. Load the manifest.json as temporary addon.
+3. Run `/src/resources/stylesheet/sassBuild.sh` (need [sass]https://sass-lang.com) installed)
+4. Head to `about:debugging`
+5. Load the manifest.json as temporary addon.
 
 # Acknowledgements
 * This add-on was forked from [Losnappa's Right Click Wiktionary](https://gitlab.com/losnappas/Context-menu-Wiktionary/).
