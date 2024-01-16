@@ -1,4 +1,4 @@
-# [Contextual Wiktionary](https://addons.mozilla.org/firefox/addon/contextual-wiktionary/)
+# [Contextual Wiktionary](https://addons.mozilla.org/en-US/firefox/addon/opendictionary/)
 Contextual Wiktionary is a Firefox web-extension that enables the user to search Wiktionary with the context menu or a pop-up. The Contextual Wiktionary extension uses the Unlicense license.
 
 ## Features
